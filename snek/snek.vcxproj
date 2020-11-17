@@ -161,6 +161,7 @@
     <ClInclude Include="Source\vertexData.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="models\snakeHead.md" />
     <None Include="Shaders\3.3.shader.fs" />
     <None Include="Shaders\3.3.shader.vs" />
   </ItemGroup>

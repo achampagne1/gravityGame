@@ -4,6 +4,9 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glad/gl.h> // include glad to get all the required OpenGL headers
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 
 class VertexData {
@@ -11,7 +14,7 @@ class VertexData {
 		unsigned int VAO,VBO,EBO;
 		unsigned int indicesNum;
 	public:
-		VertexData(float vertex[], unsigned int vertexSize, unsigned int indices[], unsigned int indicesSize);
+		VertexData(const char* modelPath);
 		void render();
 		void destroy();
 };
