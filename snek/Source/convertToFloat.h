@@ -6,6 +6,7 @@ class ConvertToFloat {
 		ConvertToFloat(int width, int height);
 		void convertToGlobal(float* input,const int size);
 		void convertFromRGB(float* input, const int size);
+		void format(float* input, const int size);
 	private:
 		int width = 0;
 		int height = 0;

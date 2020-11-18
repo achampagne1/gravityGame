@@ -14,25 +14,11 @@ void destroy();
 //object declerations
 GLFWwindow* window;
 
-//temp
-float vertices[] = {
-    // positions
-    0.5, -0.5, 0.0, 0.0, 0.0, 0.0, // bottom right
-    -0.5, -0.5, 0.0,  0.0, 0.0, 0.0,// bottom left
-    -0.5,  0.5, 0.0,  0.0, 0.0, 0.0, // top left
-    0.5, 0.5, 0.0,   0.0, 0.0, 0.0,// top right
-};
-unsigned int indices[6] = {  // note that we start from 0!
-    0, 1, 3,   // first triangle
-    1, 2, 3
-};
-
-
 int main(void)
 {
     initWindow();
     std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") };
-    std::unique_ptr<VertexData> square{ new VertexData("models/snakeHead.md") };
+    std::unique_ptr<VertexData> square{ new VertexData("models/snakeHead.md",640,480) };
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\convertToFloat.h" />
+    <ClInclude Include="Source\loadFile.h" />
     <ClInclude Include="Source\shaderLoader.h" />
     <ClInclude Include="Source\vertexData.h" />
   </ItemGroup>

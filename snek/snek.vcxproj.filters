@@ -38,6 +38,9 @@
     <ClInclude Include="Source\convertToFloat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\loadFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\3.3.shader.vs" />

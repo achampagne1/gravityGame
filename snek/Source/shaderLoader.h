@@ -4,12 +4,10 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glad/gl.h> // include glad to get all the required OpenGL headers
+#include "loadFile.h"
 
 
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
 
 
 class Shader
@@ -20,34 +18,12 @@ public:
 
     // constructor reads and builds the shader
     Shader(const char* vertexPath, const char* fragmentPath) {
-        // 1. retrieve the vertex/fragment source code from filePath
+        std::unique_ptr<LoadFile> fragFile{ new LoadFile() };
+        std::unique_ptr<LoadFile> vertexFile{ new LoadFile() };
         std::string vertexCode;
         std::string fragmentCode;
-        std::ifstream vShaderFile;
-        std::ifstream fShaderFile;
-        // ensure ifstream objects can throw exceptions:
-        vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        try
-        {
-            // open files
-            vShaderFile.open(vertexPath);
-            fShaderFile.open(fragmentPath);
-            std::stringstream vShaderStream, fShaderStream;
-            // read file's buffer contents into streams
-            vShaderStream << vShaderFile.rdbuf();
-            fShaderStream << fShaderFile.rdbuf();
-            // close file handlers
-            vShaderFile.close();
-            fShaderFile.close();
-            // convert stream into string
-            vertexCode = vShaderStream.str();
-            fragmentCode = fShaderStream.str();
-        }
-        catch (std::ifstream::failure e)
-        {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
-        }
+        vertexCode = vertexFile->load(vertexPath).str();
+        fragmentCode = fragFile->load(fragmentPath).str();
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
 
