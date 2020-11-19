@@ -5,13 +5,13 @@ ConvertToFloat::ConvertToFloat(int width, int height) {
 	this->height = height;
 }
 
-void ConvertToFloat::convertToGlobal(float* input,int size) {
-	for (int i = 0; i < size; i++) {
-		if (i % 3 == 0)
-			input[i] = ((input[i] * 2) / width) - 1;
-		else
-			input[i] = ((input[i] * 2) / height) - 1;
-	}
+ConvertToFloat::ConvertToFloat() {
+
+}
+
+void ConvertToFloat::convertToGlobal(float* input) {
+	input[0] = 2.0*input[0] / width;
+	input[1] = 2.0*input[1] / height;
 }
 
 void ConvertToFloat::convertFromRGB(float* input, const int size) {

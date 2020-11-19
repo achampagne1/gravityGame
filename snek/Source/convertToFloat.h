@@ -4,7 +4,8 @@
 class ConvertToFloat {
 	public:
 		ConvertToFloat(int width, int height);
-		void convertToGlobal(float* input,const int size);
+		ConvertToFloat();
+		void convertToGlobal(float* input);
 		void convertFromRGB(float* input, const int size);
 		void format(float* input, const int size);
 	private:

@@ -40,9 +40,6 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
     }
     
     conversion->format(vertices, numVertices * 8 * sizeof(float));
-    for (int i = 0; i < 32; i++) {
-        std::cout << vertices[i] << std::endl;
-    }
     //binds id
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
@@ -69,9 +66,27 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
 }
 
 void VertexData::render() {
+    shader->use();
+    unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
+
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+void VertexData::move(int x, int y) {
+    float coor[2] = { float(x),float(y) };
+    std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
+    conversion->convertToGlobal(coor);
+    glm::mat4 temp = glm::mat4(1.0f);
+    temp = glm::translate(temp, glm::vec3(coor[0],coor[1], 0.0f));
+    trans = temp;
+}
+
+void VertexData::rotate(int deg) {
+
 }
 
 void VertexData::destroy() {
