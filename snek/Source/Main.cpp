@@ -15,6 +15,9 @@ void changeLocation();
 void update();
 void render();
 void loadModels();
+void onStartUp();
+int roundUp(int numToRound, int multiple);
+int roundDown(int numToRound, int multiple);
 
 //object declerations
 GLFWwindow* window;
@@ -22,11 +25,11 @@ GLFWwindow* window;
 //variables
 int x = 200;
 int y = 200;
-int appleLoc[2];
+int appleLoc[2] = { x,y };
 int direction = 0;
-int stepSize = 5;
+int stepSize = 20;
 bool start = false;
-static double limitFPS = 1.0 / 30.0;
+static double limitFPS = 1.0 / 15.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
@@ -36,6 +39,7 @@ int main(void)
 {
     initWindow();
     loadModels();
+    onStartUp();
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -62,6 +66,13 @@ int main(void)
     destroy();
 }
 
+void onStartUp() {
+    srand(time(0));
+    appleLoc[0] = roundUp(rand() % 620,20);
+    appleLoc[1] = roundUp(rand() % 460,20);
+    models.at(1)->move(appleLoc[0],appleLoc[1]);
+}
+
 void loadModels() {
     std::shared_ptr<VertexData> square{ new VertexData("models/snakeHead.md",640,480) };
     std::shared_ptr<VertexData> apple{ new VertexData("models/snakeHead.md",640,480) };
@@ -72,18 +83,24 @@ void loadModels() {
 void changeLocation() {
     switch (direction) {
         case(0):
-            y += stepSize;
+            if(y<460)
+                y += stepSize;
             break;
         case(1):
-            x += stepSize;
+            if (x < 620)
+                x += stepSize;
             break;
         case(2):
-            y -= stepSize;
+            if (y > 0)
+                y -= stepSize;
             break;
         case(3):
-            x -= stepSize;
+            if (x > 0)
+                x -= stepSize;
             break;
     }
+    std::cout << x << " " << y << std::endl;
+    std::cout << appleLoc[0] << " " << appleLoc[1] << std::endl;
 }
 
 void render() {
@@ -95,10 +112,11 @@ void update() {
     if (start)
         changeLocation();
     models.at(0)->move(x, y);
-    appleLoc[0] = rand() % 620;
-    appleLoc[1] = rand() % 460;
-    std::cout << appleLoc[1] << std::endl;
-    models.at(1)->move(appleLoc[0], appleLoc[1]);
+    if (x == appleLoc[0] && y == appleLoc[1]) {
+        appleLoc[0] = roundUp(rand() % 620, 20);
+        appleLoc[1] = roundUp(rand() % 460, 20);
+        models.at(1)->move(roundUp(appleLoc[0], 20), roundUp(appleLoc[1], 20));
+    }
 }
 
 void initWindow() {
@@ -147,6 +165,30 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         direction = 1;
         start = true;
     }
+}
+
+int roundUp(int numToRound, int multiple)
+{
+    if (multiple == 0)
+        return numToRound;
+
+    int remainder = numToRound % multiple;
+    if (remainder == 0)
+        return numToRound;
+
+    return numToRound + multiple - remainder;
+}
+
+int roundDown(int numToRound, int multiple)
+{
+    if (multiple == 0)
+        return numToRound;
+
+    int remainderInverseSorta = multiple-(numToRound % multiple);
+    if (remainderInverseSorta == 0)
+        return numToRound;
+
+    return numToRound - multiple + remainderInverseSorta;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
