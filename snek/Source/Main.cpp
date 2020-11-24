@@ -72,7 +72,7 @@ void onCollect() {
     appleLoc[0] = roundUp(rand() % 620, 20);
     appleLoc[1] = roundUp(rand() % 460, 20);
     models.at(1)->move(appleLoc[0], appleLoc[1]);
-    std::shared_ptr<VertexData> model{ new VertexData("models/snakeHead.md",640,480) };
+    createModel();
 }
 
 void onStartUp() {
