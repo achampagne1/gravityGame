@@ -22,6 +22,7 @@ class VertexData {
 		glm::mat4 trans = glm::mat4(1.0f);
 	public:
 		VertexData(const char* modelPath,int width,int height);
+		VertexData(const VertexData& data);
 		void render();
 		void move(int x, int y);
 		void rotate(int deg);

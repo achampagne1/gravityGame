@@ -65,6 +65,15 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
     glBindVertexArray(0);
 }
 
+VertexData::VertexData(const VertexData& data) {
+    VAO = data.VAO;
+    VBO = data.VBO;
+    EBO = data.EBO;
+    width = data.width;
+    height = data.height;
+    trans = data.trans;
+}
+
 void VertexData::render() {
     shader->use();
     unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");

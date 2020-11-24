@@ -16,6 +16,8 @@ void update();
 void render();
 void loadModels();
 void onStartUp();
+void onCollect();
+void createModel();
 int roundUp(int numToRound, int multiple);
 int roundDown(int numToRound, int multiple);
 
@@ -66,18 +68,26 @@ int main(void)
     destroy();
 }
 
+void onCollect() {
+    appleLoc[0] = roundUp(rand() % 620, 20);
+    appleLoc[1] = roundUp(rand() % 460, 20);
+    models.at(1)->move(appleLoc[0], appleLoc[1]);
+    std::shared_ptr<VertexData> model{ new VertexData("models/snakeHead.md",640,480) };
+}
+
 void onStartUp() {
     srand(time(0));
-    appleLoc[0] = roundUp(rand() % 620,20);
-    appleLoc[1] = roundUp(rand() % 460,20);
-    models.at(1)->move(appleLoc[0],appleLoc[1]);
+    onCollect();
+}
+
+void createModel() {
+    std::shared_ptr<VertexData> model{ new VertexData("models/snakeHead.md",640,480) };
+    models.push_back(model);
 }
 
 void loadModels() {
-    std::shared_ptr<VertexData> square{ new VertexData("models/snakeHead.md",640,480) };
-    std::shared_ptr<VertexData> apple{ new VertexData("models/snakeHead.md",640,480) };
-    models.push_back(square);
-    models.push_back(apple);
+    createModel();
+    createModel();
 }
 
 void changeLocation() {
@@ -113,9 +123,7 @@ void update() {
         changeLocation();
     models.at(0)->move(x, y);
     if (x == appleLoc[0] && y == appleLoc[1]) {
-        appleLoc[0] = roundUp(rand() % 620, 20);
-        appleLoc[1] = roundUp(rand() % 460, 20);
-        models.at(1)->move(roundUp(appleLoc[0], 20), roundUp(appleLoc[1], 20));
+        onCollect();
     }
 }
 
