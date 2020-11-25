@@ -39,7 +39,7 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
         indices[i] = stoi(substr);
     }
     
-    conversion->format(vertices, numVertices * 8 * sizeof(float));
+    conversion->format(vertices, numVertices * 8);
     //binds id
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
@@ -86,12 +86,22 @@ void VertexData::render() {
 }
 
 void VertexData::move(int x, int y) {
+    this->x = x;
+    this->y = y;
     float coor[2] = { float(x),float(y) };
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     glm::mat4 temp = glm::mat4(1.0f);
     temp = glm::translate(temp, glm::vec3(coor[0],coor[1], 0.0f));
     trans = temp;
+}
+
+int VertexData::getX() {
+    return x;
+}
+
+int VertexData::getY() {
+    return y;
 }
 
 void VertexData::rotate(int deg) {

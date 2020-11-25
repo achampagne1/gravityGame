@@ -18,6 +18,7 @@ void loadModels();
 void onStartUp();
 void onCollect();
 void createModel();
+void collision();
 int roundUp(int numToRound, int multiple);
 int roundDown(int numToRound, int multiple);
 
@@ -31,6 +32,7 @@ int appleLoc[2] = { x,y };
 int direction = 0;
 int stepSize = 20;
 bool start = false;
+int size = 1;
 static double limitFPS = 1.0 / 15.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
@@ -71,13 +73,13 @@ int main(void)
 void onCollect() {
     appleLoc[0] = roundUp(rand() % 620, 20);
     appleLoc[1] = roundUp(rand() % 460, 20);
-    models.at(1)->move(appleLoc[0], appleLoc[1]);
+    models.at(0)->move(appleLoc[0], appleLoc[1]);
+    size++;
     createModel();
 }
 
 void onStartUp() {
     srand(time(0));
-    onCollect();
 }
 
 void createModel() {
@@ -109,8 +111,6 @@ void changeLocation() {
                 x -= stepSize;
             break;
     }
-    std::cout << x << " " << y << std::endl;
-    std::cout << appleLoc[0] << " " << appleLoc[1] << std::endl;
 }
 
 void render() {
@@ -121,10 +121,20 @@ void render() {
 void update() {
     if (start)
         changeLocation();
-    models.at(0)->move(x, y);
     if (x == appleLoc[0] && y == appleLoc[1]) {
         onCollect();
     }
+
+    //Note: the apple is models.at(0)
+    models.at(size)->move(x, y);
+    for (int i = 1; i < size; i++) {
+        models.at(i)->move(models.at(i + 1)->getX(), models.at(i + 1)->getY());
+    }
+    std::cout << size << std::endl;
+}
+
+void collision() {
+    
 }
 
 void initWindow() {
@@ -158,19 +168,23 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-        direction = 0;
+        if(direction!=2||size==2)
+            direction = 0;
         start = true;
     }
     if (key == GLFW_KEY_S && action == GLFW_PRESS){
-        direction = 2;
+        if (direction != 0 || size==2)
+            direction = 2;
         start = true;
     }
     if (key == GLFW_KEY_A && action == GLFW_PRESS){
-        direction = 3;
+        if (direction != 1 || size==2)
+            direction = 3;
         start = true;
     }
     if (key == GLFW_KEY_D && action == GLFW_PRESS){
-        direction = 1;
+        if (direction != 3 || size==2)
+            direction = 1;
         start = true;
     }
 }

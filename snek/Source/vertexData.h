@@ -17,6 +17,8 @@ class VertexData {
 		unsigned int VAO,VBO,EBO;
 		int width = 0;
 		int height = 0;
+		int x = 0;
+		int y = 0;
 
 		std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") }; //add shader path to constructor
 		glm::mat4 trans = glm::mat4(1.0f);
@@ -25,6 +27,8 @@ class VertexData {
 		VertexData(const VertexData& data);
 		void render();
 		void move(int x, int y);
+		int getX();
+		int getY();
 		void rotate(int deg);
 		void destroy();
 };
