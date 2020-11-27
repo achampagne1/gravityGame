@@ -1,6 +1,7 @@
 //includes
 #include "convertToFloat.h"
-#include "vertexData.h"
+//#include "vertexData.h"
+#include "quadTree.h"
 #include <iostream>
 #include <vector> 
 #include <time.h>
@@ -18,12 +19,12 @@ void loadModels();
 void onStartUp();
 void onCollect();
 void createModel();
-void collision();
 int roundUp(int numToRound, int multiple);
 int roundDown(int numToRound, int multiple);
 
 //object declerations
 GLFWwindow* window;
+//QuadTree quad(0, array);
 
 //variables
 int x = 200;
@@ -131,10 +132,6 @@ void update() {
         models.at(i)->move(models.at(i + 1)->getX(), models.at(i + 1)->getY());
     }
     std::cout << size << std::endl;
-}
-
-void collision() {
-    
 }
 
 void initWindow() {

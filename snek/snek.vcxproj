@@ -153,11 +153,13 @@
     <ClCompile Include="glad_src\gl.c" />
     <ClCompile Include="Source\convertToFloat.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\quadTree.cpp" />
     <ClCompile Include="Source\vertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\convertToFloat.h" />
     <ClInclude Include="Source\loadFile.h" />
+    <ClInclude Include="Source\quadTree.h" />
     <ClInclude Include="Source\shaderLoader.h" />
     <ClInclude Include="Source\vertexData.h" />
   </ItemGroup>

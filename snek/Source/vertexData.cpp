@@ -1,6 +1,7 @@
 #include "vertexData.h"
 
 VertexData::VertexData(const char* modelPath, int width, int height) {
+    //NOTE: Convert to Json
     this->width = width;
     this->height = height;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
@@ -102,6 +103,14 @@ int VertexData::getX() {
 
 int VertexData::getY() {
     return y;
+}
+
+int VertexData::getSizeX() {
+    return sizeX;
+}
+
+int VertexData::getSizeY(){
+    return sizeY;
 }
 
 void VertexData::rotate(int deg) {
