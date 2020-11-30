@@ -1,7 +1,6 @@
 //includes
 #include "convertToFloat.h"
-//#include "vertexData.h"
-#include "quadTree.h"
+#include "vertexData.h"
 #include <iostream>
 #include <vector> 
 #include <time.h>
@@ -24,7 +23,6 @@ int roundDown(int numToRound, int multiple);
 
 //object declerations
 GLFWwindow* window;
-//QuadTree quad(0, array);
 
 //variables
 int x = 200;
@@ -38,7 +36,9 @@ static double limitFPS = 1.0 / 15.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
+bool collision = false;
 std::vector<std::shared_ptr<VertexData>> models;
+
 
 int main(void)
 {
@@ -53,7 +53,8 @@ int main(void)
         deltaTime += (nowTime - lastTime) / limitFPS;
         lastTime = nowTime;
         while (deltaTime >= 1.0) {
-            update();
+            if(!collision)
+                update();
             updates++;
             deltaTime--;
         }
@@ -96,20 +97,28 @@ void loadModels() {
 void changeLocation() {
     switch (direction) {
         case(0):
-            if(y<460)
+            if (y < 460)
                 y += stepSize;
+            else
+                collision = true;
             break;
         case(1):
             if (x < 620)
                 x += stepSize;
+            else
+                collision = true;
             break;
         case(2):
             if (y > 0)
                 y -= stepSize;
+            else
+                collision = true;
             break;
         case(3):
             if (x > 0)
                 x -= stepSize;
+            else
+                collision = true;
             break;
     }
 }
@@ -128,10 +137,15 @@ void update() {
 
     //Note: the apple is models.at(0)
     models.at(size)->move(x, y);
-    for (int i = 1; i < size; i++) {
+    for (int i = 1; i < size; i++) 
         models.at(i)->move(models.at(i + 1)->getX(), models.at(i + 1)->getY());
-    }
+
     std::cout << size << std::endl;
+    //simple collision
+    for (int i = 1; i <= size - 2; i++) {
+        if (models.at(size - 1)->getX() == models.at(i)->getX() && models.at(size - 1)->getY() == models.at(i)->getY())
+            collision = true;
+    }
 }
 
 void initWindow() {

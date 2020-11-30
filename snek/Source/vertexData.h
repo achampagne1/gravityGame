@@ -32,8 +32,6 @@ class VertexData {
 		void move(int x, int y);
 		int getX();
 		int getY();
-		int getSizeX();
-		int getSizeY();
 		void rotate(int deg);
 		void destroy();
 };

@@ -105,14 +105,6 @@ int VertexData::getY() {
     return y;
 }
 
-int VertexData::getSizeX() {
-    return sizeX;
-}
-
-int VertexData::getSizeY(){
-    return sizeY;
-}
-
 void VertexData::rotate(int deg) {
 
 }
