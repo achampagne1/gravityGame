@@ -17,6 +17,8 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
         indices[i] = jf["indices"][i];
     
 
+
+
     conversion->format(vertices, jf["vertices"].size());
     //binds id
     glGenBuffers(1, &VBO);
