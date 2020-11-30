@@ -85,7 +85,7 @@ void onStartUp() {
 }
 
 void createModel() {
-    std::shared_ptr<VertexData> model{ new VertexData("models/snakeHead.md",640,480) };
+    std::shared_ptr<VertexData> model{ new VertexData("models/square.json",640,480) };
     models.push_back(model);
 }
 

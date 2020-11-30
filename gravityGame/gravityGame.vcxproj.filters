@@ -46,5 +46,6 @@
     <None Include="Shaders\3.3.shader.vs" />
     <None Include="Shaders\3.3.shader.fs" />
     <None Include="models\snakeHead.md" />
+    <None Include="models\square.json" />
   </ItemGroup>
 </Project>

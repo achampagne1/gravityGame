@@ -1,46 +1,23 @@
 #include "vertexData.h"
 
 VertexData::VertexData(const char* modelPath, int width, int height) {
-    //NOTE: Convert to Json
+    using json = nlohmann::json;
     this->width = width;
     this->height = height;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
     std::unique_ptr<LoadFile> file{ new LoadFile() };
-    std::stringstream modelStream;
-    std::string substr;
-    modelStream = file->load(modelPath);
-    std::getline(modelStream, substr, ','); 
-    int numVertices = stoi(substr);
-    float* vertices = new float[numVertices*8];
-    std::getline(modelStream, substr, '\n');
-    int numIndices = stoi(substr);
-    int* indices = new int[numIndices];
-    int step = 0;
-    for (int i = 0; i < numVertices * 8; i++) {
-        if(step!=7)
-            std::getline(modelStream, substr, ',');
-        else
-            std::getline(modelStream, substr, '\n');
-        vertices[i] = stof(substr);
-        if (step == 7)
-            step = 0;
-        else
-            step++;
-    }
-    step = 0;
-    for (int i = 0; i < numIndices; i++) {
-        if (step == 2) {
-            std::getline(modelStream, substr, '\n');
-            step = 0;
-        }
-        else {
-            std::getline(modelStream, substr, ',');
-            step++;
-        }
-        indices[i] = stoi(substr);
-    }
+    std::string jsonString;
+    jsonString = file->load(modelPath).str();
+    json jf = json::parse(jsonString);
+    float* vertices = new float[jf["vertices"].size() * 8];
+    int* indices = new int[jf["indices"].size()];
+    for (int i = 0; i < jf["vertices"].size(); i++)
+        vertices[i] = jf["vertices"][i];
+    for (int i = 0; i < jf["indices"].size(); i++)
+        indices[i] = jf["indices"][i];
     
-    conversion->format(vertices, numVertices * 8);
+
+    conversion->format(vertices, jf["vertices"].size());
     //binds id
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
@@ -49,7 +26,7 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, numVertices*8*sizeof(float), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, jf["vertices"].size()*8 *sizeof(float), vertices, GL_STATIC_DRAW);
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -57,7 +34,7 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices*4, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, jf["indices"].size()*4, indices, GL_STATIC_DRAW);
     //texture
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
