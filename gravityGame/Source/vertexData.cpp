@@ -1,6 +1,6 @@
 #include "vertexData.h"
 
-VertexData::VertexData(const char* modelPath, int width, int height) {
+VertexData::VertexData(const char* modelPath, int width, int height, int locked) {
     using json = nlohmann::json;
     this->width = width;
     this->height = height;
@@ -16,10 +16,11 @@ VertexData::VertexData(const char* modelPath, int width, int height) {
     for (int i = 0; i < jf["indices"].size(); i++)
         indices[i] = jf["indices"][i];
     
-
+    indicesSize = jf["indices"].size();
 
 
     conversion->format(vertices, jf["vertices"].size());
+    computeAverage(vertices, jf["vertices"].size());
     //binds id
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
@@ -61,7 +62,7 @@ void VertexData::render() {
 
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
@@ -86,6 +87,12 @@ int VertexData::getY() {
 
 void VertexData::rotate(int deg) {
 
+}
+
+void VertexData::computeAverage(float model[], int size) {
+    for (int i = 0; i < size; i++) {
+
+    }
 }
 
 void VertexData::destroy() {

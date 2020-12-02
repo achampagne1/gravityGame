@@ -162,6 +162,11 @@
     <ClInclude Include="Source\vertexData.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="models\circleR50.json" />
+    <None Include="models\circleR9.json" />
+    <None Include="models\circleRes1000Rad10.json" />
+    <None Include="models\circleRes20Rad10.json" />
+    <None Include="models\circleRes40Rad100.json" />
     <None Include="models\snakeHead.md" />
     <None Include="models\square.json" />
     <None Include="Shaders\3.3.shader.fs" />
