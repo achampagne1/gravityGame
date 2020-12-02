@@ -5,6 +5,7 @@
 #include <vector> 
 #include <time.h>
 
+
 //function prototypes
 static void error_callback(int error, const char* description);
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -14,7 +15,8 @@ void destroy();
 void update();
 void render();
 void onStartUp();
-void createModel(std::string modelPath, int x, int y);
+glm::vec2 calculateDirection(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references);
+void createModel(std::string modelPath, int x, int y, int locked);
 int roundUp(int numToRound, int multiple);
 int roundDown(int numToRound, int multiple);
 
@@ -22,18 +24,22 @@ int roundDown(int numToRound, int multiple);
 GLFWwindow* window;
 
 //variables
-static double limitFPS = 1.0 / 15.0;
+static double limitFPS = 1.0 / 25.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 std::vector<std::shared_ptr<VertexData>> models;
+int pos[2] = { 325,125 };
+float velocity[2] = { -5,0 }; //units per frame
+float gravity = 2; //units per frame per frame
 
 int main(void)
 {
     initWindow();
     onStartUp();
-    createModel("models/circleRes40Rad100.json",220,140, 1); //optimize to see if res40 is too much
-    createModel("models/square.json", 310, 400, 0);
+    createModel("models/circleRes20Rad10.json",300,300, 1); //optimize to see if res40 is too much
+    createModel("models/circleRes20Rad10.json", 350, 50, 1); //optimize to see if res40 is too much
+    createModel("models/square.json", pos[0], pos[1], 0);
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -60,6 +66,21 @@ int main(void)
     destroy();
 }
 
+glm::vec2 calculateDirection(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references) {
+    float xComponant = 0;
+    float yComponant = 0;
+    for (int i = 0; i < references.size(); i++) {
+        xComponant += references.at(i)->getAvgX() - model->getAvgX();
+        yComponant += references.at(i)->getAvgY() - model->getAvgY();
+    }
+    xComponant /= references.size();
+    yComponant /= references.size();
+    if (xComponant == 0 && yComponant == 0)
+        return glm::vec2(xComponant, yComponant);
+    else
+        return glm::normalize(glm::vec2(xComponant, yComponant));
+}
+
 void onStartUp() {
     srand(time(0));
 }
@@ -76,7 +97,16 @@ void render() {
 }
 
 void update() {
-
+    std::vector<std::shared_ptr<VertexData>> references;
+    references.push_back(models.at(0));
+    references.push_back(models.at(1));
+    glm::vec2 directionOfAcceleration = calculateDirection(models.at(2), references);
+    float deltaVelocity[2] = { directionOfAcceleration[0] * gravity, directionOfAcceleration[1] * gravity };
+    velocity[0] += deltaVelocity[0];
+    velocity[1] += deltaVelocity[1];
+    pos[0] += velocity[0];
+    pos[1] += velocity[1];
+    models.at(2)->move(pos[0], pos[1]);
 }
 
 void initWindow() {

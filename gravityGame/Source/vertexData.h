@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "glm/ext.hpp"
 #include "json.hpp"
 
 
@@ -20,6 +21,10 @@ class VertexData {
 		int height = 0;
 		int x = 0;
 		int y = 0;
+		float xAvgModel = 0;
+		float yAvgModel = 0;
+		float xAvgGlobal = 0;
+		float yAvgGlobal = 0;
 		int indicesSize = 0;
 
 		std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") }; //add shader path to constructor
@@ -32,6 +37,8 @@ class VertexData {
 		void move(int x, int y);
 		int getX();
 		int getY();
+		float getAvgX();
+		float getAvgY();
 		void rotate(int deg);
 		void computeAverage(float model[], int size);
 		void destroy();

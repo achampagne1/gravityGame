@@ -18,9 +18,8 @@ VertexData::VertexData(const char* modelPath, int width, int height, int locked)
     
     indicesSize = jf["indices"].size();
 
-
+    computeAverage(vertices, jf["vertices"].size() / 8);
     conversion->format(vertices, jf["vertices"].size());
-    computeAverage(vertices, jf["vertices"].size());
     //binds id
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
@@ -70,6 +69,8 @@ void VertexData::move(int x, int y) {
     this->x = x;
     this->y = y;
     float coor[2] = { float(x),float(y) };
+    xAvgGlobal = x + xAvgModel;
+    yAvgGlobal = y + yAvgModel;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     glm::mat4 temp = glm::mat4(1.0f);
@@ -85,14 +86,26 @@ int VertexData::getY() {
     return y;
 }
 
+float VertexData::getAvgX() {
+    return xAvgGlobal;
+}
+
+float VertexData::getAvgY() {
+    return yAvgGlobal;
+}
+
 void VertexData::rotate(int deg) {
 
 }
 
 void VertexData::computeAverage(float model[], int size) {
     for (int i = 0; i < size; i++) {
-
+        xAvgModel += model[i * 8];
+        yAvgModel += model[i * 8 + 1];
     }
+    xAvgModel /= size;
+    yAvgModel /= size;
+    std::cout << xAvgModel << " " << yAvgModel << std::endl;
 }
 
 void VertexData::destroy() {
