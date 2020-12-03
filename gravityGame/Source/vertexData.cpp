@@ -1,9 +1,10 @@
 #include "vertexData.h"
 
-VertexData::VertexData(const char* modelPath, int width, int height, int locked) {
+VertexData::VertexData(const char* modelPath, int width, int height, float gravity, int locked) {
     using json = nlohmann::json;
     this->width = width;
     this->height = height;
+    this->gravity = gravity;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
     std::unique_ptr<LoadFile> file{ new LoadFile() };
     std::string jsonString;
@@ -75,6 +76,7 @@ void VertexData::move(int x, int y) {
     conversion->convertToGlobal(coor);
     glm::mat4 temp = glm::mat4(1.0f);
     temp = glm::translate(temp, glm::vec3(coor[0],coor[1], 0.0f));
+    //temp = glm::rotate(temp, rotation, glm::vec3(0.0, 0.0, 1.0));
     trans = temp;
 }
 
@@ -94,8 +96,12 @@ float VertexData::getAvgY() {
     return yAvgGlobal;
 }
 
-void VertexData::rotate(int deg) {
+float VertexData::getGravity() {
+    return gravity;
+}
 
+void VertexData::rotate(glm::vec2 direction) {
+    rotation = atan(direction[1] / direction[0]);
 }
 
 void VertexData::computeAverage(float model[], int size) {

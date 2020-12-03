@@ -1,5 +1,5 @@
-#ifndef vertextData
-#define vertexData
+#ifndef vertextDataH
+#define vertexDataH
 
 #define GLFW_INCLUDE_NONE
 #include "loadFile.h"
@@ -21,17 +21,19 @@ class VertexData {
 		int height = 0;
 		int x = 0;
 		int y = 0;
+		float rotation = 0;
 		float xAvgModel = 0;
 		float yAvgModel = 0;
 		float xAvgGlobal = 0;
 		float yAvgGlobal = 0;
+		float gravity = 0;
 		int indicesSize = 0;
 
 		std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") }; //add shader path to constructor
 		glm::mat4 trans = glm::mat4(1.0f);
 	public:
 		VertexData();
-		VertexData(const char* modelPath,int width,int height, int locked);
+		VertexData(const char* modelPath,int width,int height, float gravity, int locked);
 		VertexData(const VertexData& data);
 		void render();
 		void move(int x, int y);
@@ -39,7 +41,8 @@ class VertexData {
 		int getY();
 		float getAvgX();
 		float getAvgY();
-		void rotate(int deg);
+		float getGravity();
+		void rotate(glm::vec2 direction);
 		void computeAverage(float model[], int size);
 		void destroy();
 };
