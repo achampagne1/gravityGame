@@ -29,15 +29,19 @@ double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 std::vector<std::shared_ptr<VertexData>> models;
 float pos[2] = { 200.0,275.0 };
+float pos2[2] = { 210,200 };
+float pos3[2] = { 200,300 };
 float velocity[2] = { 1,0 }; //units per frame
+float velocity2[2] = { -1.5,0 }; //units per frame
+float velocity3[2] = { 1.5,0 }; //units per frame
 
 int main(void)
 {
     initWindow();
     onStartUp();
     createModel("models/circleRes20Rad10.json", pos[0], pos[1], 1, 0);
-    createModel("models/circleRes20Rad10.json",300,200,100, 1); //optimize to see if res40 is too much
-    createModel("models/circleRes20Rad10.json", 200, 300, 100, 1); //optimize to see if res40 is too much
+    createModel("models/circleRes20Rad10.json",pos2[0],pos2[1],100, 1); //optimize to see if res40 is too much
+    createModel("models/circleRes20Rad10.json",pos3[0], pos3[1], 100, 1); //optimize to see if res40 is too much
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -82,14 +86,21 @@ void render() {
 void update() {
     
     std::vector<std::shared_ptr<VertexData>> references;
-    references.push_back(models.at(1));
-    //references.push_back(models.at(2));
-    glm::vec2 deltaVelocity = gravityEngine->getDeltaVelocity(models.at(0), references);
-    velocity[0] += deltaVelocity[0];
-    velocity[1] += deltaVelocity[1];
-    pos[0] += velocity[0];
-    pos[1] += velocity[1];
-    models.at(0)->move(pos[0], pos[1]);
+    std::vector<std::shared_ptr<VertexData>> references2;
+    references.push_back(models.at(2));
+    references2.push_back(models.at(1));
+    glm::vec2 deltaVelocity = gravityEngine->getDeltaVelocity(models.at(1), references);
+    glm::vec2 deltaVelocity2 = gravityEngine->getDeltaVelocity(models.at(2), references2);
+    velocity2[0] += deltaVelocity[0];
+    velocity2[1] += deltaVelocity[1];
+    velocity3[0] += deltaVelocity2[0];
+    velocity3[1] += deltaVelocity2[1];
+    pos2[0] += velocity2[0];
+    pos2[1] += velocity2[1];
+    pos3[0] += velocity3[0];
+    pos3[1] += velocity3[1];
+    models.at(1)->move(pos2[0], pos2[1]);
+    models.at(2)->move(pos3[0], pos3[1]);
 }
 
 void initWindow() {
