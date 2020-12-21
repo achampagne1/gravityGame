@@ -16,7 +16,7 @@ VertexData::VertexData(const char* modelPath, int width, int height, float gravi
         vertices[i] = jf["vertices"][i];
     for (int i = 0; i < jf["indices"].size(); i++)
         indices[i] = jf["indices"][i];
-    
+
     indicesSize = jf["indices"].size();
 
     computeAverage(vertices, jf["vertices"].size() / 8);
@@ -29,7 +29,7 @@ VertexData::VertexData(const char* modelPath, int width, int height, float gravi
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, jf["vertices"].size()*8 *sizeof(float), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, jf["vertices"].size() * 8 * sizeof(float), vertices, GL_STATIC_DRAW);
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -37,7 +37,7 @@ VertexData::VertexData(const char* modelPath, int width, int height, float gravi
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, jf["indices"].size()*4, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, jf["indices"].size() * 4, indices, GL_STATIC_DRAW);
     //texture
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
@@ -69,7 +69,7 @@ void VertexData::render() {
 void VertexData::move(float x, float y) {
     this->x = x;
     this->y = y;
-    float coor[2] = { x,y};
+    float coor[2] = { x,y };
     xAvgGlobal = x + xAvgModel;
     yAvgGlobal = y + yAvgModel;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
