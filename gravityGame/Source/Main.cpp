@@ -28,8 +28,8 @@ double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 std::vector<std::shared_ptr<VertexData>> models;
-float pos[2] = { 150.0,225.0 };
-float velocity[2] = { 2,0 }; //units per frame
+float pos[2] = { 200.0,275.0 };
+float velocity[2] = { 1,0 }; //units per frame
 
 int main(void)
 {
@@ -83,7 +83,7 @@ void update() {
     
     std::vector<std::shared_ptr<VertexData>> references;
     references.push_back(models.at(1));
-    references.push_back(models.at(2));
+    //references.push_back(models.at(2));
     glm::vec2 deltaVelocity = gravityEngine->getDeltaVelocity(models.at(0), references);
     velocity[0] += deltaVelocity[0];
     velocity[1] += deltaVelocity[1];
