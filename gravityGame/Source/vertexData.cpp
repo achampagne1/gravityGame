@@ -66,17 +66,16 @@ void VertexData::render() {
     glBindVertexArray(0);
 }
 
-void VertexData::move(int x, int y) {
+void VertexData::move(float x, float y) {
     this->x = x;
     this->y = y;
-    float coor[2] = { float(x),float(y) };
+    float coor[2] = { x,y};
     xAvgGlobal = x + xAvgModel;
     yAvgGlobal = y + yAvgModel;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     glm::mat4 temp = glm::mat4(1.0f);
-    temp = glm::translate(temp, glm::vec3(coor[0],coor[1], 0.0f));
-    //temp = glm::rotate(temp, rotation, glm::vec3(0.0, 0.0, 1.0));
+    temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
     trans = temp;
 }
 
@@ -111,7 +110,6 @@ void VertexData::computeAverage(float model[], int size) {
     }
     xAvgModel /= size;
     yAvgModel /= size;
-    std::cout << xAvgModel << " " << yAvgModel << std::endl;
 }
 
 void VertexData::destroy() {

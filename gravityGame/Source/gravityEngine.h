@@ -9,10 +9,6 @@
 
 class GravityEngine {
 	private:
-		glm::vec2 direction;
-
-		glm::vec2 calculateDirection(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references);
-		float calculateGravity(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references);
 		glm::vec2 calculateDeltaVelocity(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references);
 	public:
 		GravityEngine();

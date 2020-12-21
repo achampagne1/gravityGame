@@ -19,8 +19,8 @@ class VertexData {
 		unsigned int VAO,VBO,EBO;
 		int width = 0;
 		int height = 0;
-		int x = 0;
-		int y = 0;
+		float x = 0;
+		float y = 0;
 		float rotation = 0;
 		float xAvgModel = 0;
 		float yAvgModel = 0;
@@ -36,7 +36,7 @@ class VertexData {
 		VertexData(const char* modelPath,int width,int height, float gravity, int locked);
 		VertexData(const VertexData& data);
 		void render();
-		void move(int x, int y);
+		void move(float x, float y);
 		int getX();
 		int getY();
 		float getAvgX();

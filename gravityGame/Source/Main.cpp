@@ -28,15 +28,16 @@ double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 std::vector<std::shared_ptr<VertexData>> models;
-int pos[2] = { 300,400 };
-float velocity[2] = { 0,0 }; //units per frame
+float pos[2] = { 150.0,225.0 };
+float velocity[2] = { 2,0 }; //units per frame
 
 int main(void)
 {
     initWindow();
     onStartUp();
-    createModel("models/circleRes40Rad100.json",260,100,0.1, 1); //optimize to see if res40 is too much
-    createModel("models/square.json", pos[0], pos[1],1, 0);
+    createModel("models/circleRes20Rad10.json", pos[0], pos[1], 1, 0);
+    createModel("models/circleRes20Rad10.json",300,200,100, 1); //optimize to see if res40 is too much
+    createModel("models/circleRes20Rad10.json", 200, 300, 100, 1); //optimize to see if res40 is too much
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -81,14 +82,14 @@ void render() {
 void update() {
     
     std::vector<std::shared_ptr<VertexData>> references;
-    references.push_back(models.at(0));
-    glm::vec2 deltaVelocity = gravityEngine->getDeltaVelocity(models.at(1), references);
+    references.push_back(models.at(1));
+    references.push_back(models.at(2));
+    glm::vec2 deltaVelocity = gravityEngine->getDeltaVelocity(models.at(0), references);
     velocity[0] += deltaVelocity[0];
     velocity[1] += deltaVelocity[1];
     pos[0] += velocity[0];
     pos[1] += velocity[1];
-    models.at(1)->rotate(gravityEngine->getDirection());
-    models.at(1)->move(pos[0], pos[1]);
+    models.at(0)->move(pos[0], pos[1]);
 }
 
 void initWindow() {

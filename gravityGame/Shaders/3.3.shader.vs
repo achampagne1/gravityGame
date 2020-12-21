@@ -8,6 +8,6 @@ uniform mat4 location;
 
 void main()
 {
-    gl_Position = location*vec4(aPos, 1.0);
+    gl_Position = location*vec4(aPos, 1.0f);
     ourColor = aColor;
 }
