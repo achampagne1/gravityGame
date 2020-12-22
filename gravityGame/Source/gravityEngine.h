@@ -9,12 +9,11 @@
 
 class GravityEngine {
 	private:
-		glm::vec2 calculateDeltaVelocity(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references);
-		glm::vec2 calculateDeltaVelocity(glm::vec2 avgCoor, std::vector<std::shared_ptr<VertexData>> references);
+		glm::vec2 calculateDeltaVelocity(float avgCoor[2], std::vector<std::shared_ptr<VertexData>> references);
+
 	public:
 		GravityEngine();
-		glm::vec2 getDeltaVelocity(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references);
-		glm::vec2 getDeltaVelocity(glm::vec2 avgCoor, std::vector<std::shared_ptr<VertexData>> references);
+		glm::vec2 getDeltaVelocity(float avgCoor[2], std::vector<std::shared_ptr<VertexData>> references);
 		glm::vec2 getDirection();
 };
 

@@ -1,49 +1,7 @@
 #include "vertexData.h"
 
-VertexData::VertexData(const char* modelPath, int width, int height, float gravity, int locked) {
-    using json = nlohmann::json;
-    this->width = width;
-    this->height = height;
-    this->gravity = gravity;
-    std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
-    std::unique_ptr<LoadFile> file{ new LoadFile() };
-    std::string jsonString;
-    jsonString = file->load(modelPath).str();
-    json jf = json::parse(jsonString);
-    float* vertices = new float[jf["vertices"].size() * 8];
-    int* indices = new int[jf["indices"].size()];
-    for (int i = 0; i < jf["vertices"].size(); i++)
-        vertices[i] = jf["vertices"][i];
-    for (int i = 0; i < jf["indices"].size(); i++)
-        indices[i] = jf["indices"][i];
+VertexData::VertexData() {
 
-    indicesSize = jf["indices"].size();
-
-    computeAverage(vertices, jf["vertices"].size() / 8);
-    conversion->format(vertices, jf["vertices"].size());
-    //binds id
-    glGenBuffers(1, &VBO);
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &EBO);
-
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, jf["vertices"].size() * 8 * sizeof(float), vertices, GL_STATIC_DRAW);
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, jf["indices"].size() * 4, indices, GL_STATIC_DRAW);
-    //texture
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
 }
 
 VertexData::VertexData(const VertexData& data) {
@@ -53,6 +11,53 @@ VertexData::VertexData(const VertexData& data) {
     width = data.width;
     height = data.height;
     trans = data.trans;
+}
+
+void VertexData::generateObject(const char* modelPath, int width, int height, float gravity, int locked) {
+    using json = nlohmann::json;
+    this->width = width;
+    this->height = height;
+    this->gravity = gravity;
+    std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
+    std::unique_ptr<LoadFile> file{ new LoadFile() };
+    std::string jsonString;
+    jsonString = file->load(modelPath).str();
+    json jf = json::parse(jsonString);
+    indicesSize = jf["indices"].size();
+    verticesSize = jf["vertices"].size();
+    vertices = new float[verticesSize * 8];
+    indices = new int[indicesSize];
+    std::cout << verticesSize << " " << verticesSize << std::endl;
+    for (int i = 0; i < verticesSize; i++)
+        vertices[i] = jf["vertices"][i];
+    for (int i = 0; i < indicesSize; i++)
+        indices[i] = jf["indices"][i];
+
+    computeAverage(vertices, verticesSize / 8);
+    conversion->format(vertices, verticesSize);
+    //binds id
+    glGenBuffers(1, &VBO);
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &EBO);
+
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, verticesSize * 8 * sizeof(float), vertices, GL_STATIC_DRAW);
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize * 4, indices, GL_STATIC_DRAW);
+    //texture
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void VertexData::render() {
@@ -98,6 +103,17 @@ float VertexData::getAvgY() {
 float VertexData::getGravity() {
     return gravity;
 }
+void VertexData::getVertices(float* vertices, int* numVertices) {
+    vertices = this->vertices;
+    numVertices = &verticesSize;
+}
+
+void VertexData::getIndices(int* indices, int* numIndices){
+    indices = this->indices;
+    numIndices = &indicesSize;
+}
+
+
 
 void VertexData::rotate(glm::vec2 direction) {
     rotation = atan(direction[1] / direction[0]);

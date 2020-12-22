@@ -1,6 +1,6 @@
 //includes
 #include "convertToFloat.h"
-#include "gravityEngine.h"
+#include "model.h"
 #include <iostream>
 #include <vector> 
 #include <time.h>
@@ -23,23 +23,23 @@ std::unique_ptr<GravityEngine> gravityEngine{ new GravityEngine };
 
 
 //variables
+std::vector<std::shared_ptr<Model>> models;
+
 static double limitFPS = 1.0 / 30.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
-std::vector<std::shared_ptr<VertexData>> models;
-float pos[2] = { 100.0,190.0 };
-float pos2[2] = { 210,200 };
-float pos3[2] = { 200,300 };
-float velocity[2] = { 1,0 }; //units per frame
+float pos[2] = { 200,300 };
+float pos2[2] = { 200,100 };
+float pos3[2] = { 200,100 };
 
 int main(void)
 {
     initWindow();
     onStartUp();
     createModel("models/circleRes20Rad10.json", pos[0], pos[1], 1, 0);
-    createModel("models/circleRes20Rad10.json",pos2[0],pos2[1],100, 1); //optimize to see if res40 is too much
-    createModel("models/circleRes20Rad10.json",pos3[0], pos3[1], 100, 1); //optimize to see if res40 is too much
+    createModel("models/circleRes40Rad100.json",pos2[0],pos2[1],100, 1); //optimize to see if res40 is too much
+    //createModel("models/circleRes40Rad100.json",pos3[0], pos3[1], 100, 1); //optimize to see if res40 is too much
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -71,8 +71,10 @@ void onStartUp() {
 }
 
 void createModel(std::string modelPath,int x,int y,float gravity, int locked) {
-    std::shared_ptr<VertexData> model{ new VertexData(modelPath.c_str(),640,480,gravity,locked) };
-    model->move(x, y);
+    int windowSize[2] = { 640,480 };
+    float coor[2] = { x,y };
+    float velocity[2] = { 0,0 };
+    std::shared_ptr<Model> model{ new Model(modelPath.c_str(),windowSize,coor,velocity,gravity,locked) };
     models.push_back(model);
 }
 
@@ -83,15 +85,10 @@ void render() {
 
 void update() {
     
-    std::vector<std::shared_ptr<VertexData>> references;
+    std::vector<std::shared_ptr<Model>> references;
     references.push_back(models.at(1));
-    references.push_back(models.at(2));
-    glm::vec2 deltaVelocity = gravityEngine->getDeltaVelocity(models.at(0), references);
-    velocity[0] += deltaVelocity[0];
-    velocity[1] += deltaVelocity[1];
-    pos[0] += velocity[0];
-    pos[1] += velocity[1];
-    models.at(0)->move(pos[0], pos[1]);
+    //references.push_back(models.at(2));
+    models.at(0)->calculateGravity(references);
 }
 
 void initWindow() {
