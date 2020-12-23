@@ -103,17 +103,6 @@ float VertexData::getAvgY() {
 float VertexData::getGravity() {
     return gravity;
 }
-void VertexData::getVertices(float* vertices, int* numVertices) {
-    vertices = this->vertices;
-    numVertices = &verticesSize;
-}
-
-void VertexData::getIndices(int* indices, int* numIndices){
-    indices = this->indices;
-    numIndices = &indicesSize;
-}
-
-
 
 void VertexData::rotate(glm::vec2 direction) {
     rotation = atan(direction[1] / direction[0]);
