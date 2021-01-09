@@ -42,10 +42,12 @@ public:
 	float getGravity();
 	void rotate(glm::vec2 direction);
 	void computeAverage(float model[], int size);
+	void moveVertices(float x, float y);
 	void destroy();
 
 	int indicesSize = 0;
 	int verticesSize = 0;
 	float* vertices;
+	float* verticesUpdated;
 	int* indices;
 };

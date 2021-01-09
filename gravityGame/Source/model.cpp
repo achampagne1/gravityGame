@@ -18,7 +18,18 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	for (int i = 0; i < references.size(); i++) {
 		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
 	}
-	glm::vec2 deltaVelocity = gravityEngine->getDeltaVelocity(pos, referencesRaw);
+	deltaVelocity = gravityEngine->getDeltaVelocity(pos, referencesRaw);
+}
+
+void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
+	std::vector<std::shared_ptr<VertexData>> referencesRaw;
+	for (int i = 0; i < references.size(); i++) {
+		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
+	}
+	collisionEngine->calculateCollision(vertexData,referencesRaw);
+}
+
+void Model::calculateVelocity() {
 	velocity[0] += deltaVelocity[0];
 	velocity[1] += deltaVelocity[1];
 	pos[0] += velocity[0];

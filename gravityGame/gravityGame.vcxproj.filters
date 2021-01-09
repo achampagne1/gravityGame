@@ -70,5 +70,8 @@
     <None Include="models\circleRes20Rad10.json" />
     <None Include="models\circleRes40Rad100.json" />
     <None Include="models\circleRes1000Rad10.json" />
+    <None Include="..\..\circleGenerator\circleGenerator\res3\circleRes3Rad100.json" />
+    <None Include="models\circleRes3Rad10.json" />
+    <None Include="models\circleRes3Rad100.json" />
   </ItemGroup>
 </Project>

@@ -26,10 +26,13 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     indicesSize = jf["indices"].size();
     verticesSize = jf["vertices"].size();
     vertices = new float[verticesSize * 8];
+    verticesUpdated = new float[verticesSize * 8];
     indices = new int[indicesSize];
     std::cout << verticesSize << " " << verticesSize << std::endl;
-    for (int i = 0; i < verticesSize; i++)
+    for (int i = 0; i < verticesSize; i++) {
         vertices[i] = jf["vertices"][i];
+        verticesUpdated[i] = vertices[i];
+    }
     for (int i = 0; i < indicesSize; i++)
         indices[i] = jf["indices"][i];
 
@@ -79,6 +82,7 @@ void VertexData::move(float x, float y) {
     yAvgGlobal = y + yAvgModel;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
+    moveVertices(coor[0], coor[1]);
     glm::mat4 temp = glm::mat4(1.0f);
     temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
     trans = temp;
@@ -115,6 +119,13 @@ void VertexData::computeAverage(float model[], int size) {
     }
     xAvgModel /= size;
     yAvgModel /= size;
+}
+
+void VertexData::moveVertices(float x, float y) {
+    for (int i = 0; i < verticesSize / 8; i++) {
+        verticesUpdated[i*8] = vertices[i*8] + x;
+        verticesUpdated[i*8 + 1] = vertices[i*8 + 1] + y;
+    }
 }
 
 void VertexData::destroy() {

@@ -87,8 +87,9 @@ void update() {
     
     std::vector<std::shared_ptr<Model>> references;
     references.push_back(models.at(1));
-    //references.push_back(models.at(2));
     models.at(0)->calculateGravity(references);
+    models.at(0)->calculateCollision(references);
+    models.at(0)->calculateVelocity();
 }
 
 void initWindow() {

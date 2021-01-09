@@ -4,43 +4,51 @@ CollisionEngine::CollisionEngine() {
 
 }
 
-void CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references) {
+glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references) {
 	//find objects that will most likely collide with model will most likely use quad map (jsut going to use all objects for now, but is not efficient)
-	std::shared_ptr<VertexData> closest;
-	float seperationMin = 1000000.0;
-	float seperationXClosest = 0;
-	float seperationYClosest = 0;
-	for (int i = 0; i < references.size(); i++) {
-		float seperationX = references.at(i)->getAvgX() - model->getAvgX();
-		float seperationY = references.at(i)->getAvgY() - model->getAvgY();
-		float seperation = sqrt(pow(seperationX, 2) + pow(seperationY, 2));
-		if (seperation < seperationMin) {
-			seperationMin = seperation;
-			closest = references.at(i);
-			seperationXClosest = seperationX;
-			seperationYClosest = seperationY;
-		}
-
-	}
-	glm::vec2 coor = glm::normalize(glm::vec2(seperationXClosest, seperationYClosest));
-	for (int i = 0; i < model->verticesSize-8; i=i+8) {
-		float seperationX;
-		float seperationY;
-		if (i == model->verticesSize - 9) {
-			seperationX = model->vertices[i] - model->vertices[0];
-			seperationY = model->vertices[i + 1] - model->vertices[1];
-		}
-		else {
-			seperationX = model->vertices[i] - model->vertices[i + 8];
-			seperationY = model->vertices[i + 1] - model->vertices[i + 9];
-		}
-		glm::vec2 localUnitVec = glm::normalize(glm::vec2(seperationX, seperationY));
-		if (glm::dot(localUnitVec, coor) == 0) {
-			//this is hard
+	std::shared_ptr<VertexData> chosenPoint = references.at(0); //need to calculate this
+	bool collide = false;
+	float pt[2];
+	float v1[2];
+	float v2[2];
+	float v3[2];
+	for (int i = 0; i < model->verticesSize; i+=8) {
+		pt[0] = model->verticesUpdated[i]; //gives point that we are checking if is inside of a shape
+		pt[1] = model->verticesUpdated[i + 1];
+		for (int j = 0; j < chosenPoint->indicesSize; j+=3) {
+			v1[0] = chosenPoint->verticesUpdated[chosenPoint->indices[j]*8];
+			v2[0] = chosenPoint->verticesUpdated[chosenPoint->indices[j+1]*8];
+			v3[0] = chosenPoint->verticesUpdated[chosenPoint->indices[j+2]*8];
+			v1[1] = chosenPoint->verticesUpdated[chosenPoint->indices[j]*8 + 1];
+			v2[1] = chosenPoint->verticesUpdated[chosenPoint->indices[j + 1]*8 + 1];
+			v3[1] = chosenPoint->verticesUpdated[chosenPoint->indices[j + 2]*8 + 1];
+			collide = pointInTri(pt, v1, v2, v3);
+			if (collide) {
+				std::cout << "bam!" << std::endl;
+				collide = false;
+				return glm::vec2(0, 0);
+			}
 		}
 	}
-	//find edges that will most likely collide
-	//see what edges intersect with direction vector
+	return glm::vec2(0, 0);
+	//NOTE: might need to check the other way
+}
 
-	//detect if collided by calculating if model edge is closer to center of reference than the actual edge
+bool CollisionEngine::pointInTri(float pt[2], float v1[2], float v2[2], float v3[2]) {
+	float TotalArea = calcTriArea(v1, v2, v3);
+	float Area1 = calcTriArea(pt, v2, v3);
+	float Area2 = calcTriArea(pt, v1, v3);
+	float Area3 = calcTriArea(pt, v1, v2);
+
+	if ((Area1 + Area2 + Area3) > (TotalArea))
+		return false;
+	else
+		return true;
+}
+
+
+float CollisionEngine::calcTriArea(float v1[2], float v2[2], float v3[2]){
+	float det = 0.0f;
+	det = abs(.5 * (v1[0] * (v2[1] - v3[1]) + v2[0] * (v3[1] - v1[1]) + v3[0] * (v1[1] - v2[1])));
+	return det;
 }
