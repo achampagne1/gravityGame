@@ -6,9 +6,9 @@ MovementEngine::MovementEngine() {
 glm::vec2 MovementEngine::calculateMovement() {
 	std::cout << direction << std::endl;
 	if (direction == 1)
-		return glm::vec2(.1 * cos(angle), .1 * sin(angle));
+		return glm::vec2(1 * cos(angle), 1 * sin(angle));
 	if (direction == 3)
-		return glm::vec2(-.1 * cos(angle), -.1 * sin(angle));
+		return glm::vec2(-1 * cos(angle), -1 * sin(angle));
 	else
 		return glm::vec2(0, 0);
 }

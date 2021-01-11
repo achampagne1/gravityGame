@@ -36,11 +36,16 @@ void Model::calculateMovement() {
 	movementVec = movementEngine->calculateMovement();
 }
 
-void Model::calculateVelocity() {
+void Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) {
+	calculateGravity(references);
+	calculateCollision(references);
+	calculateMovement();
 	velocity[0] += deltaVelocity[0];
 	velocity[1] += deltaVelocity[1];
 	pos[0] += velocity[0];
 	pos[1] += velocity[1];
+	pos[0] += movementVec[0];
+	pos[1] += movementVec[1];
 	vertexData->move(pos[0], pos[1]);
 }
 
