@@ -15,20 +15,22 @@ void destroy();
 void update();
 void render();
 void onStartUp();
-void createModel(std::string modelPath, int x, int y,float gravity, int locked);
+void createModel(std::string modelPath, int x, int y,float v[2], float gravity, int locked);
 
 //object declerations
 GLFWwindow* window;
-std::unique_ptr<GravityEngine> gravityEngine{ new GravityEngine };
 
 
 //variables
 std::vector<std::shared_ptr<Model>> models;
+std::shared_ptr<MovementEngine> movementEnginePtr;
 
 static double limitFPS = 1.0 / 30.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
+float velocit[2] = { 0,0 };
+float velocit2[2] = { 0,0 };
 float pos[2] = { 200,300 };
 float pos2[2] = { 200,100 };
 float pos3[2] = { 200,100 };
@@ -37,9 +39,10 @@ int main(void)
 {
     initWindow();
     onStartUp();
-    createModel("models/circleRes20Rad10.json", pos[0], pos[1], 1, 0);
-    createModel("models/circleRes40Rad100.json",pos2[0],pos2[1],100, 1); //optimize to see if res40 is too much
+    createModel("models/circleRes20Rad10.json", pos[0], pos[1],velocit, 1, 0);
+    createModel("models/circleRes40Rad100.json",pos2[0],pos2[1],velocit2,100, 1); //optimize to see if res40 is too much
     //createModel("models/circleRes40Rad100.json",pos3[0], pos3[1], 100, 1); //optimize to see if res40 is too much
+    movementEnginePtr = models.at(0)->getMovementPointer(); //gets movement pointer from the player which is the first object in the models vector
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -67,14 +70,13 @@ int main(void)
 }
 
 void onStartUp() {
-    srand(time(0));
+    srand(time(0)); 
 }
 
-void createModel(std::string modelPath,int x,int y,float gravity, int locked) {
+void createModel(std::string modelPath,int x,int y,float v[2], float gravity, int locked) {
     int windowSize[2] = { 640,480 };
     float coor[2] = { x,y };
-    float velocity[2] = { 0,0 };
-    std::shared_ptr<Model> model{ new Model(modelPath.c_str(),windowSize,coor,velocity,gravity,locked) };
+    std::shared_ptr<Model> model{ new Model(modelPath.c_str(),windowSize,coor,v,gravity,locked) };
     models.push_back(model);
 }
 
@@ -89,6 +91,7 @@ void update() {
     references.push_back(models.at(1));
     models.at(0)->calculateGravity(references);
     models.at(0)->calculateCollision(references);
+    models.at(0)->calculateMovement();
     models.at(0)->calculateVelocity();
 }
 
@@ -126,13 +129,13 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         
     }
     if (key == GLFW_KEY_S && action == GLFW_PRESS){
-       
+   
     }
     if (key == GLFW_KEY_A && action == GLFW_PRESS){
-        
+        movementEnginePtr->setDirection(1);
     }
     if (key == GLFW_KEY_D && action == GLFW_PRESS){
-        
+        movementEnginePtr->setDirection(3);
     }
 }
 

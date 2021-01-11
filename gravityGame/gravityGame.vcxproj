@@ -156,6 +156,7 @@
     <ClCompile Include="Source\gravityEngine.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\model.cpp" />
+    <ClCompile Include="Source\movementEngine.cpp" />
     <ClCompile Include="Source\vertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="Source\gravityEngine.h" />
     <ClInclude Include="Source\loadFile.h" />
     <ClInclude Include="Source\model.h" />
+    <ClInclude Include="Source\movementEngine.h" />
     <ClInclude Include="Source\shaderLoader.h" />
     <ClInclude Include="Source\vertexData.h" />
   </ItemGroup>

@@ -18,7 +18,8 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	for (int i = 0; i < references.size(); i++) {
 		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
 	}
-	deltaVelocity = gravityEngine->getDeltaVelocity(pos, referencesRaw);
+	deltaVelocity= gravityEngine->getDeltaVelocity(pos, referencesRaw);
+	movementEngine->setGravityForceVec(deltaVelocity);
 }
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
@@ -26,7 +27,13 @@ void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	for (int i = 0; i < references.size(); i++) {
 		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
 	}
-	collisionEngine->calculateCollision(vertexData,referencesRaw);
+	glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData,referencesRaw, velocity);
+	if (deltaVelocityTemp != glm::vec2(0, 0))
+		deltaVelocity = deltaVelocityTemp;
+}
+
+void Model::calculateMovement() {
+	movementVec = movementEngine->calculateMovement();
 }
 
 void Model::calculateVelocity() {
@@ -39,6 +46,10 @@ void Model::calculateVelocity() {
 
 std::shared_ptr<VertexData> Model::getVertexDataPointer() {
 	return vertexData;
+}
+
+std::shared_ptr<MovementEngine> Model::getMovementPointer() {
+	return movementEngine;
 }
 
 void Model::render() {
