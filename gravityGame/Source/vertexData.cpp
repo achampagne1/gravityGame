@@ -18,6 +18,7 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     this->width = width;
     this->height = height;
     this->gravity = gravity;
+    int nrChannels;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
     std::unique_ptr<LoadFile> file{ new LoadFile() };
     std::string jsonString;
@@ -28,7 +29,6 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     vertices = new float[verticesSize * 8];
     verticesUpdated = new float[verticesSize * 8];
     indices = new int[indicesSize];
-    std::cout << verticesSize << " " << verticesSize << std::endl;
     for (int i = 0; i < verticesSize; i++) {
         vertices[i] = jf["vertices"][i];
         verticesUpdated[i] = vertices[i];
@@ -38,11 +38,15 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
 
     computeAverage(vertices, verticesSize / 8);
     conversion->format(vertices, verticesSize);
+
+    std::string texturePathString = to_string(jf["texturePath"]);
+    texturePathString.erase(0, 1);
+    texturePathString.erase(texturePathString.size() - 1);
     //binds id
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &EBO);
-
+    glGenTextures(1, &texture);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -56,8 +60,15 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize * 4, indices, GL_STATIC_DRAW);
     //texture
+    glBindTexture(GL_TEXTURE_2D, texture);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
+
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* data = stbi_load(texturePathString.c_str(), &width, &height, &nrChannels, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    stbi_image_free(data);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -68,7 +79,7 @@ void VertexData::render() {
     unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
-
+    glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

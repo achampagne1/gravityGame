@@ -1,4 +1,5 @@
 //includes
+#define STB_IMAGE_IMPLEMENTATION //needed for image loading 
 #include "convertToFloat.h"
 #include "model.h"
 #include <iostream>
@@ -39,8 +40,8 @@ int main(void)
 {
     initWindow();
     onStartUp();
-    createModel("models/circleRes20Rad10.json", pos[0], pos[1],velocit, 1, 0);
-    createModel("models/circleRes40Rad100.json",pos2[0],pos2[1],velocit2,100, 1); //optimize to see if res40 is too much
+    createModel("models/spaceman.json", pos[0], pos[1],velocit, 1, 0);
+    createModel("models/planet1.json",pos2[0],pos2[1],velocit2,100, 1); //optimize to see if res40 is too much
     //createModel("models/circleRes40Rad100.json",pos3[0], pos3[1], 100, 1); //optimize to see if res40 is too much
     movementEnginePtr = models.at(0)->getMovementPointer(); //gets movement pointer from the player which is the first object in the models vector
     while (!glfwWindowShouldClose(window))

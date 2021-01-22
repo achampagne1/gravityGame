@@ -92,7 +92,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib-vc2019;$(ProjectDir)include/stb_image.h;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -126,7 +126,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib-vc2019;$(ProjectDir)include/stb_image.h;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -181,13 +181,16 @@
     <None Include="models\circleRes3Rad10.json" />
     <None Include="models\circleRes3Rad100.json" />
     <None Include="models\circleRes40Rad100.json" />
-    <None Include="models\square2.json" />
+    <None Include="models\planet1.json" />
+    <None Include="models\spaceman.json" />
     <None Include="models\snakeHead.md" />
     <None Include="models\square.json" />
     <None Include="Shaders\3.3.shader.fs" />
     <None Include="Shaders\3.3.shader.vs" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="textures\awesomeface.png" />
+    <Image Include="textures\planet1.png" />
     <Image Include="textures\spaceman.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

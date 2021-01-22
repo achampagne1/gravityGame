@@ -88,10 +88,17 @@
     <None Include="..\..\circleGenerator\circleGenerator\res3\circleRes3Rad100.json" />
     <None Include="models\circleRes3Rad10.json" />
     <None Include="models\circleRes3Rad100.json" />
-    <None Include="models\square2.json" />
+    <None Include="models\spaceman.json" />
+    <None Include="models\planet1.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\spaceman.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\awesomeface.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\planet1.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -1,7 +1,4 @@
 #pragma once
-#ifndef GravityEngineH
-#define GravityEngineH
-
 #include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
@@ -16,5 +13,3 @@ class GravityEngine {
 		glm::vec2 getDeltaVelocity(float avgCoor[2], std::vector<std::shared_ptr<VertexData>> references);
 		glm::vec2 getDirection();
 };
-
-#endif

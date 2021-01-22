@@ -1,5 +1,4 @@
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -78,4 +77,4 @@ public:
         glUseProgram(ID);
     }
 };
-#endif
+
