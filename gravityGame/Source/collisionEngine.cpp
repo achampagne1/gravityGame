@@ -7,7 +7,7 @@ CollisionEngine::CollisionEngine() {
 glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model, std::vector<std::shared_ptr<VertexData>> references, float velocity[2]) {
 	//find objects that will most likely collide with model will most likely use quad map (jsut going to use all objects for now, but is not efficient)
 	std::shared_ptr<VertexData> chosenPoint = references.at(0); //need to calculate this
-	bool collide = false;
+	collide = false;
 	glm::vec2 direction;
 	float pt[2];
 	float v1[2];
@@ -28,7 +28,6 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 				std::cout << "bam!" << std::endl;
 				glm::vec2 dir = glm::vec2(v2[0] - v3[0], v2[1] - v3[1]);
 				direction = glm::normalize(glm::rotate(dir, glm::radians(-90.0f)));
-				collide = false;
 				goto breakOut;
 			}
 			else
@@ -37,15 +36,14 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 	}
 	breakOut:
 
-	if (direction != glm::vec2(0, 0)) {
+	if (collide) {
 		double angle = atan2(direction.y, direction.x);
 		double angleV = atan2(-velocity[1], -velocity[0]);
+		//std::cout <<glm::to_string(direction )<<" ("<<velocity[0]<<","<<velocity[1]<<")"<< std::endl;
+		//std::cout << angle << " " << angleV << std::endl;
 		double magV = sqrt(pow(velocity[0], 2) + pow(velocity[1], 2));
-		std::cout << angle << std::endl;
-		if (abs(angle) / abs(angleV) <= 1.1 && abs(angle) / abs(angleV) >= .9)
+		if (abs(angle) / abs(angleV) <= 2 && abs(angle) / abs(angleV) >= 0) //threshhold for the angle
 			angle = angleV;
-		std::cout << angle << std::endl;
-		std::cout << atan2(-velocity[1], -velocity[0]) << std::endl;
 		return glm::vec2(magV * cos(angle), magV * sin(angle));
 		//it bounces, why. The velocity is not fully counteracted by the normal force causing the bounce.
 		//comne back to
@@ -54,6 +52,11 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 	return glm::vec2(0, 0);
 	//NOTE: might need to check the other way
 }
+
+bool CollisionEngine::getCollision() {
+	return collide;
+}
+
 
 bool CollisionEngine::pointInTri(float pt[2], float v1[2], float v2[2], float v3[2]) {
 	float TotalArea = calcTriArea(v1, v2, v3);

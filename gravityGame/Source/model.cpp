@@ -27,25 +27,31 @@ void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	for (int i = 0; i < references.size(); i++) {
 		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
 	}
-	glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData,referencesRaw, velocity);
-	if (deltaVelocityTemp != glm::vec2(0, 0))
+	glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData, referencesRaw, velocity);
+	if (collisionEngine->getCollision()) {
 		deltaVelocity = deltaVelocityTemp;
+	}
 }
 
 void Model::calculateMovement() {
 	movementVec = movementEngine->calculateMovement();
 }
 
-void Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) {
+void Model::calculateLocation(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the new location of the object 
+	calculateMovement();
 	calculateGravity(references);
 	calculateCollision(references);
-	calculateMovement();
 	velocity[0] += deltaVelocity[0];
 	velocity[1] += deltaVelocity[1];
+	if (abs(velocity[0]) < .001) //threshold to 0 out
+		velocity[0] = 0;
+	if (abs(velocity[1]) < .001)
+		velocity[1] = 0;
 	pos[0] += velocity[0];
 	pos[1] += velocity[1];
 	pos[0] += movementVec[0];
 	pos[1] += movementVec[1];
+	std::cout << movementVec[0] << " " << movementVec[1] << std::endl;
 	vertexData->move(pos[0], pos[1]);
 }
 

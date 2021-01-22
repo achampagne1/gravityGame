@@ -160,6 +160,9 @@
     <ClCompile Include="Source\vertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\json.hpp" />
+    <ClInclude Include="include\linmath.h" />
+    <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="Source\collisionEngine.h" />
     <ClInclude Include="Source\convertToFloat.h" />
     <ClInclude Include="Source\gravityEngine.h" />
@@ -178,10 +181,14 @@
     <None Include="models\circleRes3Rad10.json" />
     <None Include="models\circleRes3Rad100.json" />
     <None Include="models\circleRes40Rad100.json" />
+    <None Include="models\square2.json" />
     <None Include="models\snakeHead.md" />
     <None Include="models\square.json" />
     <None Include="Shaders\3.3.shader.fs" />
     <None Include="Shaders\3.3.shader.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\spaceman.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,7 +31,7 @@ double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 float velocit[2] = { 0,0 };
 float velocit2[2] = { 0,0 };
-float pos[2] = { 200,300 };
+float pos[2] = { 100,100 };
 float pos2[2] = { 200,100 };
 float pos3[2] = { 200,100 };
 
@@ -89,7 +89,7 @@ void update() {
     
     std::vector<std::shared_ptr<Model>> references;
     references.push_back(models.at(1));
-    models.at(0)->calculateVelocity(references);
+    models.at(0)->calculateLocation(references);
 }
 
 void initWindow() {
@@ -133,6 +133,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     }
     if (key == GLFW_KEY_D && action == GLFW_PRESS){
         movementEnginePtr->setDirection(3);
+    }
+    if (action == GLFW_RELEASE) {
+        movementEnginePtr->setDirection(4);
     }
 }
 

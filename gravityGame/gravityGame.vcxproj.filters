@@ -65,6 +65,15 @@
     <ClInclude Include="Source\movementEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\linmath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\3.3.shader.vs" />
@@ -79,5 +88,11 @@
     <None Include="..\..\circleGenerator\circleGenerator\res3\circleRes3Rad100.json" />
     <None Include="models\circleRes3Rad10.json" />
     <None Include="models\circleRes3Rad100.json" />
+    <None Include="models\square2.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\spaceman.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

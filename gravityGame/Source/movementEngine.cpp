@@ -3,12 +3,12 @@
 MovementEngine::MovementEngine() {
 
 }
-glm::vec2 MovementEngine::calculateMovement() {
-	std::cout << direction << std::endl;
+glm::vec2 MovementEngine:: calculateMovement() {
+	float speed =2;
 	if (direction == 1)
-		return glm::vec2(1 * cos(angle), 1 * sin(angle));
+		return glm::vec2(speed * cos(angle), speed * sin(angle));
 	if (direction == 3)
-		return glm::vec2(-1 * cos(angle), -1 * sin(angle));
+		return glm::vec2(-speed * cos(angle), -speed * sin(angle));
 	else
 		return glm::vec2(0, 0);
 }
