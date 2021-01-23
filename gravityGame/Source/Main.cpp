@@ -32,8 +32,8 @@ double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 float velocit[2] = { 0,0 };
 float velocit2[2] = { 0,0 };
-float pos[2] = { 100,100 };
-float pos2[2] = { 200,100 };
+float pos[2] = { 300,400 };
+float pos2[2] = { 70,-200 };
 float pos3[2] = { 200,100 };
 
 int main(void)
@@ -82,6 +82,8 @@ void createModel(std::string modelPath,int x,int y,float v[2], float gravity, in
 }
 
 void render() {
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
     for(int i=0; i<models.size();i++)
         models.at(i)->render();
 }
