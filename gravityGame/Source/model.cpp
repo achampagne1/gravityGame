@@ -18,7 +18,7 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	for (int i = 0; i < references.size(); i++) {
 		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
 	}
-	deltaVelocity= gravityEngine->getDeltaVelocity(pos, referencesRaw);
+	deltaVelocity+= gravityEngine->getDeltaVelocity(pos, referencesRaw);
 	movementEngine->setGravityForceVec(deltaVelocity);
 }
 
@@ -34,12 +34,14 @@ void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 }
 
 void Model::calculateMovement() {
-	movementVec = movementEngine->calculateMovement();
+	//deltaVelocity -= movementVec;
+	deltaVelocity = movementEngine->calculateMovement();
+	//deltaVelocity += movementVec;
 }
 
 void Model::calculateLocation(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the new location of the object 
-	calculateMovement();
 	calculateGravity(references);
+	//calculateMovement(); //revamp movement
 	calculateCollision(references);
 	velocity[0] += deltaVelocity[0];
 	velocity[1] += deltaVelocity[1];
@@ -49,9 +51,6 @@ void Model::calculateLocation(std::vector<std::shared_ptr<Model>> references) { 
 		velocity[1] = 0;
 	pos[0] += velocity[0];
 	pos[1] += velocity[1];
-	pos[0] += movementVec[0];
-	pos[1] += movementVec[1];
-	std::cout << movementVec[0] << " " << movementVec[1] << std::endl;
 	vertexData->move(pos[0], pos[1]);
 }
 

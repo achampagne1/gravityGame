@@ -26,20 +26,43 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     std::string jsonString;
     jsonString = file->load(modelPath).str();
     json jf = json::parse(jsonString);
-    indicesSize = jf["indices"].size();
-    verticesSize = jf["vertices"].size();
-    vertices = new float[verticesSize * 8];
-    verticesUpdated = new float[verticesSize * 8];
-    indices = new int[indicesSize];
-    for (int i = 0; i < verticesSize; i++) {
-        vertices[i] = jf["vertices"][i];
-        verticesUpdated[i] = vertices[i];
-    }
-    for (int i = 0; i < indicesSize; i++)
-        indices[i] = jf["indices"][i];
 
-    computeAverage(vertices, verticesSize / 8);
-    conversion->format(vertices, verticesSize);
+    indicesSizeTexture = jf["textureIndices"].size();
+    verticesSizeTexture = jf["textureVertices"].size();
+    indicesSizeCollision = jf["collisionIndices"].size();
+    verticesSizeCollision = jf["collisionVertices"].size();
+    verticesTexture = new float[verticesSizeTexture * 8];
+    verticesCollision = new float[verticesSizeCollision * 8];
+    verticesCollisionUpdated = new float[verticesSizeCollision * 8];
+
+    indicesTexture = new int[indicesSizeTexture];
+    indicesCollision = new int[indicesSizeCollision];
+
+    for (int i = 0; i < verticesSizeTexture; i++) {  //responsible for just the texture vertices
+        verticesTexture[i] = jf["textureVertices"][i];
+        std::cout << verticesTexture[i] << " ";
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < indicesSizeTexture; i++) { // responsible for just the texture indices
+        indicesTexture[i] = jf["textureIndices"][i];
+        std::cout << indicesTexture[i] << " ";
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < verticesSizeCollision; i++) {  //responsible for just the collision vertices
+        verticesCollision[i] = jf["collisionVertices"][i];
+        verticesCollisionUpdated[i] = verticesCollision[i];
+    }
+    for (int i = 0; i < indicesSizeCollision; i++) { // responsible for just the collision indices
+        indicesCollision[i] = jf["collisionIndices"][i];
+    }
+
+    computeAverage(verticesCollision, verticesSizeCollision / 8); //you only need to compute the average for the collision model
+    conversion->format(verticesTexture, verticesSizeTexture);
+    conversion->format(verticesCollision, verticesSizeCollision);
+    for (int i = 0; i < verticesSizeTexture; i++) {  //responsible for just the texture vertices
+        std::cout << verticesTexture[i] << " ";
+    }
+    std::cout << std::endl;
 
     std::string texturePathString = to_string(jf["texturePath"]);
     texturePathString.erase(0, 1);
@@ -52,7 +75,7 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, verticesSize * 8 * sizeof(float), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, verticesSizeTexture * 8 * sizeof(float), verticesTexture, GL_STATIC_DRAW);
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -60,7 +83,7 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize * 4, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeTexture * 4, indicesTexture, GL_STATIC_DRAW);
     //texture
     glBindTexture(GL_TEXTURE_2D, texture);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
@@ -83,7 +106,7 @@ void VertexData::render() {
 
     glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indicesSizeTexture, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
@@ -132,12 +155,13 @@ void VertexData::computeAverage(float model[], int size) {
     }
     xAvgModel /= size;
     yAvgModel /= size;
+    std::cout << xAvgModel << " " << yAvgModel << std::endl;
 }
 
 void VertexData::moveVertices(float x, float y) {
-    for (int i = 0; i < verticesSize / 8; i++) {
-        verticesUpdated[i*8] = vertices[i*8] + x;
-        verticesUpdated[i*8 + 1] = vertices[i*8 + 1] + y;
+    for (int i = 0; i < verticesSizeCollision / 8; i++) {
+        verticesCollisionUpdated[i*8] = verticesCollision[i*8] + x;
+        verticesCollisionUpdated[i*8 + 1] = verticesCollision[i*8 + 1] + y;
     }
 }
 

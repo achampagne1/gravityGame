@@ -13,16 +13,16 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 	float v1[2];
 	float v2[2];
 	float v3[2];
-	for (int i = 0; i < model->verticesSize; i+=8) {
-		pt[0] = model->verticesUpdated[i]; //gives point that we are checking if is inside of a shape
-		pt[1] = model->verticesUpdated[i + 1];
-		for (int j = 0; j < chosenPoint->indicesSize; j+=3) {
-			v1[0] = chosenPoint->verticesUpdated[chosenPoint->indices[j]*8];
-			v2[0] = chosenPoint->verticesUpdated[chosenPoint->indices[j+1]*8];
-			v3[0] = chosenPoint->verticesUpdated[chosenPoint->indices[j+2]*8];
-			v1[1] = chosenPoint->verticesUpdated[chosenPoint->indices[j]*8 + 1];
-			v2[1] = chosenPoint->verticesUpdated[chosenPoint->indices[j + 1]*8 + 1];
-			v3[1] = chosenPoint->verticesUpdated[chosenPoint->indices[j + 2]*8 + 1];
+	for (int i = 0; i < model->verticesSizeCollision; i+=8) {
+		pt[0] = model->verticesCollisionUpdated[i]; //gives point that we are checking if is inside of a shape
+		pt[1] = model->verticesCollisionUpdated[i + 1];
+		for (int j = 0; j < chosenPoint->indicesSizeCollision; j+=3) {
+			v1[0] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j]*8];
+			v2[0] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j+1]*8];
+			v3[0] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j+2]*8];
+			v1[1] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j]*8 + 1];
+			v2[1] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j + 1]*8 + 1];
+			v3[1] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j + 2]*8 + 1];
 			collide = pointInTri(pt, v1, v2, v3);
 			if (collide) {
 				std::cout << "bam!" << std::endl;
@@ -42,7 +42,7 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 		//std::cout <<glm::to_string(direction )<<" ("<<velocity[0]<<","<<velocity[1]<<")"<< std::endl;
 		//std::cout << angle << " " << angleV << std::endl;
 		double magV = sqrt(pow(velocity[0], 2) + pow(velocity[1], 2));
-		if (abs(angle) / abs(angleV) <= 2 && abs(angle) / abs(angleV) >= 0) //threshhold for the angle
+		if (abs(angle) / abs(angleV) <= 1.2 && abs(angle) / abs(angleV) >= .8) //threshhold for the angle
 			angle = angleV;
 		return glm::vec2(magV * cos(angle), magV * sin(angle));
 		//it bounces, why. The velocity is not fully counteracted by the normal force causing the bounce.

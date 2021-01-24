@@ -9,7 +9,7 @@ glm::vec2 GravityEngine::getDeltaVelocity(float avgCoor[2], std::vector<std::sha
 }
 
 glm::vec2 GravityEngine::calculateDeltaVelocity(float avgCoor[2], std::vector<std::shared_ptr<VertexData>> references) {
-    float bigG = 10;
+    float bigG = .3; //for some reason, gravity got much stronger, so I had to back down bigG a lot
     glm::vec2 forceVec = glm::vec2(0, 0);
     for (int i = 0; i < references.size(); i++) {
         float forceLocal;

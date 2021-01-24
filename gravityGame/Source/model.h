@@ -14,7 +14,7 @@ class Model{
 		float pos[2] = { 0,0 };
 		float velocity[2] = { 0,0 };
 		glm::vec2 deltaVelocity;
-		glm::vec2 movementVec;
+		glm::vec2 movementVec = glm::vec2(0,0);
 
 		std::shared_ptr<VertexData> getVertexDataPointer();
 	public: 

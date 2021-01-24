@@ -47,9 +47,15 @@ public:
 	void moveVertices(float x, float y);
 	void destroy();
 
-	int indicesSize = 0;
-	int verticesSize = 0;
-	float* vertices;
-	float* verticesUpdated;
-	int* indices;
+	int indicesSizeTexture = 0;
+	int verticesSizeTexture = 0;
+	int indicesSizeCollision = 0;
+	int verticesSizeCollision= 0;
+
+	float* verticesTexture;
+	float* verticesCollision;
+	float* verticesCollisionUpdated;
+
+	int* indicesTexture;
+	int* indicesCollision;
 };

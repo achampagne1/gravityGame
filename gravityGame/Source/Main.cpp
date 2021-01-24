@@ -32,8 +32,8 @@ double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 float velocit[2] = { 0,0 };
 float velocit2[2] = { 0,0 };
-float pos[2] = { 300,400 };
-float pos2[2] = { 70,-200 };
+float pos[2] = {400,400 };
+float pos2[2] = { 50,-200 };
 float pos3[2] = { 200,100 };
 
 int main(void)
