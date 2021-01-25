@@ -15,6 +15,7 @@ glm::vec2 GravityEngine::calculateDeltaVelocity(float avgCoor[2], std::vector<st
         float forceLocal;
         float seperationX = references.at(i)->getAvgX() - avgCoor[0];
         float seperationY = references.at(i)->getAvgY() - avgCoor[1];
+        std::cout << avgCoor[0]<< std::endl;
         float seperation = sqrt(pow(seperationX, 2) + pow(seperationY, 2));
         glm::vec2 coor;
         if (seperation != 0)
@@ -23,7 +24,6 @@ glm::vec2 GravityEngine::calculateDeltaVelocity(float avgCoor[2], std::vector<st
             forceLocal = (bigG * references.at(i)->getGravity());
 
         coor = glm::normalize(glm::vec2(seperationX, seperationY));
-
         coor[0] = (coor[0] * forceLocal);
         coor[1] = (coor[1] * forceLocal);
         forceVec += coor;

@@ -32,15 +32,15 @@ double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 float velocit[2] = { 0,0 };
 float velocit2[2] = { 0,0 };
-float pos[2] = {400,400 };
-float pos2[2] = { 50,-200 };
-float pos3[2] = { 200,100 };
+float pos[2] = {300,220 };
+float pos2[2] = { 70,-600 };
+float pos3[2] = { 115,100 };
 
 int main(void)
 {
     initWindow();
     onStartUp();
-    createModel("models/spaceman.json", pos[0], pos[1],velocit, 1, 0);
+    createModel("models/spaceman.json", pos[0], pos[1],velocit, 100, 0);
     createModel("models/planet1.json",pos2[0],pos2[1],velocit2,100, 1); //optimize to see if res40 is too much
     //createModel("models/circleRes40Rad100.json",pos3[0], pos3[1], 100, 1); //optimize to see if res40 is too much
     movementEnginePtr = models.at(0)->getMovementPointer(); //gets movement pointer from the player which is the first object in the models vector
@@ -91,8 +91,8 @@ void render() {
 void update() {
     
     std::vector<std::shared_ptr<Model>> references;
-    references.push_back(models.at(1));
-    models.at(0)->calculateLocation(references);
+    references.push_back(models.at(0));
+    models.at(1)->calculateLocation(references);
 }
 
 void initWindow() {

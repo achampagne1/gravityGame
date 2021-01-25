@@ -116,6 +116,7 @@ void VertexData::move(float x, float y) {
     float coor[2] = { x,y };
     xAvgGlobal = x + xAvgModel;
     yAvgGlobal = y + yAvgModel;
+    std::cout <<"move"<< xAvgGlobal << " " << yAvgGlobal<< std::endl;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     moveVertices(coor[0], coor[1]);
@@ -155,7 +156,6 @@ void VertexData::computeAverage(float model[], int size) {
     }
     xAvgModel /= size;
     yAvgModel /= size;
-    std::cout << xAvgModel << " " << yAvgModel << std::endl;
 }
 
 void VertexData::moveVertices(float x, float y) {

@@ -18,7 +18,8 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	for (int i = 0; i < references.size(); i++) {
 		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
 	}
-	deltaVelocity+= gravityEngine->getDeltaVelocity(pos, referencesRaw);
+	float avgCoor[2] = { vertexData->getAvgX(),vertexData->getAvgY() };
+	deltaVelocity+= gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
 	movementEngine->setGravityForceVec(deltaVelocity);
 }
 
