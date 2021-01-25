@@ -165,6 +165,7 @@
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="Source\collisionEngine.h" />
     <ClInclude Include="Source\convertToFloat.h" />
+    <ClInclude Include="Source\delay.h" />
     <ClInclude Include="Source\gravityEngine.h" />
     <ClInclude Include="Source\loadFile.h" />
     <ClInclude Include="Source\model.h" />

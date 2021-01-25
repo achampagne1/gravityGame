@@ -24,7 +24,8 @@ class Model{
 		void calculateCollision(std::vector<std::shared_ptr<Model>> references);
 		std::shared_ptr<MovementEngine> getMovementPointer();
 		void calculateMovement();
-		void calculateLocation(std::vector<std::shared_ptr<Model>> references);
+		float* calculateLocation(std::vector<std::shared_ptr<Model>> references);
+		void move(float newPos[2]);
 		void render();
 		void destroy();
 };

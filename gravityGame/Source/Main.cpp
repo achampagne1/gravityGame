@@ -4,7 +4,7 @@
 #include "model.h"
 #include <iostream>
 #include <vector> 
-#include <time.h>
+#include "delay.h"
 
 
 //function prototypes
@@ -20,6 +20,7 @@ void createModel(std::string modelPath, int x, int y,float v[2], float gravity, 
 
 //object declerations
 GLFWwindow* window;
+std::shared_ptr<Delay> delay;
 
 
 //variables
@@ -42,7 +43,6 @@ int main(void)
     onStartUp();
     createModel("models/spaceman.json", pos[0], pos[1],velocit, 100, 0);
     createModel("models/planet1.json",pos2[0],pos2[1],velocit2,100, 1); //optimize to see if res40 is too much
-    //createModel("models/circleRes40Rad100.json",pos3[0], pos3[1], 100, 1); //optimize to see if res40 is too much
     movementEnginePtr = models.at(0)->getMovementPointer(); //gets movement pointer from the player which is the first object in the models vector
     while (!glfwWindowShouldClose(window))
     {
@@ -91,8 +91,10 @@ void render() {
 void update() {
     
     std::vector<std::shared_ptr<Model>> references;
-    references.push_back(models.at(0));
-    models.at(1)->calculateLocation(references);
+    references.push_back(models.at(1));
+    float* newOffset = models.at(0)->calculateLocation(references);
+    for (int i = 0; i < references.size(); i++)
+        references.at(i)->move(newOffset);
 }
 
 void initWindow() {

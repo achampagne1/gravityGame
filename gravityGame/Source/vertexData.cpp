@@ -59,10 +59,6 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     computeAverage(verticesCollision, verticesSizeCollision / 8); //you only need to compute the average for the collision model
     conversion->format(verticesTexture, verticesSizeTexture);
     conversion->format(verticesCollision, verticesSizeCollision);
-    for (int i = 0; i < verticesSizeTexture; i++) {  //responsible for just the texture vertices
-        std::cout << verticesTexture[i] << " ";
-    }
-    std::cout << std::endl;
 
     std::string texturePathString = to_string(jf["texturePath"]);
     texturePathString.erase(0, 1);
@@ -116,7 +112,6 @@ void VertexData::move(float x, float y) {
     float coor[2] = { x,y };
     xAvgGlobal = x + xAvgModel;
     yAvgGlobal = y + yAvgModel;
-    std::cout <<"move"<< xAvgGlobal << " " << yAvgGlobal<< std::endl;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     moveVertices(coor[0], coor[1]);

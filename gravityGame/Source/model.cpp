@@ -40,7 +40,7 @@ void Model::calculateMovement() {
 	//deltaVelocity += movementVec;
 }
 
-void Model::calculateLocation(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the new location of the object 
+float* Model::calculateLocation(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the new location of the object 
 	calculateGravity(references);
 	//calculateMovement(); //revamp movement
 	calculateCollision(references);
@@ -50,8 +50,14 @@ void Model::calculateLocation(std::vector<std::shared_ptr<Model>> references) { 
 		velocity[0] = 0;
 	if (abs(velocity[1]) < .001)
 		velocity[1] = 0;
-	pos[0] += velocity[0];
-	pos[1] += velocity[1];
+	//pos[0] -= velocity[0];
+	//pos[1] -= velocity[1];
+	return velocity;
+}
+
+void Model::move(float v[2]) {
+	pos[0] -= v[0];
+	pos[1] -= v[1];
 	vertexData->move(pos[0], pos[1]);
 }
 
