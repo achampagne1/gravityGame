@@ -14,20 +14,14 @@ Model::Model(const char* modelPath, int windowSize[2], float pos[2], float veloc
 }
 
 void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
-	std::vector<std::shared_ptr<VertexData>> referencesRaw;
-	for (int i = 0; i < references.size(); i++) {
-		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
-	}
+	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
 	float avgCoor[2] = { vertexData->getAvgX(),vertexData->getAvgY() };
-	deltaVelocity+= gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
+	deltaVelocity= gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
 	movementEngine->setGravityForceVec(deltaVelocity);
 }
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
-	std::vector<std::shared_ptr<VertexData>> referencesRaw;
-	for (int i = 0; i < references.size(); i++) {
-		referencesRaw.push_back(references.at(i)->getVertexDataPointer());
-	}
+	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
 	glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData, referencesRaw, velocity);
 	if (collisionEngine->getCollision()) {
 		deltaVelocity = deltaVelocityTemp;
@@ -40,25 +34,34 @@ void Model::calculateMovement() {
 	//deltaVelocity += movementVec;
 }
 
-float* Model::calculateLocation(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the new location of the object 
+float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
+	//this velocity can be used to move either the object, or offset everything else.
 	calculateGravity(references);
 	//calculateMovement(); //revamp movement
 	calculateCollision(references);
 	velocity[0] += deltaVelocity[0];
+	std::cout <<"before"<<deltaVelocity[1]<<" "<< velocity[1] << std::endl;
 	velocity[1] += deltaVelocity[1];
-	if (abs(velocity[0]) < .001) //threshold to 0 out
+	std::cout <<"after"<<deltaVelocity[1]<<" "<< velocity[1] << std::endl;
+	if (abs(velocity[0]) < .00001) //threshold to 0 out
 		velocity[0] = 0;
-	if (abs(velocity[1]) < .001)
+	if (abs(velocity[1]) < .00001)
 		velocity[1] = 0;
-	//pos[0] -= velocity[0];
-	//pos[1] -= velocity[1];
 	return velocity;
 }
 
 void Model::move(float v[2]) {
-	pos[0] -= v[0];
-	pos[1] -= v[1];
+	pos[0] += v[0];
+	pos[1] += v[1];
 	vertexData->move(pos[0], pos[1]);
+}
+
+std::vector<std::shared_ptr<VertexData>> Model::toVertexData(std::vector<std::shared_ptr<Model>> input) {
+	std::vector<std::shared_ptr<VertexData>> referencesRaw;
+	for (int i = 0; i < input.size(); i++) {
+		referencesRaw.push_back(input.at(i)->getVertexDataPointer());
+	}
+	return referencesRaw;
 }
 
 std::shared_ptr<VertexData> Model::getVertexDataPointer() {

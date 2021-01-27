@@ -93,6 +93,7 @@
     <None Include="models\circleRes3Rad100.json" />
     <None Include="models\spaceman.json" />
     <None Include="models\planet1.json" />
+    <None Include="models\sky.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\spaceman.png">
@@ -102,6 +103,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="textures\planet1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\sky.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -33,16 +33,21 @@ double deltaTime = 0, nowTime = 0;
 int frames = 0, updates = 0;
 float velocit[2] = { 0,0 };
 float velocit2[2] = { 0,0 };
-float pos[2] = {300,220 };
-float pos2[2] = { 70,-600 };
-float pos3[2] = { 115,100 };
+float velocit3[2] = { 0,0 };
+float velocit4[2] = { 0,0 };
+float pos[2] = {380,220 };
+float pos2[2] = { 150,-400 };
+float pos3[2] = { 280,300 };
+bool run = false;
 
 int main(void)
 {
     initWindow();
     onStartUp();
-    createModel("models/spaceman.json", pos[0], pos[1],velocit, 100, 0);
-    createModel("models/planet1.json",pos2[0],pos2[1],velocit2,100, 1); //optimize to see if res40 is too much
+    createModel("models/sky.json", 0, 0, velocit4, 1, 0);
+    createModel("models/spaceman.json", pos[0], pos[1],velocit, 1, 0);
+    createModel("models/spacewoman.json", pos3[0], pos3[1], velocit3, 1, 0);
+    createModel("models/planet1.json",pos2[0],pos2[1],velocit2,10000, 1); //optimize to see if res40 is too much
     movementEnginePtr = models.at(0)->getMovementPointer(); //gets movement pointer from the player which is the first object in the models vector
     while (!glfwWindowShouldClose(window))
     {
@@ -75,7 +80,7 @@ void onStartUp() {
 }
 
 void createModel(std::string modelPath,int x,int y,float v[2], float gravity, int locked) {
-    int windowSize[2] = { 640,480 };
+    int windowSize[2] = { 800,460 };
     float coor[2] = { x,y };
     std::shared_ptr<Model> model{ new Model(modelPath.c_str(),windowSize,coor,v,gravity,locked) };
     models.push_back(model);
@@ -89,19 +94,27 @@ void render() {
 }
 
 void update() {
-    
-    std::vector<std::shared_ptr<Model>> references;
-    references.push_back(models.at(1));
-    float* newOffset = models.at(0)->calculateLocation(references);
-    for (int i = 0; i < references.size(); i++)
-        references.at(i)->move(newOffset);
+    if (run) {
+        std::vector<std::shared_ptr<Model>> references;
+        references.push_back(models.at(3));
+        float* newOffset = models.at(1)->calculateVelocity(references); //janky way of doing it, but this is for transfering the data in that array to a new array so the original array does not get modified
+        float newOffsetTemp[2] = { newOffset[0],newOffset[1] };
+        newOffsetTemp[0] = -newOffset[0];
+        newOffsetTemp[1] = -newOffset[1];
+
+        for (int i = 2; i < models.size(); i++)
+            models.at(i)->move(newOffsetTemp);
+
+        newOffset = models.at(2)->calculateVelocity(references);
+        models.at(2)->move(newOffset);
+    };
 }
 
 void initWindow() {
     if (!glfwInit())
         exit(EXIT_FAILURE);
 
-    window = glfwCreateWindow(640, 480, "Gravity Game", NULL, NULL);
+    window = glfwCreateWindow(800, 450, "Gravity Game", NULL, NULL);
 
     if (!window)
     {
@@ -127,6 +140,12 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+        if (run)
+            run = false;
+        else
+            run = true;
+    }
     if (key == GLFW_KEY_W && action == GLFW_PRESS) {
         
     }

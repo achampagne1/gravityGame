@@ -183,6 +183,7 @@
     <None Include="models\circleRes3Rad100.json" />
     <None Include="models\circleRes40Rad100.json" />
     <None Include="models\planet1.json" />
+    <None Include="models\sky.json" />
     <None Include="models\spaceman.json" />
     <None Include="models\snakeHead.md" />
     <None Include="models\square.json" />
@@ -192,6 +193,7 @@
   <ItemGroup>
     <Image Include="textures\awesomeface.png" />
     <Image Include="textures\planet1.png" />
+    <Image Include="textures\sky.png" />
     <Image Include="textures\spaceman.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -14,7 +14,7 @@ class Model{
 		float pos[2] = { 0,0 };
 		float velocity[2] = { 0,0 };
 		glm::vec2 deltaVelocity;
-		glm::vec2 movementVec = glm::vec2(0,0);
+		glm::vec2 movementVec = glm::vec2(0, 0);
 
 		std::shared_ptr<VertexData> getVertexDataPointer();
 	public: 
@@ -24,7 +24,8 @@ class Model{
 		void calculateCollision(std::vector<std::shared_ptr<Model>> references);
 		std::shared_ptr<MovementEngine> getMovementPointer();
 		void calculateMovement();
-		float* calculateLocation(std::vector<std::shared_ptr<Model>> references);
+		float* calculateVelocity(std::vector<std::shared_ptr<Model>> references);
+		std::vector<std::shared_ptr<VertexData>> toVertexData(std::vector<std::shared_ptr<Model>> input);
 		void move(float newPos[2]);
 		void render();
 		void destroy();

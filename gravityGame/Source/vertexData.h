@@ -33,12 +33,9 @@ private:
 	glm::mat4 trans = glm::mat4(1.0f);
 public:
 	VertexData();
-	VertexData(const VertexData& data);
 	void generateObject(const char* modelPath, int width, int height, float gravity, int locked);
 	void render();
 	void move(float x, float y);
-	int getX();
-	int getY();
 	float getAvgX();
 	float getAvgY();
 	float getGravity();

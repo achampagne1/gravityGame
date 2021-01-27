@@ -1,18 +1,7 @@
 #include "vertexData.h"
 
-//TODO: seperate the collison box from the texture models
-
 VertexData::VertexData() {
 
-}
-
-VertexData::VertexData(const VertexData& data) {
-    VAO = data.VAO;
-    VBO = data.VBO;
-    EBO = data.EBO;
-    width = data.width;
-    height = data.height;
-    trans = data.trans;
 }
 
 void VertexData::generateObject(const char* modelPath, int width, int height, float gravity, int locked) {
@@ -40,14 +29,10 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
 
     for (int i = 0; i < verticesSizeTexture; i++) {  //responsible for just the texture vertices
         verticesTexture[i] = jf["textureVertices"][i];
-        std::cout << verticesTexture[i] << " ";
     }
-    std::cout << std::endl;
     for (int i = 0; i < indicesSizeTexture; i++) { // responsible for just the texture indices
         indicesTexture[i] = jf["textureIndices"][i];
-        std::cout << indicesTexture[i] << " ";
     }
-    std::cout << std::endl;
     for (int i = 0; i < verticesSizeCollision; i++) {  //responsible for just the collision vertices
         verticesCollision[i] = jf["collisionVertices"][i];
         verticesCollisionUpdated[i] = verticesCollision[i];
@@ -118,14 +103,6 @@ void VertexData::move(float x, float y) {
     glm::mat4 temp = glm::mat4(1.0f);
     temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
     trans = temp;
-}
-
-int VertexData::getX() {
-    return x;
-}
-
-int VertexData::getY() {
-    return y;
 }
 
 float VertexData::getAvgX() {
