@@ -17,32 +17,32 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
 	float avgCoor[2] = { vertexData->getAvgX(),vertexData->getAvgY() };
 	deltaVelocity= gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
-	movementEngine->setGravityForceVec(deltaVelocity);
+	movementEngine->setGravityForceVec(gravityEngine->getDirection());
 }
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
-	glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData, referencesRaw, velocity);
+	float temp[2] ={ velocity[0] + deltaVelocity[0],velocity[1] + deltaVelocity[1] };
+	glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData, referencesRaw, temp);
 	if (collisionEngine->getCollision()) {
-		deltaVelocity = deltaVelocityTemp;
+		deltaVelocity += deltaVelocityTemp;
 	}
 }
 
 void Model::calculateMovement() {
-	//deltaVelocity -= movementVec;
-	deltaVelocity = movementEngine->calculateMovement();
-	//deltaVelocity += movementVec;
+	deltaVelocity -= movementVec;
+	movementVec = movementEngine->calculateMovement();
+	deltaVelocity += movementVec;
 }
 
 float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
 	//this velocity can be used to move either the object, or offset everything else.
 	calculateGravity(references);
-	//calculateMovement(); //revamp movement
+	calculateMovement();
 	calculateCollision(references);
+	std::cout << velocity[0] << " " << deltaVelocity[0] << std::endl;
 	velocity[0] += deltaVelocity[0];
-	std::cout <<"before"<<deltaVelocity[1]<<" "<< velocity[1] << std::endl;
 	velocity[1] += deltaVelocity[1];
-	std::cout <<"after"<<deltaVelocity[1]<<" "<< velocity[1] << std::endl;
 	if (abs(velocity[0]) < .00001) //threshold to 0 out
 		velocity[0] = 0;
 	if (abs(velocity[1]) < .00001)
@@ -54,6 +54,10 @@ void Model::move(float v[2]) {
 	pos[0] += v[0];
 	pos[1] += v[1];
 	vertexData->move(pos[0], pos[1]);
+}
+
+void Model::rotate(glm::vec2 direction) {
+	vertexData->rotate(direction);
 }
 
 std::vector<std::shared_ptr<VertexData>> Model::toVertexData(std::vector<std::shared_ptr<Model>> input) {

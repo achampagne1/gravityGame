@@ -27,6 +27,7 @@ class Model{
 		float* calculateVelocity(std::vector<std::shared_ptr<Model>> references);
 		std::vector<std::shared_ptr<VertexData>> toVertexData(std::vector<std::shared_ptr<Model>> input);
 		void move(float newPos[2]);
+		void rotate(glm::vec2 direction);
 		void render();
 		void destroy();
 };

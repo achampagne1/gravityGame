@@ -4,7 +4,7 @@ MovementEngine::MovementEngine() {
 
 }
 glm::vec2 MovementEngine:: calculateMovement() {
-	float speed =2;
+	float speed =3;
 	if (direction == 1)
 		return glm::vec2(speed * cos(angle), speed * sin(angle));
 	if (direction == 3)

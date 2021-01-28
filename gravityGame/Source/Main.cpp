@@ -36,7 +36,7 @@ float velocit2[2] = { 0,0 };
 float velocit3[2] = { 0,0 };
 float velocit4[2] = { 0,0 };
 float pos[2] = {380,220 };
-float pos2[2] = { 150,-400 };
+float pos2[2] = { -300,0 };
 float pos3[2] = { 280,300 };
 bool run = false;
 
@@ -48,7 +48,7 @@ int main(void)
     createModel("models/spaceman.json", pos[0], pos[1],velocit, 1, 0);
     createModel("models/spacewoman.json", pos3[0], pos3[1], velocit3, 1, 0);
     createModel("models/planet1.json",pos2[0],pos2[1],velocit2,10000, 1); //optimize to see if res40 is too much
-    movementEnginePtr = models.at(0)->getMovementPointer(); //gets movement pointer from the player which is the first object in the models vector
+    movementEnginePtr = models.at(1)->getMovementPointer(); //gets movement pointer from the player which is the first object in the models vector
     while (!glfwWindowShouldClose(window))
     {
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -102,8 +102,11 @@ void update() {
         newOffsetTemp[0] = -newOffset[0];
         newOffsetTemp[1] = -newOffset[1];
 
-        for (int i = 2; i < models.size(); i++)
+        for (int i = 2; i < models.size(); i++) {
+            models.at(i)->rotate(glm::vec2(0, 1));
             models.at(i)->move(newOffsetTemp);
+            //things need to be rotated as well
+        }
 
         newOffset = models.at(2)->calculateVelocity(references);
         models.at(2)->move(newOffset);

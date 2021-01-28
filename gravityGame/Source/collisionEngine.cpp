@@ -37,20 +37,29 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 	breakOut:
 
 	if (collide) {
+		float disX = model->getAvgX() - chosenPoint->getAvgX();
+		float disY = model->getAvgY() - chosenPoint->getAvgY();
+		float magV = sqrt(pow(velocity[0], 2) + pow(velocity[1], 2));
+		glm::vec2 normalVec = glm::normalize(glm::vec2(disX, disY));
+		normalVec *= magV;
+		return normalVec;
+	}
+	return glm::vec2(0, 0);
+	/* //more complicated collision
+	if (collide) {
 		double angle = atan2(direction.y, direction.x);
 		double angleV = atan2(-velocity[1], -velocity[0]);
-		//std::cout <<glm::to_string(direction )<<" ("<<velocity[0]<<","<<velocity[1]<<")"<< std::endl;
-		//std::cout << angle << " " << angleV << std::endl;
 		double magV = sqrt(pow(velocity[0], 2) + pow(velocity[1], 2));
-		if (abs(angle) / abs(angleV) <= 1.2 && abs(angle) / abs(angleV) >= .8) //threshhold for the angle
+		if (abs(angle) / abs(angleV) <= 2 && abs(angle) / abs(angleV) >= 0) //threshhold for the angle
 			angle = angleV;
 		return glm::vec2(magV * cos(angle), magV * sin(angle));
 		//it bounces, why. The velocity is not fully counteracted by the normal force causing the bounce.
 		//comne back to
+		//this is a mess and need to be redone
 	}
 
 	return glm::vec2(0, 0);
-	//NOTE: might need to check the other way
+	//NOTE: might need to check the other way */
 }
 
 bool CollisionEngine::getCollision() {
