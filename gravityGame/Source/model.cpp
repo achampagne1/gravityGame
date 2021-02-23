@@ -17,7 +17,8 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
 	float avgCoor[2] = { vertexData->getAvgX(),vertexData->getAvgY() };
 	deltaVelocity= gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
-	movementEngine->setGravityForceVec(gravityEngine->getDirection());
+	gravityDirection = gravityEngine->getDirection();
+	movementEngine->setGravityForceVec(gravityDirection);
 }
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
@@ -50,9 +51,15 @@ float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) 
 	return velocity;
 }
 
-void Model::move(float v[2]) {
-	pos[0] += v[0];
-	pos[1] += v[1];
+void Model::moveWithVelocity(float newV[2]) {
+	pos[0] += newV[0];
+	pos[1] += newV[1];
+	vertexData->move(pos[0], pos[1]);
+}
+
+void Model::moveWithPosition(float newPos[2]) {
+	pos[0] = newPos[0];
+	pos[1] = newPos[1];
 	vertexData->move(pos[0], pos[1]);
 }
 
@@ -75,6 +82,12 @@ std::shared_ptr<VertexData> Model::getVertexDataPointer() {
 std::shared_ptr<MovementEngine> Model::getMovementPointer() {
 	return movementEngine;
 }
+
+glm::vec2 Model::getGravityDirection(std::vector<std::shared_ptr<Model>> references) {
+	calculateGravity(references);
+	return gravityDirection;
+}
+
 
 void Model::render() {
 	vertexData->render();

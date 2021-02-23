@@ -102,7 +102,7 @@ void VertexData::move(float x, float y) {
     moveVertices(coor[0], coor[1]);
     glm::mat4 temp = glm::mat4(1.0f);
     temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
-    temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+    //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
     trans = temp;
 }
 

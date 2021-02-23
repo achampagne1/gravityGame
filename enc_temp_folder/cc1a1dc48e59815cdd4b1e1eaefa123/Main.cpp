@@ -133,7 +133,7 @@ void adjustDownward() {
         std::cout << angle2 << " " << magnitude << std::endl;
         angle2 -= angleDifference;
         float newPos[2] = { magnitude * cos(angle2),magnitude * sin(angle2) };
-        std::cout << newPos[0] << " " << newPos[1] << std::endl; //is the movement not taking into accoutn the size?
+        std::cout << newPos[0] << " " << newPos[1] << std::endl;
         //models.at(i)->moveWithPosition(newPos);
 
     }

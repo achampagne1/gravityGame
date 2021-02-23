@@ -15,18 +15,21 @@ class Model{
 		float velocity[2] = { 0,0 };
 		glm::vec2 deltaVelocity;
 		glm::vec2 movementVec = glm::vec2(0, 0);
+		glm::vec2 gravityDirection = glm::vec2(0, 0);
 
-		std::shared_ptr<VertexData> getVertexDataPointer();
 	public: 
 		Model();
 		Model(const char* modelPath,int windowSize[2], float pos[2], float velocity[2], float gravity, int locked);
 		void calculateGravity(std::vector<std::shared_ptr<Model>> references);
 		void calculateCollision(std::vector<std::shared_ptr<Model>> references);
 		std::shared_ptr<MovementEngine> getMovementPointer();
+		glm::vec2 getGravityDirection(std::vector<std::shared_ptr<Model>> references);
 		void calculateMovement();
 		float* calculateVelocity(std::vector<std::shared_ptr<Model>> references);
 		std::vector<std::shared_ptr<VertexData>> toVertexData(std::vector<std::shared_ptr<Model>> input);
-		void move(float newPos[2]);
+		std::shared_ptr<VertexData> getVertexDataPointer();
+		void moveWithVelocity(float newV[2]);
+		void moveWithPosition(float newPos[2]);
 		void rotate(glm::vec2 direction);
 		void render();
 		void destroy();
