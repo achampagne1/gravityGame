@@ -19,7 +19,6 @@ void render();
 void onStartUp();
 void adjustDownwardOnStart();
 void adjustDownward();
-void stepFunc();
 void createModel(std::string modelPath, int x, int y,float v[2], float gravity, int locked);
 
 //object declerations
@@ -46,7 +45,7 @@ float pos2[2] = { -200,0 };
 float pos3[2] = { 350,300 };
 bool run = false;
 bool step = false;
-bool  stepMode = false;
+bool stepMode = false;
 
 int main(void)
 {
@@ -121,13 +120,8 @@ void update() {
         newOffset = models.at(2)->calculateVelocity(references);
         models.at(2)->moveWithVelocity(newOffset);
         //adjustDownward(); //need to fix
-        stepFunc();
-    };
-}
-
-void stepFunc() { // a small function for dev purposes
-    if (stepMode) 
         step = false;
+    };
 }
 
 void adjustDownwardOnStart() { //for only adjusting downward on stratup
@@ -188,7 +182,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GLFW_TRUE);
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    if (key == GLFW_KEY_C && action == GLFW_PRESS) {
         if (run)
             run = false;
         else
@@ -214,6 +208,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     }
     if (key == GLFW_KEY_D && action == GLFW_PRESS){
         movementEnginePtr->setDirection(3);
+    }
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+        movementEnginePtr->jump();
     }
     if (action == GLFW_RELEASE) {
         movementEnginePtr->setDirection(4);

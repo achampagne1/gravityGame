@@ -23,19 +23,17 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
-	//glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData, referencesRaw, velocity); //This colliison is temp
 	collisionEngine->calculateCollision(vertexData, referencesRaw, velocity);
 	if (collisionEngine->getCollision()) {
 		velocity[0] = 0;
 		velocity[1] = 0;
 		deltaVelocity[0] = 0;
 		deltaVelocity[1] = 0;
+		movementEngine->setGrounded(true);
 	}
 }
 
 void Model::calculateMovement() {
-	//velocity[0] -= movementVec[0]; //subtracts old movement velocity neeDeD for other collision
-	//velocity[1] -= movementVec[1]; 
 	movementVec = movementEngine->calculateMovement();
 	velocity[0] += movementVec[0]; //adds new movement velocity
 	velocity[1] += movementVec[1];
@@ -49,10 +47,6 @@ float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) 
 	calculateCollision(references);
 	calculateMovement();
 	std::cout << velocity[0] << " " << velocity[1] << std::endl;
-	//if (abs(velocity[0]) < .01) //threshold to 0 out
-	//	velocity[0] = 0;
-	//if (abs(velocity[1]) < .01)
-	//	velocity[1] = 0;
 	return velocity;
 }
 

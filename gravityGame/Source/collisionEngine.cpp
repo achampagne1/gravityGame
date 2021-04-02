@@ -25,7 +25,6 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 			v3[1] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j + 2]*8 + 1];
 			collide = pointInTri(pt, v1, v2, v3);
 			if (collide) {
-				std::cout << "bam!" << std::endl;
 				glm::vec2 dir = glm::vec2(v2[0] - v3[0], v2[1] - v3[1]);
 				direction = glm::normalize(glm::rotate(dir, glm::radians(-90.0f)));
 				goto breakOut;
