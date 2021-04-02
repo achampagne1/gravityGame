@@ -94,6 +94,7 @@
     <None Include="models\spaceman.json" />
     <None Include="models\planet1.json" />
     <None Include="models\sky.json" />
+    <None Include="models\spacewoman.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\spaceman.png">

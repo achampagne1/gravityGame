@@ -23,7 +23,7 @@ class Model{
 		void calculateGravity(std::vector<std::shared_ptr<Model>> references);
 		void calculateCollision(std::vector<std::shared_ptr<Model>> references);
 		std::shared_ptr<MovementEngine> getMovementPointer();
-		glm::vec2 getGravityDirection(std::vector<std::shared_ptr<Model>> references);
+		glm::vec2 getGravityDirection();
 		void calculateMovement();
 		float* calculateVelocity(std::vector<std::shared_ptr<Model>> references);
 		std::vector<std::shared_ptr<VertexData>> toVertexData(std::vector<std::shared_ptr<Model>> input);

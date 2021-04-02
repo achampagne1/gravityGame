@@ -114,6 +114,14 @@ float VertexData::getAvgY() {
     return yAvgGlobal;
 }
 
+float VertexData::getAvgXModel() {
+    return yAvgModel;
+}
+
+float VertexData::getAvgYModel() {
+    return xAvgModel;
+}
+
 float VertexData::getGravity() {
     return gravity;
 }

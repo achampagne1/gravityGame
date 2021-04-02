@@ -186,6 +186,7 @@
     <None Include="models\sky.json" />
     <None Include="models\spaceman.json" />
     <None Include="models\snakeHead.md" />
+    <None Include="models\spacewoman.json" />
     <None Include="models\square.json" />
     <None Include="Shaders\3.3.shader.fs" />
     <None Include="Shaders\3.3.shader.vs" />

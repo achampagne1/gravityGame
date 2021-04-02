@@ -16,6 +16,7 @@ void MovementEngine::setDirection(int direction) {
 	this->direction = direction;
 }
 void MovementEngine::setGravityForceVec(glm::vec2 direction) {
+	std::cout << glm::to_string(direction) << std::endl;
 	glm::vec2 rotatedVec = glm::rotate(direction, glm::radians(-90.0f));
 	angle = atan2(rotatedVec.y, rotatedVec.x);
 }

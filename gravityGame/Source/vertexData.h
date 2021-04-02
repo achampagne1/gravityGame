@@ -38,6 +38,8 @@ public:
 	void move(float x, float y);
 	float getAvgX();
 	float getAvgY();
+	float getAvgXModel();
+	float getAvgYModel();
 	float getGravity();
 	void rotate(glm::vec2 direction);
 	void computeAverage(float model[], int size);

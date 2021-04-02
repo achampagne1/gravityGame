@@ -23,31 +23,36 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
-	float temp[2] ={ velocity[0] + deltaVelocity[0],velocity[1] + deltaVelocity[1] };
-	glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData, referencesRaw, temp);
+	//glm::vec2 deltaVelocityTemp = collisionEngine->calculateCollision(vertexData, referencesRaw, velocity); //This colliison is temp
+	collisionEngine->calculateCollision(vertexData, referencesRaw, velocity);
 	if (collisionEngine->getCollision()) {
-		deltaVelocity += deltaVelocityTemp;
+		velocity[0] = 0;
+		velocity[1] = 0;
+		deltaVelocity[0] = 0;
+		deltaVelocity[1] = 0;
 	}
 }
 
 void Model::calculateMovement() {
-	deltaVelocity -= movementVec;
+	//velocity[0] -= movementVec[0]; //subtracts old movement velocity neeDeD for other collision
+	//velocity[1] -= movementVec[1]; 
 	movementVec = movementEngine->calculateMovement();
-	deltaVelocity += movementVec;
+	velocity[0] += movementVec[0]; //adds new movement velocity
+	velocity[1] += movementVec[1];
 }
 
 float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
 	//this velocity can be used to move either the object, or offset everything else.
 	calculateGravity(references);
-	calculateMovement();
-	calculateCollision(references);
-	std::cout << velocity[0] << " " << deltaVelocity[0] << std::endl;
 	velocity[0] += deltaVelocity[0];
 	velocity[1] += deltaVelocity[1];
-	if (abs(velocity[0]) < .00001) //threshold to 0 out
-		velocity[0] = 0;
-	if (abs(velocity[1]) < .00001)
-		velocity[1] = 0;
+	calculateCollision(references);
+	calculateMovement();
+	std::cout << velocity[0] << " " << velocity[1] << std::endl;
+	//if (abs(velocity[0]) < .01) //threshold to 0 out
+	//	velocity[0] = 0;
+	//if (abs(velocity[1]) < .01)
+	//	velocity[1] = 0;
 	return velocity;
 }
 
@@ -83,8 +88,7 @@ std::shared_ptr<MovementEngine> Model::getMovementPointer() {
 	return movementEngine;
 }
 
-glm::vec2 Model::getGravityDirection(std::vector<std::shared_ptr<Model>> references) {
-	calculateGravity(references);
+glm::vec2 Model::getGravityDirection() {
 	return gravityDirection;
 }
 
