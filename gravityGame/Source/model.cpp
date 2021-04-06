@@ -4,10 +4,12 @@ Model::Model() {
 
 }
 
-Model::Model(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], float gravity, int locked) {
+void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], float gravity, int locked) {
 	vertexData->generateObject(modelPath, windowSize[0], windowSize[1], gravity, locked);
 	this->pos[0] = pos[0];
 	this->pos[1] = pos[1];
+	respawnPoint[0] = pos[0];
+	respawnPoint[1] = pos[1];
 	this->velocity[0] = velocity[0];
 	this->velocity[1] = velocity[1];
 	vertexData->move(pos[0], pos[1]);
@@ -46,7 +48,6 @@ float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) 
 	velocity[1] += deltaVelocity[1];
 	calculateCollision(references);
 	calculateMovement();
-	std::cout << velocity[0] << " " << velocity[1] << std::endl;
 	return velocity;
 }
 
@@ -60,6 +61,10 @@ void Model::moveWithPosition(float newPos[2]) {
 	pos[0] = newPos[0];
 	pos[1] = newPos[1];
 	vertexData->move(pos[0], pos[1]);
+}
+
+void Model::respawn() {
+	moveWithPosition(respawnPoint);
 }
 
 void Model::rotate(glm::vec2 direction) {
@@ -85,7 +90,6 @@ std::shared_ptr<MovementEngine> Model::getMovementPointer() {
 glm::vec2 Model::getGravityDirection() {
 	return gravityDirection;
 }
-
 
 void Model::render() {
 	vertexData->render();

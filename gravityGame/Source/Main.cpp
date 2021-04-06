@@ -2,10 +2,10 @@
 #define STB_IMAGE_IMPLEMENTATION //needed for image loading 
 #define _USE_MATH_DEFINES
 #include "convertToFloat.h"
-#include "model.h"
 #include <iostream>
 #include <vector> 
 #include "delay.h"
+#include "map.h"
 
 
 //function prototypes
@@ -20,10 +20,6 @@ void onStartUp();
 void adjustDownwardOnStart();
 void adjustDownward();
 void createModel(std::string modelPath, int x, int y,float v[2], float gravity, int locked);
-
-//object declerations
-GLFWwindow* window;
-std::shared_ptr<Delay> delay;
 
 
 //variables
@@ -46,6 +42,11 @@ float pos3[2] = { 350,300 };
 bool run = false;
 bool step = false;
 bool stepMode = false;
+
+//object declerations
+GLFWwindow* window;
+std::shared_ptr<Delay> delay;
+std::shared_ptr<Map> map{ new Map("abc",screenWidth,screenHeight) };
 
 int main(void)
 {
@@ -90,7 +91,8 @@ void onStartUp() {
 void createModel(std::string modelPath,int x,int y,float v[2], float gravity, int locked) {
     int windowSize[2] = { screenWidth,screenHeight };
     float coor[2] = { x,y };
-    std::shared_ptr<Model> model{ new Model(modelPath.c_str(),windowSize,coor,v,gravity,locked) };
+    std::shared_ptr<Model> model{new Model};
+    model->generateModel(modelPath.c_str(), windowSize, coor, v, gravity, locked);
     models.push_back(model);
 }
 
@@ -148,7 +150,6 @@ void adjustDownward() { //adjusting downward for everything else
         angle2 -= angleDifference;
         float newPos[2] = { (magnitude * cos(angle2))+screenWidth/2-temp->getAvgXModel(),(magnitude * sin(angle2))+screenHeight/2-temp->getAvgYModel()};
         models.at(i)->moveWithPosition(newPos);
-
     }
 }
 

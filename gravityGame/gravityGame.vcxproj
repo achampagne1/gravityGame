@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\map.cpp" />
     <ClCompile Include="Source\collisionEngine.cpp" />
     <ClCompile Include="glad_src\gl.c" />
     <ClCompile Include="Source\convertToFloat.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\linmath.h" />
     <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="Source\map.h" />
     <ClInclude Include="Source\collisionEngine.h" />
     <ClInclude Include="Source\convertToFloat.h" />
     <ClInclude Include="Source\delay.h" />
