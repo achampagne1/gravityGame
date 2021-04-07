@@ -1,7 +1,7 @@
 #include "model.h"
 
 Model::Model() {
-
+	
 }
 
 void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], float gravity, int locked) {
