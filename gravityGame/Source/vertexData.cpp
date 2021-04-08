@@ -8,14 +8,13 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     using json = nlohmann::json;
     this->width = width;
     this->height = height;
-    this->gravity = gravity;
     int nrChannels;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
     std::unique_ptr<LoadFile> file{ new LoadFile() };
     std::string jsonString;
     jsonString = file->load(modelPath).str();
     json jf = json::parse(jsonString);
-
+    
     indicesSizeTexture = jf["textureIndices"].size();
     verticesSizeTexture = jf["textureVertices"].size();
     indicesSizeCollision = jf["collisionIndices"].size();
@@ -46,6 +45,7 @@ void VertexData::generateObject(const char* modelPath, int width, int height, fl
     conversion->format(verticesCollision, verticesSizeCollision);
 
     std::string texturePathString = to_string(jf["texturePath"]);
+    this->gravity = jf["gravity"];
     texturePathString.erase(0, 1);
     texturePathString.erase(texturePathString.size() - 1);
     //binds id

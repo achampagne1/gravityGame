@@ -13,6 +13,7 @@
 "texturePath": "textures/sky.png",
 
   "collisionVertices": [],
-  "collisionIndices": []
+  "collisionIndices": [],
 
+  "gravity":1 
 }

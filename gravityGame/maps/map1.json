@@ -1,0 +1,25 @@
+{
+	"models": [
+		{
+			"_comment": "sky is always first",
+			"path": "models/sky.json",
+			"coordinates": [ 0, 0 ]
+		},
+		{
+			"_comment": "the player is alwats second",
+			"path": "models/spaceman.json",
+			"coordinates": [ 380, 220 ]
+		},
+		{
+			"_comment": "everything else comes after",
+			"path": "models/spacewoman.json",
+			"coordinates": [ 350, 300 ]
+		},
+		{
+			"path": "models/planet1.json",
+			"coordinates": [ -200, 0 ]
+		}
+			
+	
+	]
+}

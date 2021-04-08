@@ -1,6 +1,7 @@
 #include "map.h"
 
-Map::Map(const char* modelPath, int width,int height) {
+Map::Map(const char* mapPath, int width,int height) {
+    this->mapPath = mapPath;
     windowSize[0] = width;
     windowSize[1] = height;
 }
@@ -18,14 +19,16 @@ void Map::createModel(std::string modelPath, int x, int y, float v[2], float gra
 
 void Map::createMap() {
     float velocit[2] = { 0,0 };
-    float pos[2] = { 380,220 };
-    float pos2[2] = { -200,0 };
-    float pos3[2] = { 350,300 };
-    createModel("models/sky.json", 0, 0, velocit, 1, 0);
-    createModel("models/spaceman.json", pos[0], pos[1], velocit, 1, 0);
-    createModel("models/spacewoman.json", pos3[0], pos3[1], velocit, 1, 0);
-    createModel("models/planet1.json", pos2[0], pos2[0], velocit, 10000, 1); //optimize to see if res40 is too much
-    adjustDownwardOnStart();
+    using json = nlohmann::json;
+    std::unique_ptr<LoadFile> fileLoader{ new LoadFile };
+    json jf = json::parse(fileLoader->load(mapPath).str());
+    for (int i = 0; i < jf["models"].size(); i++) {
+        std::string path = jf["models"][i]["path"];
+        int x = jf["models"][i]["coordinates"][0];
+        int y = jf["models"][i]["coordinates"][1];
+        createModel(path, x, y, velocit, 1, 0);
+    }
+    //adjustDownwardOnStart(); need to fix
 }
 
 void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup

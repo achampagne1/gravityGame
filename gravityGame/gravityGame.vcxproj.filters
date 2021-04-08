@@ -116,4 +116,7 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="maps\map1.json" />
+  </ItemGroup>
 </Project>

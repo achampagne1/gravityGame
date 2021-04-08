@@ -199,6 +199,9 @@
     <Image Include="textures\sky.png" />
     <Image Include="textures\spaceman.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="maps\map1.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
