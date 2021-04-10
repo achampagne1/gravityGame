@@ -86,33 +86,6 @@ void update() {
     };
 }
 
-/*void adjustDownwardOnStart() { //for only adjusting downward on stratup
-    std::vector<std::shared_ptr<Model>> references;
-    references.push_back(models.at(3)); // expand for other planets
-    models.at(1)->calculateGravity(references);
-    adjustDownward();
-}
-
-void adjustDownward() { //adjusting downward for everything else
-    glm::vec2 direction = models.at(1)->getGravityDirection();
-    float angleDown = atan2(-1,0); 
-    float angle = atan2(direction.y, direction.x); //gets the angle that everything needs to be rotated by
-    float angleDifference = angle - angleDown;
-    if (angleDifference < 0.0000001)
-        return;
-    std::shared_ptr<VertexData> player = models.at(1)->getVertexDataPointer(); //player vertex data
-    for (int i = 2; i < models.size(); i++) { //loops through all models
-        std::shared_ptr<VertexData> temp =models.at(i)->getVertexDataPointer(); //gets model vertex data
-        float xDiff = temp->getAvgX() - player->getAvgX();  //gets difference of x
-        float yDiff = temp->getAvgY() - player->getAvgY();  //gets difference of y
-        float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
-        float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
-        angle2 -= angleDifference;
-        float newPos[2] = { (magnitude * cos(angle2))+screenWidth/2-temp->getAvgXModel(),(magnitude * sin(angle2))+screenHeight/2-temp->getAvgYModel()};
-        models.at(i)->moveWithPosition(newPos);
-    }
-}*/
-
 void initWindow() {
     if (!glfwInit())
         exit(EXIT_FAILURE);

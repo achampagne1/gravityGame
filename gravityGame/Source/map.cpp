@@ -26,9 +26,14 @@ void Map::createMap() {
         std::string path = jf["models"][i]["path"];
         int x = jf["models"][i]["coordinates"][0];
         int y = jf["models"][i]["coordinates"][1];
+        velocit[0] = jf["models"][i]["velocity"][0];
+        velocit[1] = jf["models"][i]["velocity"][1];
         createModel(path, x, y, velocit, 1, 0);
     }
-    //adjustDownwardOnStart(); need to fix
+    for (int i = 0; i < jf["mapBounds"].size(); i++)
+        mapBounds[i] = jf["mapBounds"][i];
+
+    adjustDownwardOnStart();
 }
 
 void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
@@ -43,8 +48,7 @@ void Map::adjustDownward() { //adjusting downward for everything else
     float angleDown = atan2(-1, 0);
     float angle = atan2(direction.y, direction.x); //gets the angle that everything needs to be rotated by
     float angleDifference = angle - angleDown;
-    std::cout << angleDifference << std::endl;
-    if (abs(angleDifference) < 0.1)
+    if (abs(angleDifference) < 0.000001) //why does the guy jump
         return;
     std::shared_ptr<VertexData> player = models.at(1)->getVertexDataPointer(); //player vertex data
     for (int i = 2; i < models.size(); i++) { //loops through all models
@@ -53,9 +57,26 @@ void Map::adjustDownward() { //adjusting downward for everything else
         float yDiff = temp->getAvgY() - player->getAvgY();  //gets difference of y
         float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
         float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
+        std::cout << magnitude << std::endl;
         angle2 -= angleDifference;
-        float newPos[2] = { (magnitude * cos(angle2)) + windowSize[0] / 2 - temp->getAvgXModel(),(magnitude * sin(angle2)) + windowSize[0] / 2 - temp->getAvgYModel() };
+        float newPos[2] = { (magnitude * cos(angle2)) + windowSize[0] / 2 - temp->getAvgXModel(),(magnitude * sin(angle2)) + windowSize[1] / 2 - temp->getAvgYModel() };
         models.at(i)->moveWithPosition(newPos);
+    }
+}
+
+void Map::respawn() {
+    if (currentPlayerLocation[0]<mapBounds[0] || currentPlayerLocation[0] > mapBounds[1] || currentPlayerLocation[1]<mapBounds[2] || currentPlayerLocation[1] > mapBounds[3]) {
+        //I need to get a global coordinate system done before i do respawn
+        float newOffsetTemp[2] = { 0,-96 };
+        for (int i = 2; i < models.size(); i++) {
+            std::shared_ptr<VertexData> data = models.at(i)->getVertexDataPointer();
+            currentPlayerLocation[0] += data->getAvgX();
+            currentPlayerLocation[1] += data->getAvgY();
+            models.at(i)->rotate(glm::vec2(0, 1));
+            models.at(i)->moveWithPosition(newOffsetTemp);
+            //things need to be rotated as well
+        }
+        std::cout << "respawn" << std::endl;
     }
 }
 
@@ -69,8 +90,11 @@ void Map::updateMap() {
     references.push_back(models.at(3));
     float* newOffset = models.at(1)->calculateVelocity(references); //janky way of doing it, but this is for transfering the data in that array to a new array so the original array does not get modified
     float newOffsetTemp[2] = { newOffset[0],newOffset[1] };
-    newOffsetTemp[0] = -newOffset[0];
-    newOffsetTemp[1] = -newOffset[1];
+    currentPlayerLocation[0] += newOffsetTemp[0];
+    currentPlayerLocation[1] += newOffsetTemp[1];
+    newOffsetTemp[0] *= -1; //reverses the direction
+    newOffsetTemp[1] *= -1;
+    std::cout << currentPlayerLocation[0] << " " << currentPlayerLocation[1] << std::endl;
 
 
     for (int i = 2; i < models.size(); i++) {
@@ -79,6 +103,8 @@ void Map::updateMap() {
         //things need to be rotated as well
     }
 
+    //adjustDownward(); //adjusting downward works, but messes up because of collision makes you hop
+    respawn();
     newOffset = models.at(2)->calculateVelocity(references);
     models.at(2)->moveWithVelocity(newOffset);
 }

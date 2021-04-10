@@ -3,23 +3,28 @@
 		{
 			"_comment": "sky is always first",
 			"path": "models/sky.json",
-			"coordinates": [ 0, 0 ]
+			"coordinates": [ 0, 0 ],
+			"velocity": [ 0, 0 ]
 		},
 		{
-			"_comment": "the player is alwats second",
+			"_comment": "the player is always second",
 			"path": "models/spaceman.json",
-			"coordinates": [ 380, 220 ]
+			"coordinates": [ 380, 220 ],
+			"velocity": [ 0, 0 ]
 		},
 		{
 			"_comment": "everything else comes after",
 			"path": "models/spacewoman.json",
-			"coordinates": [ 350, 300 ]
+			"coordinates": [ 350, 300 ],
+			"velocity": [ 0, 0 ]
 		},
 		{
 			"path": "models/planet1.json",
-			"coordinates": [ -200, 0 ]
+			"coordinates": [ -200, 0 ],
+			"velocity": [ 0, 0 ]
 		}
-			
-	
-	]
+
+
+	],
+	"mapBounds": [-10,800,-800,800]
 }

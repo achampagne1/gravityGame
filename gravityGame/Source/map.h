@@ -6,7 +6,9 @@ class Map{
 	private:
 		std::vector<std::shared_ptr<Model>> models;
 		int windowSize[2];
+		int mapBounds[4] = { 0,0,0,0 };
 		const char* mapPath = "";
+		float currentPlayerLocation[2] = { 0,0 };
 
 	public:
 		Map(const char* mapPath, int width,int height);
@@ -16,6 +18,7 @@ class Map{
 		void createMap();
 		void adjustDownwardOnStart();
 		void adjustDownward();
+		void respawn();
 		void updateMap();
 		void destroyMap();
 };
