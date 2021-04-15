@@ -33,7 +33,23 @@ void Map::createMap() {
     for (int i = 0; i < jf["mapBounds"].size(); i++)
         mapBounds[i] = jf["mapBounds"][i];
 
+    centerMap();
     adjustDownwardOnStart();
+}
+
+void Map::centerMap() {
+    std::shared_ptr<VertexData> playerData = models.at(1)->getVertexDataPointer();
+    float offset[2] = { 0,0 };
+    offset[0] = 380-playerData->getAvgX();
+    offset[1] = 220 - playerData->getAvgY();
+    std::cout << models.size() << std::endl;
+    for (int i = 1; i < models.size(); i++) {
+        std::shared_ptr<VertexData> temp= models.at(i)->getVertexDataPointer();
+        float offsetOfModel[2] = { 0,0 };
+        offsetOfModel[0] = offset[0]+ playerData->getAvgX();
+        offsetOfModel[1] = offset[1]+ playerData->getAvgY();
+        models.at(i)->moveWithPosition(offsetOfModel);
+    }
 }
 
 void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
@@ -104,7 +120,7 @@ void Map::updateMap() {
     }
 
     //adjustDownward(); //adjusting downward works, but messes up because of collision makes you hop
-    respawn();
+    //respawn();
     newOffset = models.at(2)->calculateVelocity(references);
     models.at(2)->moveWithVelocity(newOffset);
 }

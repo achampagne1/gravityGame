@@ -16,6 +16,7 @@ class Map{
 		void renderMap();
 		void createModel(std::string modelPath, int x, int y, float v[2], float gravity, int locked);
 		void createMap();
+		void centerMap();
 		void adjustDownwardOnStart();
 		void adjustDownward();
 		void respawn();

@@ -9,7 +9,7 @@
 		{
 			"_comment": "the player is always second",
 			"path": "models/spaceman.json",
-			"coordinates": [ 380, 220 ],
+			"coordinates": [ 350, 50],
 			"velocity": [ 0, 0 ]
 		},
 		{
