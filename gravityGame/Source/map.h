@@ -1,14 +1,15 @@
 #pragma once
 
 #include "mapLoader.h"
-#include "player.h"
 
 
 class Map{
 	private:
 		std::vector<std::shared_ptr<Model>> models;
-		std::unique_ptr<MapLoader> mapLoader{ new MapLoader };
 		std::shared_ptr<Player> player;
+		std::vector<std::shared_ptr<Npc>> npc;
+		std::vector<std::shared_ptr<Planet>> planets;
+		std::unique_ptr<MapLoader> mapLoader{ new MapLoader };
 		int windowSize[2];
 		int mapBounds[4] = { 0,0,0,0 };
 		const char* mapPath = "";

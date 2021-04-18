@@ -1,5 +1,8 @@
 #pragma once
 #include "player.h"
+#include "npc.h"
+#include "planet.h"
+
 class MapLoader
 {
 	private:
@@ -12,7 +15,7 @@ class MapLoader
 		MapLoader();
 		void setMapPath(const char* mapPath);
 		void setWindowSize(int windowSize[2]);
-		std::shared_ptr<Model> loadModel(std::string modelType);
-		std::shared_ptr<Model> loadGenerics(std::string modelType, std::shared_ptr<Model> model);
+		std::vector<std::shared_ptr<Model>> loadModels(std::string modelType);
+		std::shared_ptr<Model> loadGenerics(std::string modelType, std::shared_ptr<Model> model, int locationInArray);
 };
 

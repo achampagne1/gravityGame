@@ -95,8 +95,8 @@ void VertexData::move(float x, float y) {
     this->x = x;
     this->y = y;
     float coor[2] = { x,y };
-    xAvgGlobal = x + xAvgModel;
-    yAvgGlobal = y + yAvgModel;
+    xAvgGlobal = x+xAvgModel;//might need to change back to xAvgModel and yAvgModel
+    yAvgGlobal = y+yAvgModel;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     moveVertices(coor[0], coor[1]);
