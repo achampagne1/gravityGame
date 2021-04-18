@@ -1,4 +1,34 @@
 {
+	"background": {
+		"_comment": "sky is always first",
+		"path": "models/sky.json",
+		"coordinates": [ 0, 0 ],
+		"velocity": [ 0, 0 ]
+	},
+	"player": {
+		"_comment": "this is the player",
+		"path": "models/sky.json",
+		"coordinates": [ 0, 0 ],
+		"velocity": [ 0, 0 ]
+	},
+	"npc": [
+		{
+			"_comment": "",
+			"path": "models/spacewoman.json",
+			"coordinates": [ 350, 300 ],
+			"velocity": [ 0, 0 ]
+		}
+	],
+	"planets": [
+		{
+			"path": "models/planet1.json",
+			"coordinates": [ -200, 0 ],
+			"velocity": [ 0, 0 ]
+		}
+	],
+	"objects": [
+
+	],
 	"models": [
 		{
 			"_comment": "sky is always first",
@@ -9,7 +39,7 @@
 		{
 			"_comment": "the player is always second",
 			"path": "models/spaceman.json",
-			"coordinates": [ 350, 50],
+			"coordinates": [ 350, 50 ],
 			"velocity": [ 0, 0 ]
 		},
 		{
@@ -26,5 +56,5 @@
 
 
 	],
-	"mapBounds": [-10,800,-800,800]
+	"mapBounds": [ -10, 800, -800, 800 ]
 }

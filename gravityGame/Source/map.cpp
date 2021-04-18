@@ -13,8 +13,13 @@ std::shared_ptr<MovementEngine> Map::getMovementPtr() {
 void Map::createModel(std::string modelPath, int x, int y, float v[2], float gravity, int locked) {
     float coor[2] = { x,y };
     std::shared_ptr<Model> model{ new Model };
-    model->generateModel(modelPath.c_str(), windowSize, coor, v, gravity, locked);
+    model->generateModel(modelPath.c_str(), windowSize, coor, v, locked);
     models.push_back(model);
+}
+
+void Map::loadPlayer(std::string modelPath, int x, int y, float v[2], float gravity, int locked) {
+
+   // player->generateModel(modelPath.c_str(), windowSize, coor, v, gravity, locked);
 }
 
 void Map::createMap() {
@@ -22,6 +27,7 @@ void Map::createMap() {
     using json = nlohmann::json;
     std::unique_ptr<LoadFile> fileLoader{ new LoadFile };
     json jf = json::parse(fileLoader->load(mapPath).str());
+
     for (int i = 0; i < jf["models"].size(); i++) {
         std::string path = jf["models"][i]["path"];
         int x = jf["models"][i]["coordinates"][0];
@@ -32,7 +38,8 @@ void Map::createMap() {
     }
     for (int i = 0; i < jf["mapBounds"].size(); i++)
         mapBounds[i] = jf["mapBounds"][i];
-
+    mapLoader->setMapPath(mapPath);
+    player = std::dynamic_pointer_cast<Player>(mapLoader->loadModel("player"));
     centerMap();
     adjustDownwardOnStart();
 }

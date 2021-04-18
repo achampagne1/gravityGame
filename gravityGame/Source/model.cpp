@@ -4,8 +4,8 @@ Model::Model() {
 	
 }
 
-void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], float gravity, int locked) {
-	vertexData->generateObject(modelPath, windowSize[0], windowSize[1], gravity, locked);
+void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], int locked) {
+	vertexData->generateObject(modelPath, windowSize[0], windowSize[1], locked);
 	this->pos[0] = pos[0];
 	this->pos[1] = pos[1];
 	respawnPoint[0] = pos[0];

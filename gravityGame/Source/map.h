@@ -1,10 +1,14 @@
 #pragma once
 
-#include "model.h"
+#include "mapLoader.h"
+#include "player.h"
+
 
 class Map{
 	private:
 		std::vector<std::shared_ptr<Model>> models;
+		std::unique_ptr<MapLoader> mapLoader{ new MapLoader };
+		std::shared_ptr<Player> player;
 		int windowSize[2];
 		int mapBounds[4] = { 0,0,0,0 };
 		const char* mapPath = "";
@@ -15,6 +19,7 @@ class Map{
 		std::shared_ptr<MovementEngine> getMovementPtr();
 		void renderMap();
 		void createModel(std::string modelPath, int x, int y, float v[2], float gravity, int locked);
+		void loadPlayer(std::string modelPath, int x, int y, float v[2], float gravity, int locked);
 		void createMap();
 		void centerMap();
 		void adjustDownwardOnStart();
