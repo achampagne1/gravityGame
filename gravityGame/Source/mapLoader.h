@@ -2,6 +2,7 @@
 #include "player.h"
 #include "npc.h"
 #include "planet.h"
+#include "background.h"
 
 class MapLoader
 {

@@ -27,6 +27,8 @@ void Map::createMap() {
         planets.push_back(std::dynamic_pointer_cast<Planet>(tempPlanetVector.at(0)));
     }
 
+    background = std::dynamic_pointer_cast<Background>(mapLoader->loadModels("background").at(0));
+
     centerMap();
     adjustDownwardOnStart();
 }
@@ -51,7 +53,7 @@ void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     std::vector<std::shared_ptr<Model>> references;
     for (int i = 0; i < planets.size(); i++)
         references.push_back(planets.at(i));
-    models.at(1)->calculateGravity(references);
+    player->calculateGravity(references);
     adjustDownward();
 }
 
@@ -63,10 +65,10 @@ void Map::adjustDownward() { //adjusting downward for everything else
     if (abs(angleDifference) < 0.000001) //why does the guy jump
         return;
     std::shared_ptr<VertexData> playerVertexData = player->getVertexDataPointer(); //player vertex data
-    for (int i = 0; i < models.size(); i++) { //loops through all models
+    for (int i = 1; i < models.size(); i++) { //loops through all models
         std::shared_ptr<VertexData> temp = models.at(i)->getVertexDataPointer(); //gets model vertex data
-        float xDiff = temp->getAvgX() - playerVertexData->getAvgX();  //gets difference of x
-        float yDiff = temp->getAvgY() - playerVertexData->getAvgY();  //gets difference of y
+        float xDiff = temp->getAvgX() - playerVertexData->getAvgX()- playerVertexData->getAvgXModel();  //gets difference of x
+        float yDiff = temp->getAvgY() - playerVertexData->getAvgY()- playerVertexData->getAvgYModel();  //gets difference of y
         float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
         float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
         angle2 -= angleDifference;
@@ -92,6 +94,7 @@ void Map::respawn() {
 }
 
 void Map::renderMap() {
+    background->render();
     for (int i = 0; i < models.size(); i++)
         models.at(i)->render();
 }
@@ -125,4 +128,5 @@ void Map::updateMap() {
 void Map::destroyMap() {
     for (int i = 0; i < models.size(); i++)
         models.at(i)->destroy();
+    background->destroy();
 }

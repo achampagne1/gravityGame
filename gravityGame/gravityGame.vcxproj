@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\background.cpp" />
     <ClCompile Include="Source\planet.cpp" />
     <ClCompile Include="Source\npc.cpp" />
     <ClCompile Include="Source\mapLoader.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Source\vertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\background.h" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\linmath.h" />
     <ClInclude Include="include\stb_image.h" />

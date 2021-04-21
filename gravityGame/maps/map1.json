@@ -12,7 +12,7 @@
 				"_comment": "this is the player",
 				"path": "models/spaceMan.json",
 				"coordinates": [ 0, 0 ],
-				"velocity": [ 0, 0 ]
+				"velocity": [ -10, 0 ]
 			}
 		],
 	"npc":[
@@ -20,13 +20,19 @@
 			"_comment": "1st",
 			"path": "models/spacewoman.json",
 			"coordinates": [ 150, 0 ],
-			"velocity": [ 0, 0 ]
+			"velocity": [ 11.5, 0 ]
 		},
 		{
 			"_comment": "2nd",
 			"path": "models/spacewoman.json",
 			"coordinates": [ 250, 0 ],
-			"velocity": [ 0, 0 ]
+			"velocity": [ 10, -1 ]
+		},
+		{
+			"_comment": "3rd",
+			"path": "models/spacewoman.json",
+			"coordinates": [ 0, 100 ],
+			"velocity": [ -10, 0 ]
 		}
 		],
 	"planets":[

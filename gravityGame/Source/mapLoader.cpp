@@ -41,6 +41,15 @@ std::vector<std::shared_ptr<Model>> MapLoader::loadModels(std::string modelType)
 			returnVec.push_back(planet);
 		}
 	}
+
+	else if (modelType == "background") {
+		for (int i = 0; i < jf[modelType].size(); i++) {
+			std::shared_ptr<Background> background{ new Background };
+			loadGenerics(modelType, background, i);
+			//set NPC specific parameters here
+			returnVec.push_back(background);
+		}
+	}
 	return returnVec;
 }
 

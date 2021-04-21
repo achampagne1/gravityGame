@@ -9,6 +9,7 @@ class Map{
 		std::shared_ptr<Player> player;
 		std::vector<std::shared_ptr<Npc>> npc;
 		std::vector<std::shared_ptr<Planet>> planets;
+		std::shared_ptr<Background> background;
 		std::unique_ptr<MapLoader> mapLoader{ new MapLoader };
 		int windowSize[2];
 		int mapBounds[4] = { 0,0,0,0 };
