@@ -1,8 +1,8 @@
 #pragma once
 
-#include "gravityEngine.h"
-#include "collisionEngine.h"
-#include "movementEngine.h"
+#include "physics/gravityEngine.h"
+#include "physics/collisionEngine.h"
+#include "physics/movementEngine.h"
 
 class Model{
 	private:

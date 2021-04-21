@@ -150,43 +150,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\background.cpp" />
-    <ClCompile Include="Source\planet.cpp" />
-    <ClCompile Include="Source\npc.cpp" />
+    <ClCompile Include="Source\modelClasses\background.cpp" />
+    <ClCompile Include="Source\modelClasses\planet.cpp" />
+    <ClCompile Include="Source\modelClasses\npc.cpp" />
     <ClCompile Include="Source\mapLoader.cpp" />
-    <ClCompile Include="Source\player.cpp" />
+    <ClCompile Include="Source\modelClasses\player.cpp" />
     <ClCompile Include="Source\map.cpp" />
-    <ClCompile Include="Source\collisionEngine.cpp" />
+    <ClCompile Include="Source\physics\collisionEngine.cpp" />
     <ClCompile Include="glad_src\gl.c" />
     <ClCompile Include="Source\convertToFloat.cpp" />
-    <ClCompile Include="Source\gravityEngine.cpp" />
+    <ClCompile Include="Source\physics\gravityEngine.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\model.cpp" />
-    <ClCompile Include="Source\movementEngine.cpp" />
+    <ClCompile Include="Source\modelClasses\model.cpp" />
+    <ClCompile Include="Source\physics\movementEngine.cpp" />
     <ClCompile Include="Source\vertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\background.h" />
+    <ClInclude Include="Source\modelClasses\background.h" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\linmath.h" />
     <ClInclude Include="include\stb_image.h" />
-    <ClInclude Include="Source\planet.h" />
-    <ClInclude Include="Source\npc.h" />
+    <ClInclude Include="Source\modelClasses\planet.h" />
+    <ClInclude Include="Source\modelClasses\npc.h" />
     <ClInclude Include="Source\mapLoader.h" />
-    <ClInclude Include="Source\player.h" />
+    <ClInclude Include="Source\modelClasses\player.h" />
     <ClInclude Include="Source\map.h" />
-    <ClInclude Include="Source\collisionEngine.h" />
+    <ClInclude Include="Source\physics\collisionEngine.h" />
     <ClInclude Include="Source\convertToFloat.h" />
     <ClInclude Include="Source\delay.h" />
-    <ClInclude Include="Source\gravityEngine.h" />
+    <ClInclude Include="Source\physics\gravityEngine.h" />
     <ClInclude Include="Source\loadFile.h" />
-    <ClInclude Include="Source\model.h" />
-    <ClInclude Include="Source\movementEngine.h" />
+    <ClInclude Include="Source\modelClasses\model.h" />
+    <ClInclude Include="Source\physics\movementEngine.h" />
     <ClInclude Include="Source\shaderLoader.h" />
     <ClInclude Include="Source\vertexData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\circleGenerator\circleGenerator\res3\circleRes3Rad100.json" />
+    <None Include="maps\oldMaps\orbitTester.json" />
     <None Include="models\circleR50.json" />
     <None Include="models\circleR9.json" />
     <None Include="models\circleRes1000Rad10.json" />

@@ -27,34 +27,34 @@
     <ClCompile Include="Source\convertToFloat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\gravityEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\collisionEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\movementEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\mapLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\npc.cpp">
+    <ClCompile Include="Source\modelClasses\planet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\planet.cpp">
+    <ClCompile Include="Source\modelClasses\npc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\background.cpp">
+    <ClCompile Include="Source\modelClasses\player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\modelClasses\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\modelClasses\background.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\physics\collisionEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\physics\gravityEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\physics\movementEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -69,18 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\loadFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\gravityEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\collisionEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\movementEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\linmath.h">
@@ -98,19 +86,31 @@
     <ClInclude Include="Source\map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\mapLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\npc.h">
+    <ClInclude Include="Source\modelClasses\planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\planet.h">
+    <ClInclude Include="Source\modelClasses\npc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\background.h">
+    <ClInclude Include="Source\modelClasses\player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\modelClasses\model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\modelClasses\background.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\physics\collisionEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\physics\gravityEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\physics\movementEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -131,6 +131,7 @@
     <None Include="models\planet1.json" />
     <None Include="models\sky.json" />
     <None Include="models\spacewoman.json" />
+    <None Include="maps\oldMaps\orbitTester.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\spaceman.png">
