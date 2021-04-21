@@ -12,7 +12,7 @@
 				"_comment": "this is the player",
 				"path": "models/spaceMan.json",
 				"coordinates": [ 0, 0 ],
-				"velocity": [ -10, 0 ]
+				"velocity": [ 0, 0 ]
 			}
 		],
 	"npc":[

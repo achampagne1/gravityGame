@@ -163,7 +163,7 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\modelClasses\model.cpp" />
     <ClCompile Include="Source\physics\movementEngine.cpp" />
-    <ClCompile Include="Source\vertexData.cpp" />
+    <ClCompile Include="Source\modelClasses\vertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\modelClasses\background.h" />
@@ -183,7 +183,7 @@
     <ClInclude Include="Source\modelClasses\model.h" />
     <ClInclude Include="Source\physics\movementEngine.h" />
     <ClInclude Include="Source\shaderLoader.h" />
-    <ClInclude Include="Source\vertexData.h" />
+    <ClInclude Include="Source\modelClasses\vertexData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\circleGenerator\circleGenerator\res3\circleRes3Rad100.json" />

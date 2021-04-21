@@ -21,9 +21,6 @@
     <ClCompile Include="glad_src\gl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\vertexData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\convertToFloat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,12 +54,12 @@
     <ClCompile Include="Source\physics\movementEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\modelClasses\vertexData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\shaderLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\vertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\convertToFloat.h">
@@ -111,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\physics\movementEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\modelClasses\vertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

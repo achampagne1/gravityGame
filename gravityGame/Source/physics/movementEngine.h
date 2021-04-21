@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "vertexData.h"
+#include "../modelClasses/vertexData.h"
 
 class MovementEngine
 {

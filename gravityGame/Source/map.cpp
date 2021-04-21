@@ -42,8 +42,8 @@ void Map::centerMap() {
         std::shared_ptr<VertexData> temp= models.at(i)->getVertexDataPointer();
         std::cout << temp->getAvgX() << " " << temp->getAvgY() << std::endl;
         float offsetOfModel[2] = { 0,0 };
-        offsetOfModel[0] = offset[0]+ temp->getAvgX()-temp->getAvgXModel();
-        offsetOfModel[1] = offset[1]+ temp->getAvgY()-temp->getAvgXModel();
+        offsetOfModel[0] = offset[0] + temp->getAvgX() - temp->getAvgXModel() +playerData->getAvgXModel();
+        offsetOfModel[1] = offset[1] + temp->getAvgY() - temp->getAvgXModel() +playerData->getAvgYModel();
         //NOTE: the avergae of the model must be subtracted out due to the move function adding it back in later
         models.at(i)->moveWithPosition(offsetOfModel);
     }
@@ -67,8 +67,8 @@ void Map::adjustDownward() { //adjusting downward for everything else
     std::shared_ptr<VertexData> playerVertexData = player->getVertexDataPointer(); //player vertex data
     for (int i = 1; i < models.size(); i++) { //loops through all models
         std::shared_ptr<VertexData> temp = models.at(i)->getVertexDataPointer(); //gets model vertex data
-        float xDiff = temp->getAvgX() - playerVertexData->getAvgX()- playerVertexData->getAvgXModel();  //gets difference of x
-        float yDiff = temp->getAvgY() - playerVertexData->getAvgY()- playerVertexData->getAvgYModel();  //gets difference of y
+        float xDiff = temp->getAvgX() - playerVertexData->getAvgX();  //gets difference of x
+        float yDiff = temp->getAvgY() - playerVertexData->getAvgY();  //gets difference of y
         float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
         float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
         angle2 -= angleDifference;

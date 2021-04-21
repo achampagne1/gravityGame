@@ -1,8 +1,8 @@
 #pragma once
-#include "modelClasses/player.h"
-#include "modelClasses/npc.h"
-#include "modelClasses/planet.h"
-#include "modelClasses/background.h"
+#include "modelClasses\player.h"
+#include "modelClasses\npc.h"
+#include "modelClasses\planet.h"
+#include "modelClasses\background.h"
 
 class MapLoader
 {
