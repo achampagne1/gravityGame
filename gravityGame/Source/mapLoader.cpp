@@ -19,6 +19,7 @@ void MapLoader::loadModelDataFromMemory() {
 	for (int i = 0; i < jf["modelPaths"].size(); i++) {
 		std::string path = jf["modelPaths"][i]["path"];
 		std::string type = jf["modelPaths"][i]["type"];
+		std::cout << type << std::endl;
 		fileLoader->loadFromMemory(path.c_str(), type.c_str());
 	}
 }
@@ -74,7 +75,7 @@ std::shared_ptr<Model> MapLoader::loadGenerics(std::string modelType, std::share
 std::shared_ptr<Bullet> MapLoader::createBullet(float coor[], float direction[]) {
 	float velocit[2] = { direction[0] * 15,direction[1] * 15 };
 	std::shared_ptr<Bullet> bullet{ new Bullet };
-	std::string path = "models/bullet.json";
-	bullet->generateModel(path.c_str(), windowSize,coor,velocit, fileLoader);
+	std::string type = "bullet";
+	bullet->generateModel(type.c_str(), windowSize,coor,velocit, fileLoader);
 	return bullet;
 }

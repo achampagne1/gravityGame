@@ -38,16 +38,16 @@
 			"type": "player"
 		},
 		{
-			"path": "models/spaceMan.json",
-			"type": "player"
-		},
-		{
 			"path": "models/spaceWoman.json",
 			"type": "npc"
 		},
 		{
 			"path": "models/planet1.json",
 			"type": "planet"
+		},
+		{
+			"path": "models/bullet.json",
+			"type": "bullet"
 		}
 	]
 }
