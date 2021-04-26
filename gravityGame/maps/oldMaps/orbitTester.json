@@ -2,7 +2,7 @@
 	"background": [
 			{
 				"_comment": "sky is always first",
-				"path": "models/sky.json",
+				"type": "background",
 				"coordinates": [ 0, 0 ],
 				"velocity": [ 0, 0 ]
 			}
@@ -10,7 +10,7 @@
 	"player":[
 			{
 				"_comment": "this is the player",
-				"path": "models/spaceMan.json",
+				"type": "player",
 				"coordinates": [ 0, 0 ],
 				"velocity": [ 0, 0 ]
 			}
@@ -18,44 +18,44 @@
 	"npc":[
 		{
 			"_comment": "1st",
-			"path": "models/spacewoman.json",
+			"type": "npc",
 			"coordinates": [ 150, 0 ],
 			"velocity": [ 11.5, 0 ]
 		},
 		{
 			"_comment": "2nd",
-			"path": "models/spacewoman.json",
+			"type": "npc",
 			"coordinates": [ 250, 0 ],
 			"velocity": [ 10, -1 ]
 		},
 		{
 			"_comment": "3rd",
-			"path": "models/spacewoman.json",
+			"type": "npc",
 			"coordinates": [ 0, 100 ],
 			"velocity": [ -10, 0 ]
 		},
 		{
 			"_comment": "4th",
-			"path": "models/spacewoman.json",
+			"type": "npc",
 			"coordinates": [ -100, 100 ],
 			"velocity": [ -10, -10 ]
 		},
 		{
 			"_comment": "5th",
-			"path": "models/spacewoman.json",
+			"type": "npc",
 			"coordinates": [ 50, 50 ],
 			"velocity": [ -10, 0 ]
 		},
 		{
 			"_comment": "6th",
-			"path": "models/spacewoman.json",
+			"type": "npc",
 			"coordinates": [ 150, 50 ],
 			"velocity": [ 10, 5 ]
 		}
 		],
 	"planets":[
 			{
-				"path": "models/planet1.json",
+				"type": "planet",
 				"coordinates": [ -300,-500 ],
 				"velocity": [ 0, 0 ]
 			}
@@ -63,5 +63,27 @@
 	"objects":[
 
 		],
-	"mapBounds":[ -10, 800, -800, 800 ]
+	"mapBounds": [ -10, 800, -800, 800 ],
+	"modelPaths": [
+		{
+			"path": "models/sky.json",
+			"type": "background"
+		},
+		{
+			"path": "models/spaceMan.json",
+			"type": "player"
+		},
+		{
+			"path": "models/spaceMan.json",
+			"type": "player"
+		},
+		{
+			"path": "models/spaceWoman.json",
+			"type": "npc"
+		},
+		{
+			"path": "models/planet1.json",
+			"type": "planet"
+		}
+	]
 }

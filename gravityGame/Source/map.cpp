@@ -11,7 +11,7 @@ std::shared_ptr<MovementEngine> Map::getMovementPtr() {
 }
 
 void Map::createMap() {
-    mapLoader->setMapPath(mapPath);
+    mapLoader->initMap(mapPath);
     mapLoader->setWindowSize(windowSize);
     player = std::dynamic_pointer_cast<Player>(mapLoader->loadModels("player").at(0));
     models.push_back(player);
@@ -28,7 +28,6 @@ void Map::createMap() {
     }
 
     background = std::dynamic_pointer_cast<Background>(mapLoader->loadModels("background").at(0));
-
     centerMap();
     adjustDownwardOnStart();
 }
@@ -93,10 +92,12 @@ void Map::respawn() {
     }
 }
 
-void Map::renderMap() {
-    background->render();
-    for (int i = 0; i < models.size(); i++)
-        models.at(i)->render();
+void Map::shoot() {
+    float temp[2] = { 0,0 };
+    float temp2[2] = { 1,0 };
+    std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, temp2);
+    //models.push_back(bullet);
+    //bullets.push_back(bullet);
 }
 
 void Map::updateMap() {
@@ -123,6 +124,17 @@ void Map::updateMap() {
         newOffset = npc.at(i)->calculateVelocity(references);
         npc.at(i)->moveWithVelocity(newOffset);
     }
+
+    for (int i = 0; i < bullets.size(); i++) {
+        newOffset = bullets.at(i)->calculateVelocity(references);
+        bullets.at(i)->moveWithVelocity(newOffset);
+    }
+}
+
+void Map::renderMap() {
+    background->render();
+    for (int i = 0; i < models.size(); i++)
+        models.at(i)->render();
 }
 
 void Map::destroyMap() {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vertexData.h"
+#include "../modelClasses/vertexData.h"
 
 class CollisionEngine{
 	private:

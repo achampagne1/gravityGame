@@ -30,10 +30,12 @@ private:
 	float gravity = 0;
 
 	std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") }; //add shader path to constructor
+	std::shared_ptr<LoadFile> file;
 	glm::mat4 trans = glm::mat4(1.0f);
 public:
 	VertexData();
-	void generateObject(const char* modelPath, int width, int height, int locked);
+	void setFileLoaderPtr(std::shared_ptr<LoadFile> ptr);
+	void generateObject(const char* type, int width, int height);
 	void render();
 	void move(float x, float y);
 	float getAvgX();

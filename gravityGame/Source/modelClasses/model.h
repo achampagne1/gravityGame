@@ -20,7 +20,7 @@ class Model{
 
 	public: 
 		Model();
-		void generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], int locked);
+		void generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], std::shared_ptr<LoadFile> loadFile);
 		void calculateGravity(std::vector<std::shared_ptr<Model>> references);
 		void calculateCollision(std::vector<std::shared_ptr<Model>> references);
 		std::shared_ptr<MovementEngine> getMovementPointer();
@@ -33,6 +33,7 @@ class Model{
 		void moveWithPosition(float newPos[2]);
 		void respawn();
 		void rotate(glm::vec2 direction);
+		void setFileLoader(std::shared_ptr<LoadFile> fileLoader);
 		void render();
 		virtual void destroy();
 };

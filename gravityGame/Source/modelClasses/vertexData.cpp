@@ -4,15 +4,18 @@ VertexData::VertexData() {
 
 }
 
-void VertexData::generateObject(const char* modelPath, int width, int height, int locked) {
+void VertexData::setFileLoaderPtr(std::shared_ptr<LoadFile> ptr) {
+    file = ptr;
+}
+
+void VertexData::generateObject(const char* type, int width, int height) {
     using json = nlohmann::json;
     this->width = width;
     this->height = height;
     int nrChannels;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width, height) };
-    std::unique_ptr<LoadFile> file{ new LoadFile() };
     std::string jsonString;
-    jsonString = file->load(modelPath).str();
+    jsonString = file->load(type);
     json jf = json::parse(jsonString);
     
     indicesSizeTexture = jf["textureIndices"].size();
@@ -101,9 +104,14 @@ void VertexData::move(float x, float y) {
     conversion->convertToGlobal(coor);
     moveVertices(coor[0], coor[1]);
     glm::mat4 temp = glm::mat4(1.0f);
+    //temp = glm::rotate(temp, glm::radians(45.0f), glm::vec3(0, 0, 1));
+    //temp = glm::scale(temp, glm::vec3(8.0f / 4.5f, 1.0f, 1.0f));
     temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
-    //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
     trans = temp;
+}
+
+void VertexData::rotate(glm::vec2 direction) {
+    rotation = atan(direction[1] / direction[0]);
 }
 
 float VertexData::getAvgX() {
@@ -124,10 +132,6 @@ float VertexData::getAvgYModel() {
 
 float VertexData::getGravity() {
     return gravity;
-}
-
-void VertexData::rotate(glm::vec2 direction) {
-    rotation = atan(direction[1] / direction[0]);
 }
 
 void VertexData::computeAverage(float model[], int size) {

@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
-#include "vertexData.h"
+#include "../modelClasses/vertexData.h"
 
 class GravityEngine {
 	private:

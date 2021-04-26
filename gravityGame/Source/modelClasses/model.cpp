@@ -4,8 +4,9 @@ Model::Model() {
 	
 }
 
-void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], int locked) {
-	vertexData->generateObject(modelPath, windowSize[0], windowSize[1], locked);
+void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], std::shared_ptr<LoadFile> loadFile) {
+	vertexData->setFileLoaderPtr(loadFile);
+	vertexData->generateObject(modelPath, windowSize[0], windowSize[1]);
 	this->pos[0] = pos[0];
 	this->pos[1] = pos[1];
 	respawnPoint[0] = pos[0];
@@ -89,6 +90,10 @@ std::shared_ptr<MovementEngine> Model::getMovementPointer() {
 
 glm::vec2 Model::getGravityDirection() {
 	return gravityDirection;
+}
+
+void setFileLoader(std::shared_ptr<LoadFile> fileLoader) {
+
 }
 
 void Model::render() {

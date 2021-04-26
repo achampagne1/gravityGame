@@ -57,6 +57,9 @@
     <ClCompile Include="Source\modelClasses\vertexData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\modelClasses\bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\shaderLoader.h">
@@ -113,6 +116,15 @@
     <ClInclude Include="Source\modelClasses\vertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\modelClasses\bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModelDataPacket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\3.3.shader.vs" />
@@ -124,7 +136,6 @@
     <None Include="models\circleRes20Rad10.json" />
     <None Include="models\circleRes40Rad100.json" />
     <None Include="models\circleRes1000Rad10.json" />
-    <None Include="..\..\circleGenerator\circleGenerator\res3\circleRes3Rad100.json" />
     <None Include="models\circleRes3Rad10.json" />
     <None Include="models\circleRes3Rad100.json" />
     <None Include="models\spaceman.json" />
@@ -132,6 +143,7 @@
     <None Include="models\sky.json" />
     <None Include="models\spacewoman.json" />
     <None Include="maps\oldMaps\orbitTester.json" />
+    <None Include="models\bullet.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\spaceman.png">
