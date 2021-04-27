@@ -84,10 +84,6 @@
 		{
 			"path": "models/planet1.json",
 			"type": "planet"
-		},
-		{
-			"path": "models/bullet.json",
-			"type": "bullet"
 		}
 	]
 }

@@ -18,7 +18,6 @@ class LoadFile {
                 if (data.at(i)->type == type)
                     return data.at(i)->data;
             }
-            
             return "NONE FOUND";
 		}
         void loadFromMemory(const char* path,const char* type) {
