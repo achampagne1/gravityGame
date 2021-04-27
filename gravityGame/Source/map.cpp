@@ -96,8 +96,8 @@ void Map::shoot() {
     float temp[2] = { 0,0 };
     float temp2[2] = { 1,0 };
     std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, temp2);
-    //models.push_back(bullet);
-    //bullets.push_back(bullet);
+    models.push_back(bullet);
+    bullets.push_back(bullet);
 }
 
 void Map::updateMap() {
