@@ -4,8 +4,16 @@ Model::Model() {
 	
 }
 
-void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2], int locked) {
-	vertexData->generateObject(modelPath, windowSize[0], windowSize[1], locked);
+void Model::setType(std::string type){
+	this->type = type;
+}
+
+std::string Model::getType() {
+	return type;
+}
+
+void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2]) {
+	vertexData->generateObject(modelPath, windowSize[0], windowSize[1]);
 	this->pos[0] = pos[0];
 	this->pos[1] = pos[1];
 	respawnPoint[0] = pos[0];
@@ -51,10 +59,15 @@ float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) 
 	return velocity;
 }
 
-void Model::moveWithVelocity(float newV[2]) {
+void Model::moveWithVelocity(float newV[2]) { //I do not know if set velocity and move with Velocity act as the same
 	pos[0] += newV[0];
 	pos[1] += newV[1];
 	vertexData->move(pos[0], pos[1]);
+}
+
+void Model::setVelocity(float velocity[2]) {
+	this->velocity[0] = velocity[0];
+	this->velocity[1] = velocity[1];
 }
 
 void Model::moveWithPosition(float newPos[2]) {

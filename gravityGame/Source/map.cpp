@@ -11,23 +11,23 @@ std::shared_ptr<MovementEngine> Map::getMovementPtr() {
 }
 
 void Map::createMap() {
-    mapLoader->setMapPath(mapPath);
     mapLoader->setWindowSize(windowSize);
-    player = std::dynamic_pointer_cast<Player>(mapLoader->loadModels("player").at(0));
+    mapLoader->initMap(mapPath);
+    player = std::dynamic_pointer_cast<Player>(mapLoader->getModels("player").at(0));
     models.push_back(player);
-    std::vector<std::shared_ptr<Model>> tempNpcVector = mapLoader->loadModels("npc");
+    std::vector<std::shared_ptr<Model>> tempNpcVector = mapLoader->getModels("npc");
     for (int i = 0; i < tempNpcVector.size(); i++) {
         models.push_back(tempNpcVector.at(i));
         npc.push_back(std::dynamic_pointer_cast<Npc>(tempNpcVector.at(i)));
     }
 
-    std::vector<std::shared_ptr<Model>> tempPlanetVector = mapLoader->loadModels("planets");
+    std::vector<std::shared_ptr<Model>> tempPlanetVector = mapLoader->getModels("planets");
     for (int i = 0; i < tempPlanetVector.size(); i++) {
         models.push_back(tempPlanetVector.at(i));
         planets.push_back(std::dynamic_pointer_cast<Planet>(tempPlanetVector.at(0)));
     }
 
-    background = std::dynamic_pointer_cast<Background>(mapLoader->loadModels("background").at(0));
+    background = std::dynamic_pointer_cast<Background>(mapLoader->getModels("background").at(0));
 
     centerMap();
     adjustDownwardOnStart();

@@ -4,7 +4,7 @@ VertexData::VertexData() {
 
 }
 
-void VertexData::generateObject(const char* modelPath, int width, int height, int locked) {
+void VertexData::generateObject(const char* modelPath, int width, int height) {
     using json = nlohmann::json;
     this->width = width;
     this->height = height;
