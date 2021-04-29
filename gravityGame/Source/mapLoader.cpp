@@ -45,7 +45,7 @@ std::shared_ptr<Model> MapLoader::ifElseHell(std::string input) {
 	}
 }
 
-std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) {
+std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) { //This function is for loading models from memory only
 	std::vector<std::shared_ptr<Model>> returnVec;
 	if (modelType == "player") {
 		std::shared_ptr<Player> player{ new Player };
@@ -107,6 +107,5 @@ std::shared_ptr<Model> MapLoader::loadGenerics(std::string modelType, std::share
 	velocit[1] = jf[modelType][locationInArray]["velocity"][1];
 	model->moveWithPosition(coor);
 	model->setVelocity(velocit);
-	//model->generateModel(path.c_str(), windowSize, coor, velocit);
 	return model;
 }

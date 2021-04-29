@@ -34,7 +34,7 @@ bool stepMode = false;
 //object declerations
 GLFWwindow* window;
 std::shared_ptr<Delay> delay;
-std::shared_ptr<Map> map{ new Map("maps/oldMaps/orbitTester.json",screenWidth,screenHeight) };
+std::shared_ptr<Map> map{ new Map("maps/map1.json",screenWidth,screenHeight) };
 
 int main(void)
 {
@@ -144,9 +144,6 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     }
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         movementEnginePtr->jump();
-    }
-    if (key == GLFW_KEY_Q && action == GLFW_PRESS) { //temp key mapping until i figure out mouse click
-        map->shoot();
     }
     if (action == GLFW_RELEASE) {
         movementEnginePtr->setDirection(4);

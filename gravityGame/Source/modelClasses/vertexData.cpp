@@ -13,6 +13,7 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
     std::unique_ptr<LoadFile> file{ new LoadFile() };
     std::string jsonString;
     jsonString = file->load(modelPath).str();
+    std::cout << modelPath << std::endl;
     json jf = json::parse(jsonString);
     
     indicesSizeTexture = jf["textureIndices"].size();
