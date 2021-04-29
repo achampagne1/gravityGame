@@ -21,8 +21,8 @@ public:
         std::unique_ptr<LoadFile> vertexFile{ new LoadFile() };
         std::string vertexCode;
         std::string fragmentCode;
-        vertexCode = vertexFile->load(vertexPath).str();
-        fragmentCode = fragFile->load(fragmentPath).str();
+        vertexCode = vertexFile->loadStraight(vertexPath).str();
+        fragmentCode = fragFile->loadStraight(fragmentPath).str();
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
 

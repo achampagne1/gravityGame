@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\modelClasses\bullet.cpp" />
     <ClCompile Include="Source\modelClasses\background.cpp" />
     <ClCompile Include="Source\modelClasses\planet.cpp" />
     <ClCompile Include="Source\modelClasses\npc.cpp" />
@@ -166,6 +167,8 @@
     <ClCompile Include="Source\modelClasses\vertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Header.h" />
+    <ClInclude Include="Source\modelClasses\bullet.h" />
     <ClInclude Include="Source\modelClasses\background.h" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\linmath.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="Source\mapLoader.h" />
     <ClInclude Include="Source\modelClasses\player.h" />
     <ClInclude Include="Source\map.h" />
+    <ClInclude Include="Source\ModelDataPacket.h" />
     <ClInclude Include="Source\physics\collisionEngine.h" />
     <ClInclude Include="Source\convertToFloat.h" />
     <ClInclude Include="Source\delay.h" />
@@ -186,8 +190,8 @@
     <ClInclude Include="Source\modelClasses\vertexData.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\circleGenerator\circleGenerator\res3\circleRes3Rad100.json" />
     <None Include="maps\oldMaps\orbitTester.json" />
+    <None Include="models\bullet.json" />
     <None Include="models\circleR50.json" />
     <None Include="models\circleR9.json" />
     <None Include="models\circleRes1000Rad10.json" />
