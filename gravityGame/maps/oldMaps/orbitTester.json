@@ -53,7 +53,7 @@
       "velocity": [ 10, 5 ]
     }
   ],
-  "planets": [
+  "planet": [
     {
       "type": "planet",
       "coordinates": [ -300, -500 ],
@@ -64,14 +64,10 @@
 
   ],
   "mapBounds": [ -10, 800, -800, 800 ],
-  "modelPaths": [
+  "modelType": [
     {
       "path": "models/sky.json",
       "type": "background"
-    },
-    {
-      "path": "models/spaceMan.json",
-      "type": "player"
     },
     {
       "path": "models/spaceMan.json",
@@ -84,10 +80,6 @@
     {
       "path": "models/planet1.json",
       "type": "planet"
-    },
-    {
-      "path": "models/bullet.json",
-      "type": "bullet"
     }
   ]
 }

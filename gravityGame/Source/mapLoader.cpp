@@ -17,7 +17,9 @@ void MapLoader::setWindowSize(int windowSize[2]) {
 void MapLoader::loadModelsFromMemory() { //responsible for loading all models from memory
 	jf = json::parse(fileLoader->load(mapPath).str());
 	for (int i = 0; i < jf["modelType"].size(); i++) {
-		std::shared_ptr<Model> model = ifElseHell(jf["modelType"][i]["type"]);
+		std::string type = jf["modelType"][i]["type"];
+		std::shared_ptr<Model> model = ifElseHell(type);
+		model->setType(type);
 		std::string path = jf["modelType"][i]["path"];
 		float coor[2] = { 0,0 };
 		float velocity[2] = { 0,0 };
@@ -50,20 +52,21 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 	if (modelType == "player") {
 		std::shared_ptr<Player> player{ new Player };
 		for (int i = 0; i < modelsLoaded.size(); i++) {
-			if (modelsLoaded.at(i)->getType() == modelType)
+			if (modelsLoaded.at(i)->getType() == modelType) {
 				player = std::dynamic_pointer_cast<Player>(modelsLoaded.at(i));
+			}
 		}
 		loadGenerics(modelType, player,0);
 		//set player specific parameters here
 		returnVec.push_back(player);
 	}
-
 	else if(modelType == "npc") {
 		for (int i = 0; i < jf[modelType].size(); i++) {
 			std::shared_ptr<Npc> npc{ new Npc };
 			for (int i = 0; i < modelsLoaded.size(); i++) {
-				if (modelsLoaded.at(i)->getType() == modelType)
+				if (modelsLoaded.at(i)->getType() == modelType) {
 					npc = std::dynamic_pointer_cast<Npc>(modelsLoaded.at(i));
+				}
 			}
 			loadGenerics(modelType, npc, i);
 			//set NPC specific parameters here
@@ -71,11 +74,11 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 		}
 	}
 
-	else if (modelType == "planets") {
+	else if (modelType == "planet") {
 		for (int i = 0; i < jf[modelType].size(); i++) {
 			std::shared_ptr<Planet> planet{ new Planet };
 			for (int i = 0; i < modelsLoaded.size(); i++) {
-				if (modelsLoaded.at(i)->getType() == modelType)
+				if (modelsLoaded.at(i)->getType() == modelType) 
 					planet = std::dynamic_pointer_cast<Planet>(modelsLoaded.at(i));
 			}
 			loadGenerics(modelType, planet, i);

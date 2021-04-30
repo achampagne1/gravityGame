@@ -13,6 +13,7 @@ std::shared_ptr<MovementEngine> Map::getMovementPtr() {
 void Map::createMap() {
     mapLoader->setWindowSize(windowSize);
     mapLoader->initMap(mapPath);
+
     player = std::dynamic_pointer_cast<Player>(mapLoader->getModels("player").at(0));
     models.push_back(player);
     std::vector<std::shared_ptr<Model>> tempNpcVector = mapLoader->getModels("npc");
@@ -21,7 +22,7 @@ void Map::createMap() {
         npc.push_back(std::dynamic_pointer_cast<Npc>(tempNpcVector.at(i)));
     }
 
-    std::vector<std::shared_ptr<Model>> tempPlanetVector = mapLoader->getModels("planets");
+    std::vector<std::shared_ptr<Model>> tempPlanetVector = mapLoader->getModels("planet");
     for (int i = 0; i < tempPlanetVector.size(); i++) {
         models.push_back(tempPlanetVector.at(i));
         planets.push_back(std::dynamic_pointer_cast<Planet>(tempPlanetVector.at(0)));

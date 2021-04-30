@@ -34,7 +34,7 @@ bool stepMode = false;
 //object declerations
 GLFWwindow* window;
 std::shared_ptr<Delay> delay;
-std::shared_ptr<Map> map{ new Map("maps/map1.json",screenWidth,screenHeight) };
+std::shared_ptr<Map> map{ new Map("maps/oldMaps/orbitTester.json",screenWidth,screenHeight) };
 
 int main(void)
 {
