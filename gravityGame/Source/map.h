@@ -6,6 +6,7 @@
 class Map{
 	private:
 		std::vector<std::shared_ptr<Model>> models;
+		std::vector<std::shared_ptr<Bullet>> bullets;
 		std::shared_ptr<Player> player;
 		std::vector<std::shared_ptr<Npc>> npc;
 		std::vector<std::shared_ptr<Planet>> planets;

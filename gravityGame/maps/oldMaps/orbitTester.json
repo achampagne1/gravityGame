@@ -70,6 +70,10 @@
       "type": "background"
     },
     {
+      "path": "models/bullet.json",
+      "type": "bullet"
+    },
+    {
       "path": "models/spaceMan.json",
       "type": "player"
     },

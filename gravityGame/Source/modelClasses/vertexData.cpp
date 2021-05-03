@@ -25,12 +25,14 @@ VertexData::VertexData(const VertexData& vertexData) {
     verticesSizeCollision = vertexData.verticesSizeCollision;
     verticesCollision = new float[verticesSizeCollision * 8];
     verticesCollisionUpdated = new float[verticesSizeCollision * 8];
+    indicesCollision = new int[indicesSizeCollision];
     for (int i = 0; i < verticesSizeCollision * 8; i++) {
         verticesCollision[i]= vertexData.verticesCollision[i];
         verticesCollisionUpdated[i] = vertexData.verticesCollisionUpdated[i];
     }
 
-    //*verticesCollisionUpdated = *vertexData.verticesCollisionUpdated;
+    for (int i = 0; i < indicesSizeCollision; i++)
+        indicesCollision[i] = vertexData.indicesCollision[i];
 
 }
 

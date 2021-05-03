@@ -77,6 +77,14 @@ void Map::adjustDownward() { //adjusting downward for everything else
     }
 }
 
+void Map::shoot() {
+    float temp[2] = { 0,0 };
+    float temp2[2] = { 1,1 };
+    std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, temp2);
+    models.push_back(bullet);
+    bullets.push_back(bullet);
+}
+
 void Map::respawn() {
     if (currentPlayerLocation[0]<mapBounds[0] || currentPlayerLocation[0] > mapBounds[1] || currentPlayerLocation[1]<mapBounds[2] || currentPlayerLocation[1] > mapBounds[3]) {
         //I need to get a global coordinate system done before i do respawn
@@ -122,6 +130,11 @@ void Map::updateMap() {
     for (int i = 0; i < npc.size(); i++) {
         newOffset = npc.at(i)->calculateVelocity(references);
         npc.at(i)->moveWithVelocity(newOffset);
+    }
+    
+    for (int i = 0; i < bullets.size(); i++) {
+        newOffset = bullets.at(i)->calculateVelocity(references);
+        bullets.at(i)->moveWithVelocity(newOffset);
     }
 }
 

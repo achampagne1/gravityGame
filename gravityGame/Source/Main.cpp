@@ -145,6 +145,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         movementEnginePtr->jump();
     }
+    if (key == GLFW_KEY_Q && action == GLFW_PRESS) { //temp key mapping until i figure out mouse click
+        map->shoot();
+    }
     if (action == GLFW_RELEASE) {
         movementEnginePtr->setDirection(4);
     }
