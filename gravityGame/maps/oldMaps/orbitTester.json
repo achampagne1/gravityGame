@@ -20,13 +20,13 @@
       "_comment": "1st",
       "type": "npc",
       "coordinates": [ 150, 0 ],
-      "velocity": [ 11.5, 0 ]
+      "velocity": [ 0, 0 ]
     },
     {
       "_comment": "2nd",
       "type": "npc",
       "coordinates": [ 250, 0 ],
-      "velocity": [ 10, -1 ]
+      "velocity": [ 0, -1 ]
     },
     {
       "_comment": "3rd",
