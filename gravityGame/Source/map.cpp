@@ -41,7 +41,6 @@ void Map::centerMap() {
     offset[1] = 220 - playerData->getAvgY();
     for (int i = 0; i < models.size(); i++) {
         std::shared_ptr<VertexData> temp= models.at(i)->getVertexDataPointer();
-        std::cout << temp->getAvgX() << " " << temp->getAvgY() << std::endl;
         float offsetOfModel[2] = { 0,0 };
         offsetOfModel[0] = offset[0] + temp->getAvgX() - temp->getAvgXModel() +playerData->getAvgXModel();
         offsetOfModel[1] = offset[1] + temp->getAvgY() - temp->getAvgXModel() +playerData->getAvgYModel();

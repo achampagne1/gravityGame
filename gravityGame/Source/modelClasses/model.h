@@ -21,6 +21,7 @@ class Model{
 
 	public: 
 		Model();
+		Model(const Model& model);
 		void setType(std::string type);
 		std::string getType();
 		void generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2]);

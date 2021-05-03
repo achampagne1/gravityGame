@@ -53,7 +53,7 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 		std::shared_ptr<Player> player{ new Player };
 		for (int i = 0; i < modelsLoaded.size(); i++) {
 			if (modelsLoaded.at(i)->getType() == modelType) {
-				player = std::dynamic_pointer_cast<Player>(modelsLoaded.at(i));
+				player = std::make_shared<Player>(*std::dynamic_pointer_cast<Player>(modelsLoaded.at(i)));
 			}
 		}
 		loadGenerics(modelType, player,0);
@@ -65,7 +65,7 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 			std::shared_ptr<Npc> npc{ new Npc };
 			for (int i = 0; i < modelsLoaded.size(); i++) {
 				if (modelsLoaded.at(i)->getType() == modelType) {
-					npc = std::dynamic_pointer_cast<Npc>(modelsLoaded.at(i));
+					npc = std::make_shared<Npc>(*std::dynamic_pointer_cast<Npc>(modelsLoaded.at(i)));
 				}
 			}
 			loadGenerics(modelType, npc, i);

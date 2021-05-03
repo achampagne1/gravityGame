@@ -4,6 +4,12 @@ Model::Model() {
 	
 }
 
+Model::Model(const Model& model) {
+	type = model.type;
+	vertexData = std::make_shared<VertexData>(*model.vertexData);
+
+}
+
 void Model::setType(std::string type){
 	this->type = type;
 }

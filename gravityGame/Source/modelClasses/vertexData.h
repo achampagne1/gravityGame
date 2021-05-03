@@ -33,6 +33,7 @@ private:
 	glm::mat4 trans = glm::mat4(1.0f);
 public:
 	VertexData();
+	VertexData(const VertexData& vertexData);
 	void generateObject(const char* modelPath, int width, int height);
 	void render();
 	void move(float x, float y);

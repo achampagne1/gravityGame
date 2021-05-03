@@ -4,6 +4,38 @@ VertexData::VertexData() {
 
 }
 
+VertexData::VertexData(const VertexData& vertexData) {
+    shader = std::make_unique<Shader>(*vertexData.shader);
+    VAO = vertexData.VAO;
+    texture = vertexData.texture;
+    width = vertexData.width;
+    height = vertexData.height;
+    x = vertexData.x;
+    y = vertexData.y;
+    rotation = vertexData.rotation;
+    xAvgModel = vertexData.xAvgModel;
+    yAvgModel = vertexData.yAvgModel;
+    xAvgGlobal = vertexData.xAvgGlobal;
+    yAvgGlobal = vertexData.yAvgGlobal;
+    gravity = vertexData.gravity;
+    trans = vertexData.trans;
+    indicesSizeTexture = vertexData.indicesSizeTexture;
+    verticesSizeTexture = vertexData.verticesSizeTexture;
+    indicesSizeCollision = vertexData.indicesSizeCollision;
+    verticesSizeCollision = vertexData.verticesSizeCollision;
+    verticesTexture = new float[verticesSizeTexture * 8];
+    verticesCollision = new float[verticesSizeCollision * 8];
+    verticesCollisionUpdated = new float[verticesSizeCollision * 8];
+    indicesTexture = new int[indicesSizeTexture];
+    indicesCollision = new int[indicesSizeCollision];
+    *verticesTexture = *vertexData.verticesTexture;
+    *verticesCollision = *vertexData.verticesCollision;
+    *verticesCollisionUpdated = *verticesCollisionUpdated;
+    *indicesTexture = *vertexData.indicesTexture;
+    *indicesCollision = *vertexData.indicesCollision;
+
+}
+
 void VertexData::generateObject(const char* modelPath, int width, int height) {
     using json = nlohmann::json;
     this->width = width;
@@ -53,7 +85,6 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &EBO);
     glGenTextures(1, &texture);
-
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, verticesSizeTexture * 8 * sizeof(float), verticesTexture, GL_STATIC_DRAW);
