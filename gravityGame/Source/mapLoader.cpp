@@ -117,10 +117,11 @@ std::shared_ptr<Model> MapLoader::loadGenerics(std::string modelType, std::share
 }
 
 std::shared_ptr<Bullet> MapLoader::createBullet(float coor[], float direction[]) {
-	float velocit[2] = { direction[0] * 15,direction[1] * 15 };
+	float velocit[2] = { direction[0] * 20,direction[1] * 20 };
 	for (int i = 0; i < modelsLoaded.size(); i++){
 		if (modelsLoaded.at(i)->getType() == "bullet") {
 			std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(*std::dynamic_pointer_cast<Bullet>(modelsLoaded.at(i)));
+			bullet->moveWithPosition(coor);
 			bullet->setVelocity(velocit);
 			return bullet;
 		}

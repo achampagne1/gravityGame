@@ -78,9 +78,11 @@ void Map::adjustDownward() { //adjusting downward for everything else
 }
 
 void Map::shoot() {
-    float temp[2] = { 0,0 };
-    float temp2[2] = { 1,1 };
-    std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, temp2);
+    std::shared_ptr<VertexData> playerVertexData = player->getVertexDataPointer();
+    float temp[2] = { playerVertexData->getAvgX(),playerVertexData->getAvgY()};
+    glm::vec2 direction = glm::normalize(glm::vec2(-(windowSize[0]/2-cursorPos[0]), windowSize[1] / 2 - cursorPos[1]));
+    float directionToShoot[2] = { direction[0],direction[1]};
+    std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, directionToShoot);
     models.push_back(bullet);
     bullets.push_back(bullet);
 }
@@ -99,6 +101,16 @@ void Map::respawn() {
         }
         std::cout << "respawn" << std::endl;
     }
+}
+
+void Map::setCursorPos(double xPos, double yPos) {
+    cursorPos[0] = xPos;
+    cursorPos[1] = yPos;
+}
+
+void Map::setScreenSize(float width, float height){
+    windowSize[0] = width;
+    windowSize[1] = height;
 }
 
 void Map::renderMap() {

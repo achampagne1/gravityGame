@@ -14,6 +14,7 @@ class Map{
 		std::unique_ptr<MapLoader> mapLoader{ new MapLoader };
 		int windowSize[2];
 		int mapBounds[4] = { 0,0,0,0 };
+		double cursorPos[2] = { 0,0 };
 		const char* mapPath = "";
 		float currentPlayerLocation[2] = { 0,0 };
 
@@ -27,6 +28,8 @@ class Map{
 		void adjustDownwardOnStart();
 		void adjustDownward();
 		void respawn();
+		void setCursorPos(double xPos, double yPos);
+		void setScreenSize(float width, float height);
 		void updateMap();
 		void destroyMap();
 };

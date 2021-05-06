@@ -20,6 +20,8 @@ private:
 
 	int width = 0;
 	int height = 0;
+	float aspectRatioX = 0;
+	float aspectRatioY = 0;
 	float x = 0;
 	float y = 0;
 	float rotation = 0;
