@@ -165,6 +165,7 @@
     <ClCompile Include="Source\modelClasses\model.cpp" />
     <ClCompile Include="Source\physics\movementEngine.cpp" />
     <ClCompile Include="Source\modelClasses\vertexData.cpp" />
+    <ClCompile Include="Source\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Header.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Source\physics\movementEngine.h" />
     <ClInclude Include="Source\shaderLoader.h" />
     <ClInclude Include="Source\modelClasses\vertexData.h" />
+    <ClInclude Include="Source\timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="maps\oldMaps\orbitTester.json" />

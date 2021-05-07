@@ -114,6 +114,4 @@ void Model::render() {
 	vertexData->render();
 }
 
-void Model::destroy() {
-	vertexData->destroy();
-}
+Model::~Model() {};

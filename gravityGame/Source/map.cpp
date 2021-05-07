@@ -87,6 +87,24 @@ void Map::shoot() {
     bullets.push_back(bullet);
 }
 
+void Map::bulletStuff(std::vector<std::shared_ptr<Model>> references) {
+    float* newOffset;
+    for (int i = 0; i < bullets.size(); i++) {
+        newOffset = bullets.at(i)->calculateVelocity(references);
+        bullets.at(i)->moveWithVelocity(newOffset);
+        if (bullets.at(i)->checkToDestroy()) {
+            for(int j = 0;j<models.size();j++){
+                if (bullets.at(i) == models.at(j)) {
+                    std::cout << models.size() << std::endl;
+                    models.erase(models.begin() + j);
+                    std::cout << models.size() << std::endl;
+                }
+            }
+            bullets.erase(bullets.begin()+i);
+        }
+    }
+}
+
 void Map::respawn() {
     if (currentPlayerLocation[0]<mapBounds[0] || currentPlayerLocation[0] > mapBounds[1] || currentPlayerLocation[1]<mapBounds[2] || currentPlayerLocation[1] > mapBounds[3]) {
         //I need to get a global coordinate system done before i do respawn
@@ -144,14 +162,9 @@ void Map::updateMap() {
         npc.at(i)->moveWithVelocity(newOffset);
     }
     
-    for (int i = 0; i < bullets.size(); i++) {
-        newOffset = bullets.at(i)->calculateVelocity(references);
-        bullets.at(i)->moveWithVelocity(newOffset);
-    }
+    bulletStuff(references);
+
 }
 
-void Map::destroyMap() {
-    for (int i = 0; i < models.size(); i++)
-        models.at(i)->destroy();
-    background->destroy();
-}
+Map::~Map() {}
+  

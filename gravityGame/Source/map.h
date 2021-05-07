@@ -20,6 +20,7 @@ class Map{
 
 	public:
 		Map(const char* mapPath, int width,int height);
+		~Map();
 		std::shared_ptr<MovementEngine> getMovementPtr();
 		void renderMap();
 		void shoot();
@@ -31,6 +32,6 @@ class Map{
 		void setCursorPos(double xPos, double yPos);
 		void setScreenSize(float width, float height);
 		void updateMap();
-		void destroyMap();
+		void bulletStuff(std::vector<std::shared_ptr<Model>> references);
 };
 

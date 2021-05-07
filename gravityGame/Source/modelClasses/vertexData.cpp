@@ -183,7 +183,7 @@ void VertexData::moveVertices(float x, float y) {
     }
 }
 
-void VertexData::destroy() {
+VertexData::~VertexData() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);

@@ -175,7 +175,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 
 void destroy() {
-    map->destroyMap();
     glfwDestroyWindow(window);
     glfwTerminate();
     exit(EXIT_SUCCESS);

@@ -22,6 +22,7 @@ class Model{
 	public: 
 		Model();
 		Model(const Model& model);
+		~Model();
 		void setType(std::string type);
 		std::string getType();
 		void generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2]);
@@ -38,7 +39,6 @@ class Model{
 		void moveWithPosition(float newPos[2]);
 		void respawn();
 		void rotate(glm::vec2 direction);
-		void render();
-		virtual void destroy();
+		virtual void render();
 };
 

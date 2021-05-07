@@ -36,6 +36,7 @@ private:
 public:
 	VertexData();
 	VertexData(const VertexData& vertexData);
+	~VertexData();
 	void generateObject(const char* modelPath, int width, int height);
 	void render();
 	void move(float x, float y);
@@ -47,7 +48,6 @@ public:
 	void rotate(glm::vec2 direction);
 	void computeAverage(float model[], int size);
 	void moveVertices(float x, float y);
-	void destroy();
 
 	int indicesSizeTexture = 0;
 	int verticesSizeTexture = 0;
