@@ -5,7 +5,7 @@ Bullet::Bullet() {
 }
 
 Bullet::Bullet(const Bullet& bullet) :Model(bullet) {
-	timer->startTimer(2000); //sets lifespan to 2 seconds
+	timer->startTimer(10000); //sets lifespan to 2 seconds
 }
 
 bool Bullet::checkToDestroy() {

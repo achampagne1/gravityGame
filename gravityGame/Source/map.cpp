@@ -90,17 +90,16 @@ void Map::shoot() {
 void Map::bulletStuff(std::vector<std::shared_ptr<Model>> references) {
     float* newOffset;
     for (int i = 0; i < bullets.size(); i++) {
-        newOffset = bullets.at(i)->calculateVelocity(references);
-        bullets.at(i)->moveWithVelocity(newOffset);
         if (bullets.at(i)->checkToDestroy()) {
             for(int j = 0;j<models.size();j++){
-                if (bullets.at(i) == models.at(j)) {
-                    std::cout << models.size() << std::endl;
+                if (bullets.at(i) == models.at(j)) 
                     models.erase(models.begin() + j);
-                    std::cout << models.size() << std::endl;
-                }
             }
             bullets.erase(bullets.begin()+i);
+        }
+        else {
+            newOffset = bullets.at(i)->calculateVelocity(references);
+            bullets.at(i)->moveWithVelocity(newOffset);
         }
     }
 }

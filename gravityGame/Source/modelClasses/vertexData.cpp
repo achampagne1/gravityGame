@@ -113,13 +113,13 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
 
 void VertexData::render() {
     shader->use();
-    unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");
+    unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");    
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glBindVertexArray(VAO);
+    glBindTexture(GL_TEXTURE_2D, texture);   
+    glBindVertexArray(VAO); 
     glDrawElements(GL_TRIANGLES, indicesSizeTexture, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    glBindVertexArray(0);   
 }
 
 void VertexData::move(float x, float y) {
@@ -184,7 +184,7 @@ void VertexData::moveVertices(float x, float y) {
 }
 
 VertexData::~VertexData() {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    //glDeleteVertexArrays(1, &VAO);
+    //glDeleteBuffers(1, &VBO);
+    //glDeleteBuffers(1, &EBO);
 }
