@@ -133,11 +133,16 @@ void VertexData::render() {
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
     if (texturesSize > 1) {
-        glBindTexture(GL_TEXTURE_2D, textures[index]);
-        if (index == texturesSize)
-            index = 0;
+        glBindTexture(GL_TEXTURE_2D, textures[animationIndex]);
+        if (frameCounter == 20) { //number of frames to change sprite
+            animationIndex++;
+            frameCounter = 0;
+        }
         else
-            index++;
+            frameCounter++;
+
+        if (animationIndex == texturesSize)
+            animationIndex = 0;
     }
     else
         glBindTexture(GL_TEXTURE_2D, textures[0]);
