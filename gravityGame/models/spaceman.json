@@ -10,7 +10,7 @@
 0,3,2
 ],
 
-"texturePath": "textures/animationFrame1(1000px).png",
+  "texturePaths": [ "textures/animationFrame1(1000px).png", "textures/spacewoman.png" ],
 
   "collisionVertices": [
 20.00,40.00,0.0,0.0,0.0,0.0,0.0,0.0,

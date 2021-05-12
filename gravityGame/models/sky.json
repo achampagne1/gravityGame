@@ -10,7 +10,7 @@
 0,3,2
 ],
 
-"texturePath": "textures/sky.png",
+  "texturePaths": [ "textures/sky.png" ],
 
   "collisionVertices": [],
   "collisionIndices": [],

@@ -10,7 +10,7 @@
 0,3,2
 ],
 
-"texturePath": "textures/spacewoman.png",
+  "texturePaths": [ "textures/spacewoman.png" ],
 
   "collisionVertices": [
 20.00,40.00,0.0,0.0,0.0,0.0,0.0,0.0,

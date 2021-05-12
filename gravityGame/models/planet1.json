@@ -10,7 +10,7 @@
 0,3,2
 ],
 
-"texturePath": "textures/planet1.png",
+  "texturePaths": [ "textures/planet1.png" ],
 
   "collisionVertices": [
 250.00,500.00,0.0,0.0,0.0,0.0,0.0,0.0,

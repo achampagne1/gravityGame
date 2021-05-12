@@ -15,8 +15,11 @@
 
 class VertexData {
 private:
+	int index = 0;
 	unsigned int VAO=0, VBO=0, EBO=0;
-	unsigned int texture = 0;
+	unsigned int* textures;
+	int texturesSize;
+	std::vector<std::string> texturePaths;
 
 	int width = 0;
 	int height = 0;

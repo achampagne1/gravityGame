@@ -7,7 +7,6 @@ VertexData::VertexData() {
 VertexData::VertexData(const VertexData& vertexData) {
     shader = std::make_unique<Shader>(*vertexData.shader);
     VAO = vertexData.VAO;
-    texture = vertexData.texture;
     width = vertexData.width;
     height = vertexData.height;
     x = vertexData.x;
@@ -23,9 +22,11 @@ VertexData::VertexData(const VertexData& vertexData) {
     verticesSizeTexture = vertexData.verticesSizeTexture;
     indicesSizeCollision = vertexData.indicesSizeCollision;
     verticesSizeCollision = vertexData.verticesSizeCollision;
+    texturesSize = vertexData.texturesSize;
     verticesCollision = new float[verticesSizeCollision * 8];
     verticesCollisionUpdated = new float[verticesSizeCollision * 8];
     indicesCollision = new int[indicesSizeCollision];
+    textures = new unsigned int[texturesSize * 4];
     for (int i = 0; i < verticesSizeCollision * 8; i++) {
         verticesCollision[i]= vertexData.verticesCollision[i];
         verticesCollisionUpdated[i] = vertexData.verticesCollisionUpdated[i];
@@ -34,6 +35,10 @@ VertexData::VertexData(const VertexData& vertexData) {
     for (int i = 0; i < indicesSizeCollision; i++)
         indicesCollision[i] = vertexData.indicesCollision[i];
 
+    for (int i = 0; i < texturesSize; i++)
+        textures[i] = vertexData.textures[i];
+
+    
 }
 
 void VertexData::generateObject(const char* modelPath, int width, int height) {
@@ -51,9 +56,12 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
     verticesSizeTexture = jf["textureVertices"].size();
     indicesSizeCollision = jf["collisionIndices"].size();
     verticesSizeCollision = jf["collisionVertices"].size();
+    texturesSize = jf["texturePaths"].size();
     verticesTexture = new float[verticesSizeTexture * 8];
     verticesCollision = new float[verticesSizeCollision * 8];
     verticesCollisionUpdated = new float[verticesSizeCollision * 8];
+    verticesCollisionUpdated = new float[verticesSizeCollision * 8];
+    textures = new unsigned int[texturesSize*4];
 
     indicesTexture = new int[indicesSizeTexture];
     indicesCollision = new int[indicesSizeCollision];
@@ -71,20 +79,23 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
     for (int i = 0; i < indicesSizeCollision; i++) { // responsible for just the collision indices
         indicesCollision[i] = jf["collisionIndices"][i];
     }
+    for (int i = 0; i < jf["texturePaths"].size(); i++) {
+        texturePaths.push_back(jf["texturePaths"].at(i));
+    }
+
 
     computeAverage(verticesCollision, verticesSizeCollision / 8); //you only need to compute the average for the collision model
     conversion->format(verticesTexture, verticesSizeTexture);
     conversion->format(verticesCollision, verticesSizeCollision);
 
-    std::string texturePathString = to_string(jf["texturePath"]);
     this->gravity = jf["gravity"];
-    texturePathString.erase(0, 1);
-    texturePathString.erase(texturePathString.size() - 1);
+
     //binds id
     glGenBuffers(1, &VBO);
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &EBO);
-    glGenTextures(1, &texture);
+    for(int i = 0;i<texturesSize;i++)
+        glGenTextures(1, &textures[i]);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, verticesSizeTexture * 8 * sizeof(float), verticesTexture, GL_STATIC_DRAW);
@@ -97,15 +108,20 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeTexture * 4, indicesTexture, GL_STATIC_DRAW);
     //texture
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    for (int i = 0; i < texturesSize; i++) {
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        glEnableVertexAttribArray(2);
 
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(texturePathString.c_str(), &width, &height, &nrChannels, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    stbi_image_free(data);
+        std::string texturePathString = to_string(jf["texturePaths"][i]);
+        texturePathString.erase(0, 1);
+        texturePathString.erase(texturePathString.size() - 1);
+        stbi_set_flip_vertically_on_load(true);
+        unsigned char* data = stbi_load(texturePathString.c_str(), &width, &height, &nrChannels, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        stbi_image_free(data);
+    }
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -116,10 +132,18 @@ void VertexData::render() {
     unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");    
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
-    glBindTexture(GL_TEXTURE_2D, texture);   
+    if (texturesSize > 1) {
+        glBindTexture(GL_TEXTURE_2D, textures[index]);
+        if (index == texturesSize)
+            index = 0;
+        else
+            index++;
+    }
+    else
+        glBindTexture(GL_TEXTURE_2D, textures[0]);
     glBindVertexArray(VAO); 
     glDrawElements(GL_TRIANGLES, indicesSizeTexture, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);   
+    glBindVertexArray(0);       
 }
 
 void VertexData::move(float x, float y) {
