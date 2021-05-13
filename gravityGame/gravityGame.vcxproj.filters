@@ -164,6 +164,18 @@
     <Image Include="textures\sky.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="textures\spacemanWaiting\frame1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\spacemanWaiting\frame2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\spacemanWaiting\frame3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\spacemanWaiting\frame4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="maps\map1.json" />

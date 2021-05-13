@@ -6,8 +6,8 @@ Model::Model() {
 
 Model::Model(const Model& model) {
 	type = model.type;
+	texturesSize = model.texturesSize;
 	vertexData = std::make_shared<VertexData>(*model.vertexData);
-
 }
 
 void Model::setType(std::string type){
@@ -27,6 +27,7 @@ void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2]
 	this->velocity[0] = velocity[0];
 	this->velocity[1] = velocity[1];
 	vertexData->move(pos[0], pos[1]);
+	texturesSize = vertexData->getTexturesSize();
 }
 
 void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
@@ -111,7 +112,20 @@ glm::vec2 Model::getGravityDirection() {
 }
 
 void Model::render() {
-	vertexData->render();
+	if (texturesSize > 1) {
+		if (frameCounter == 15) { //number of frames to change sprite
+			animationFrame++;
+			frameCounter = 0;
+		}
+		else
+			frameCounter++;
+
+		if (animationFrame == texturesSize)
+			animationFrame = 0;
+		vertexData->render(animationFrame);
+	}
+	else
+		vertexData->render(0);
 }
 
 Model::~Model() {};

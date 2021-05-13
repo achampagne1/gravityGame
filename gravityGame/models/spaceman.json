@@ -10,7 +10,7 @@
 0,3,2
 ],
 
-  "texturePaths": [ "textures/animationFrame1(1000px).png", "textures/spacewoman.png" ],
+  "texturePaths": [ "textures/spacemanWaiting/frame1.png", "textures/spacemanWaiting/frame2.png", "textures/spacemanWaiting/frame3.png", "textures/spacemanWaiting/frame4.png" ],
 
   "collisionVertices": [
 20.00,40.00,0.0,0.0,0.0,0.0,0.0,0.0,

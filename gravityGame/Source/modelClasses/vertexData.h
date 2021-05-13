@@ -42,13 +42,14 @@ public:
 	VertexData(const VertexData& vertexData);
 	~VertexData();
 	void generateObject(const char* modelPath, int width, int height);
-	void render();
+	void render(int animationFrame);
 	void move(float x, float y);
 	float getAvgX();
 	float getAvgY();
 	float getAvgXModel();
 	float getAvgYModel();
 	float getGravity();
+	int getTexturesSize();
 	void rotate(glm::vec2 direction);
 	void computeAverage(float model[], int size);
 	void moveVertices(float x, float y);

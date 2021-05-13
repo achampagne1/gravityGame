@@ -127,25 +127,12 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
     glBindVertexArray(0);
 }
 
-void VertexData::render() {
+void VertexData::render(int animationFrame) {
     shader->use();
     unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");    
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
-    if (texturesSize > 1) {
-        glBindTexture(GL_TEXTURE_2D, textures[animationIndex]);
-        if (frameCounter == 20) { //number of frames to change sprite
-            animationIndex++;
-            frameCounter = 0;
-        }
-        else
-            frameCounter++;
-
-        if (animationIndex == texturesSize)
-            animationIndex = 0;
-    }
-    else
-        glBindTexture(GL_TEXTURE_2D, textures[0]);
+    glBindTexture(GL_TEXTURE_2D, textures[animationFrame]);     
     glBindVertexArray(VAO); 
     glDrawElements(GL_TRIANGLES, indicesSizeTexture, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);       
@@ -190,6 +177,10 @@ float VertexData::getAvgYModel() {
 
 float VertexData::getGravity() {
     return gravity;
+}
+
+int VertexData::getTexturesSize() {
+    return texturesSize;
 }
 
 void VertexData::rotate(glm::vec2 direction) {
