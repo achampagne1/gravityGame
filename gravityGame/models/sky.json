@@ -10,8 +10,15 @@
 0,3,2
 ],
 
-  "texturePaths": [ "textures/sky.png" ],
+  "animations": [
+    {
+      "type": "generic",
 
+      "frames": [ "textures/sky.png" ],
+
+      "order": [ 0 ]
+    }
+  ],
   "collisionVertices": [],
   "collisionIndices": [],
 

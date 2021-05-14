@@ -10,7 +10,15 @@
 0,3,2
 ],
 
-  "texturePaths": [ "textures/planet1.png" ],
+    "animations": [
+    {
+      "type": "generic",
+
+      "frames": [ "textures/planet1.png" ],
+
+      "order": [ 0 ]
+    }
+  ],
 
   "collisionVertices": [
 250.00,500.00,0.0,0.0,0.0,0.0,0.0,0.0,

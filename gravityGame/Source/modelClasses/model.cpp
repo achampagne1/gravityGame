@@ -27,7 +27,9 @@ void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2]
 	this->velocity[0] = velocity[0];
 	this->velocity[1] = velocity[1];
 	vertexData->move(pos[0], pos[1]);
-	texturesSize = vertexData->getTexturesSize();
+	vertexData->setAnimationType("generic");
+	currentAnimationType = vertexData->getCurrentAnimation();
+	texturesSize = currentAnimationType->getFramesSize();	
 }
 
 void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
@@ -122,10 +124,12 @@ void Model::render() {
 
 		if (animationFrame == texturesSize)
 			animationFrame = 0;
-		vertexData->render(animationFrame);
+		currentAnimationType = vertexData->getCurrentAnimation();
+		vertexData->render(currentAnimationType->getOrder(animationFrame));
 	}
-	else
+	else {
 		vertexData->render(0);
+	}
 }
 
 Model::~Model() {};

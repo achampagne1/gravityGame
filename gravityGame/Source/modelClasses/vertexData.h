@@ -4,6 +4,7 @@
 #include "..\loadFile.h"
 #include "..\convertToFloat.h"
 #include "..\shaderLoader.h"
+#include "..\animationData.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -15,12 +16,9 @@
 
 class VertexData {
 private:
-	int animationIndex = 0;
-	int frameCounter = 0;
 	unsigned int VAO=0, VBO=0, EBO=0;
-	unsigned int* textures;
-	int texturesSize;
-	std::vector<std::string> texturePaths;
+	std::vector<std::shared_ptr<AnimationData>> animationDataVec;
+	std::shared_ptr<AnimationData> currentAnimationType;
 
 	int width = 0;
 	int height = 0;
@@ -50,6 +48,8 @@ public:
 	float getAvgYModel();
 	float getGravity();
 	int getTexturesSize();
+	std::shared_ptr<AnimationData> getCurrentAnimation();
+	void setAnimationType(std::string type);
 	void rotate(glm::vec2 direction);
 	void computeAverage(float model[], int size);
 	void moveVertices(float x, float y);

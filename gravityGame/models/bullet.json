@@ -10,7 +10,16 @@
 0,3,2
 ],
 
-  "texturePaths": [ "textures/bullet.png" ],
+ 
+  "animations": [
+    {
+      "type": "generic",
+
+      "frames": [ "textures/bullet.png" ],
+
+      "order": [ 0 ]
+    }
+  ],
 
   "collisionVertices": [
 10.00,20.00,0.0,0.0,0.0,0.0,0.0,0.0,

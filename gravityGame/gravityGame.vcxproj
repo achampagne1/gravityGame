@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\animationData.cpp" />
     <ClCompile Include="Source\modelClasses\bullet.cpp" />
     <ClCompile Include="Source\modelClasses\background.cpp" />
     <ClCompile Include="Source\modelClasses\planet.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Source\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\animationData.h" />
     <ClInclude Include="Source\Header.h" />
     <ClInclude Include="Source\modelClasses\bullet.h" />
     <ClInclude Include="Source\modelClasses\background.h" />
