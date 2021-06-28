@@ -170,7 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\animationData.h" />
-    <ClInclude Include="Source\Header.h" />
     <ClInclude Include="Source\modelClasses\bullet.h" />
     <ClInclude Include="Source\modelClasses\background.h" />
     <ClInclude Include="include\json.hpp" />
@@ -211,6 +210,7 @@
     <None Include="models\square.json" />
     <None Include="Shaders\3.3.shader.fs" />
     <None Include="Shaders\3.3.shader.vs" />
+    <None Include="textures\spacemanWaiting\spacemanWaiting.ai" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\awesomeface.png" />
@@ -221,6 +221,8 @@
     <Image Include="textures\spacemanWaiting\frame2.png" />
     <Image Include="textures\spacemanWaiting\frame3.png" />
     <Image Include="textures\spacemanWaiting\frame4.png" />
+    <Image Include="textures\spacemanWaiting\frame5.png" />
+    <Image Include="textures\spacemanWaiting\frame6.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="maps\map1.json" />

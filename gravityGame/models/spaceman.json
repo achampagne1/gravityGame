@@ -14,9 +14,9 @@
     {
       "type": "generic",
 
-      "frames": [ "textures/spacemanWaiting/frame1.png", "textures/spacemanWaiting/frame2.png", "textures/spacemanWaiting/frame3.png", "textures/spacemanWaiting/frame4.png" ],
+      "frames": [ "textures/spacemanWaiting/frame1.png", "textures/spacemanWaiting/frame2.png", "textures/spacemanWaiting/frame3.png", "textures/spacemanWaiting/frame4.png", "textures/spacemanWaiting/frame5.png", "textures/spacemanWaiting/frame6.png" ],
 
-      "order": [ 0, 1, 2, 3, 2, 1]
+      "order": [ 0,1,2,3,4,5,5,5,5,4,3,2,1,0]
     }
   ],
 

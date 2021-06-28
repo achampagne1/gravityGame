@@ -8,6 +8,7 @@ class AnimationData{
 		int framesSize;
 		std::vector<int> order;
 	public:	
+		AnimationData();
 		void setFramesSize(int framesSize);
 		void setType(std::string type);
 		void setFrame(int index, unsigned int data);

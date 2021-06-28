@@ -1,5 +1,8 @@
 #include "animationData.h"
 
+AnimationData::AnimationData() {
+
+}
 void AnimationData::setFramesSize(int framesSize) {
 	this->framesSize = framesSize;
 	frames = new unsigned int[framesSize * 4];

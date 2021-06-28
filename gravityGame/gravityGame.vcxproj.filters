@@ -125,9 +125,6 @@
     <ClInclude Include="Source\modelClasses\bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Header.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ModelDataPacket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -156,6 +153,7 @@
     <None Include="models\spacewoman.json" />
     <None Include="maps\oldMaps\orbitTester.json" />
     <None Include="models\bullet.json" />
+    <None Include="textures\spacemanWaiting\spacemanWaiting.ai" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\spaceman.png">
@@ -180,6 +178,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="textures\spacemanWaiting\frame4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\spacemanWaiting\frame5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\spacemanWaiting\frame6.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

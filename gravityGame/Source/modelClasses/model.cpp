@@ -115,7 +115,7 @@ glm::vec2 Model::getGravityDirection() {
 
 void Model::render() {
 	if (texturesSize > 1) {
-		if (frameCounter == 15) { //number of frames to change sprite
+		if (frameCounter == 8) { //number of frames to change sprite
 			animationFrame++;
 			frameCounter = 0;
 		}
@@ -124,7 +124,7 @@ void Model::render() {
 
 		if (animationFrame == texturesSize)
 			animationFrame = 0;
-		currentAnimationType = vertexData->getCurrentAnimation();
+		currentAnimationType = vertexData->getCurrentAnimation(); //for some reason, the currentAnimation odesnt save
 		vertexData->render(currentAnimationType->getOrder(animationFrame));
 	}
 	else {
