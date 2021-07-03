@@ -83,23 +83,24 @@ void Map::shoot() {
     glm::vec2 direction = glm::normalize(glm::vec2(-(windowSize[0]/2-cursorPos[0]), windowSize[1] / 2 - cursorPos[1]));
     float directionToShoot[2] = { direction[0],direction[1]};
     std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, directionToShoot);
-    models.push_back(bullet);
-    bullets.push_back(bullet);
+    for (int i = 0; i < 100; i++) {
+        if (bullets[i] == nullptr) {
+            bullets[i] = bullet;
+            break;
+        }
+    }
 }
 
 void Map::bulletStuff(std::vector<std::shared_ptr<Model>> references) {
     float* newOffset;
-    for (int i = 0; i < bullets.size(); i++) {
-        if (bullets.at(i)->checkToDestroy()) {
-            for(int j = 0;j<models.size();j++){
-                if (bullets.at(i) == models.at(j)) 
-                    models.erase(models.begin() + j);
-            }
-            bullets.erase(bullets.begin()+i);
-        }
+    for (int i = 0; i < 100; i++) {
+        if (bullets[i] == nullptr)
+            continue;
+        else if (bullets[i]->checkToDestroy()) 
+            bullets[i] = nullptr;
         else {
-            newOffset = bullets.at(i)->calculateVelocity(references);
-            bullets.at(i)->moveWithVelocity(newOffset);
+            newOffset = bullets[i]->calculateVelocity(references);
+            bullets[i]->moveWithVelocity(newOffset);
         }
     }
 }
@@ -132,6 +133,10 @@ void Map::setScreenSize(float width, float height){
 
 void Map::renderMap() {
     background->render();
+    for (int i = 0; i < 100; i++) {
+        if (bullets[i] != nullptr)
+            bullets[i]->render();
+    }
     for (int i = 0; i < models.size(); i++)
         models.at(i)->render();
 }
@@ -152,6 +157,12 @@ void Map::updateMap() {
         models.at(i)->rotate(glm::vec2(0, 1));
         models.at(i)->moveWithVelocity(newOffsetTemp);
         //things need to be rotated as well
+    }
+    for (int i = 0; i < 100; i++) {
+        if (bullets[i] != nullptr) {
+            bullets[i]->rotate(glm::vec2(0, 1));
+            bullets[i]->moveWithVelocity(newOffsetTemp);
+        }
     }
 
     //adjustDownward(); //adjusting downward works, but messes up because of collision makes you hop
