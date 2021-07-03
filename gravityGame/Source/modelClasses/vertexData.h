@@ -16,8 +16,7 @@
 
 class VertexData {
 private:
-	unsigned int VAO=0, VBO=0, EBO=0;
-	std::vector<std::shared_ptr<AnimationData>> animationDataVec;
+	unsigned int VAO = 0, VBO = 0, EBO = 0;
 	std::shared_ptr<AnimationData> currentAnimationType;
 
 	int width = 0;
@@ -39,7 +38,7 @@ public:
 	VertexData();
 	VertexData(const VertexData& vertexData);
 	~VertexData();
-	void generateObject(const char* modelPath, int width, int height);
+	std::vector<std::shared_ptr<AnimationData>> generateObject(const char* modelPath, int width, int height);
 	void render(int animationFrame);
 	void move(float x, float y);
 	float getAvgX();
@@ -49,7 +48,6 @@ public:
 	float getGravity();
 	int getTexturesSize();
 	std::shared_ptr<AnimationData> getCurrentAnimation();
-	void setAnimationType(std::string type);
 	void rotate(glm::vec2 direction);
 	void computeAverage(float model[], int size);
 	void moveVertices(float x, float y);

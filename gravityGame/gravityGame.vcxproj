@@ -180,7 +180,6 @@
     <ClInclude Include="Source\mapLoader.h" />
     <ClInclude Include="Source\modelClasses\player.h" />
     <ClInclude Include="Source\map.h" />
-    <ClInclude Include="Source\ModelDataPacket.h" />
     <ClInclude Include="Source\physics\collisionEngine.h" />
     <ClInclude Include="Source\convertToFloat.h" />
     <ClInclude Include="Source\delay.h" />
@@ -205,9 +204,7 @@
     <None Include="models\planet1.json" />
     <None Include="models\sky.json" />
     <None Include="models\spaceman.json" />
-    <None Include="models\snakeHead.md" />
     <None Include="models\spacewoman.json" />
-    <None Include="models\square.json" />
     <None Include="Shaders\3.3.shader.fs" />
     <None Include="Shaders\3.3.shader.vs" />
     <None Include="textures\spacemanWaiting\spacemanWaiting.ai" />
@@ -223,6 +220,7 @@
     <Image Include="textures\spacemanWaiting\frame4.png" />
     <Image Include="textures\spacemanWaiting\frame5.png" />
     <Image Include="textures\spacemanWaiting\frame6.png" />
+    <Image Include="textures\spacemanWaiting\waitingSpritesheet.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="maps\map1.json" />

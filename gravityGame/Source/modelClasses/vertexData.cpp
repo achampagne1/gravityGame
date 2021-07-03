@@ -32,13 +32,9 @@ VertexData::VertexData(const VertexData& vertexData) {
 
     for (int i = 0; i < indicesSizeCollision; i++)
         indicesCollision[i] = vertexData.indicesCollision[i];
-
-    for (int i = 0; i < vertexData.animationDataVec.size(); i++)
-        animationDataVec.push_back(std::make_shared<AnimationData>(*vertexData.animationDataVec.at(i)));
-    
 }
 
-void VertexData::generateObject(const char* modelPath, int width, int height) {
+std::vector<std::shared_ptr<AnimationData>> VertexData::generateObject(const char* modelPath, int width, int height) {
     using json = nlohmann::json;
     this->width = width;
     this->height = height;
@@ -95,7 +91,8 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSizeTexture * 4, indicesTexture, GL_STATIC_DRAW);
-    //texture
+    //animatons
+    std::vector<std::shared_ptr<AnimationData>> animationDataVec;
     for (int i = 0; i < jf["animations"].size(); i++) {
         std::shared_ptr<AnimationData> temp{ new AnimationData };
         int framesSize = 0;
@@ -125,13 +122,14 @@ void VertexData::generateObject(const char* modelPath, int width, int height) {
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+    return animationDataVec;
 }
 
 void VertexData::render(int animationFrame) {
     shader->use();
     unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");    
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));  
-    glBindTexture(GL_TEXTURE_2D, animationDataVec.at(0)->getFrame(animationFrame));
+    glBindTexture(GL_TEXTURE_2D, animationFrame);
     glBindVertexArray(VAO); 
     glDrawElements(GL_TRIANGLES, indicesSizeTexture, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);       
@@ -182,17 +180,8 @@ int VertexData::getTexturesSize() {
     return currentAnimationType->getFramesSize();
 }
 
-void VertexData::setAnimationType(std::string type) {
-    for (int i = 0; i < animationDataVec.size(); i++) {
-        if (animationDataVec.at(i)->getType() == type) {
-            currentAnimationType = animationDataVec.at(i);     
-            return;
-        }
-    }
-}
-
 std::shared_ptr<AnimationData> VertexData::getCurrentAnimation() {
-    return animationDataVec.at(0);
+    return currentAnimationType;
 }
 
 void VertexData::rotate(glm::vec2 direction) {

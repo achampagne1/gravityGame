@@ -125,9 +125,6 @@
     <ClInclude Include="Source\modelClasses\bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModelDataPacket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -138,8 +135,6 @@
   <ItemGroup>
     <None Include="Shaders\3.3.shader.vs" />
     <None Include="Shaders\3.3.shader.fs" />
-    <None Include="models\snakeHead.md" />
-    <None Include="models\square.json" />
     <None Include="models\circleR9.json" />
     <None Include="models\circleR50.json" />
     <None Include="models\circleRes20Rad10.json" />
@@ -184,6 +179,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="textures\spacemanWaiting\frame6.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\spacemanWaiting\waitingSpritesheet.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

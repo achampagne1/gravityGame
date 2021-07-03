@@ -10,6 +10,7 @@ class Model{
 		std::unique_ptr<GravityEngine> gravityEngine{ new GravityEngine };
 		std::unique_ptr<CollisionEngine> collisionEngine{ new CollisionEngine };
 		std::shared_ptr<MovementEngine> movementEngine{ new MovementEngine };
+		std::vector<std::shared_ptr<AnimationData>> animationDataVec;
 		std::shared_ptr<AnimationData> currentAnimationType;
 
 		float pos[2] = { 0,0 };
@@ -43,6 +44,7 @@ class Model{
 		void moveWithPosition(float newPos[2]);
 		void respawn();
 		void rotate(glm::vec2 direction);
+		void setAnimationType(std::string type);
 		virtual void render();
 };
 

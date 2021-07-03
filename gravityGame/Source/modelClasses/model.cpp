@@ -8,6 +8,7 @@ Model::Model(const Model& model) {
 	type = model.type;
 	texturesSize = model.texturesSize;
 	vertexData = std::make_shared<VertexData>(*model.vertexData);
+	currentAnimationType = model.currentAnimationType;
 }
 
 void Model::setType(std::string type){
@@ -19,7 +20,7 @@ std::string Model::getType() {
 }
 
 void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2]) {
-	vertexData->generateObject(modelPath, windowSize[0], windowSize[1]);
+	animationDataVec = vertexData->generateObject(modelPath, windowSize[0], windowSize[1]);
 	this->pos[0] = pos[0];
 	this->pos[1] = pos[1];
 	respawnPoint[0] = pos[0];
@@ -27,8 +28,7 @@ void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2]
 	this->velocity[0] = velocity[0];
 	this->velocity[1] = velocity[1];
 	vertexData->move(pos[0], pos[1]);
-	vertexData->setAnimationType("generic");
-	currentAnimationType = vertexData->getCurrentAnimation();
+	setAnimationType("generic");
 	texturesSize = currentAnimationType->getFramesSize();	
 }
 
@@ -115,7 +115,7 @@ glm::vec2 Model::getGravityDirection() {
 
 void Model::render() {
 	if (texturesSize > 1) {
-		if (frameCounter == 8) { //number of frames to change sprite
+		if (frameCounter == 2) { //number of frames to change sprite
 			animationFrame++;
 			frameCounter = 0;
 		}
@@ -124,11 +124,19 @@ void Model::render() {
 
 		if (animationFrame == texturesSize)
 			animationFrame = 0;
-		currentAnimationType = vertexData->getCurrentAnimation(); //for some reason, the currentAnimation odesnt save
-		vertexData->render(currentAnimationType->getOrder(animationFrame));
+		vertexData->render(currentAnimationType->getFrame(currentAnimationType->getOrder(animationFrame)));
 	}
 	else {
-		vertexData->render(0);
+		vertexData->render(currentAnimationType->getFrame(0));
+	}
+}
+
+void Model::setAnimationType(std::string type) {
+	for (int i = 0; i < animationDataVec.size(); i++) { //animation data vec needs to be sorted by letter so binary search can be used.
+		if (animationDataVec.at(i)->getType() == type) {
+			currentAnimationType = animationDataVec.at(i);
+			return;
+		}
 	}
 }
 
