@@ -16,16 +16,17 @@ void Map::createMap() {
 
     player = std::dynamic_pointer_cast<Player>(mapLoader->getModels("player").at(0));
     models.push_back(player);
-    std::vector<std::shared_ptr<Model>> tempNpcVector = mapLoader->getModels("npc");
-    for (int i = 0; i < tempNpcVector.size(); i++) {
-        models.push_back(tempNpcVector.at(i));
-        npc.push_back(std::dynamic_pointer_cast<Npc>(tempNpcVector.at(i)));
-    }
 
     std::vector<std::shared_ptr<Model>> tempPlanetVector = mapLoader->getModels("planet");
     for (int i = 0; i < tempPlanetVector.size(); i++) {
         models.push_back(tempPlanetVector.at(i));
         planets.push_back(std::dynamic_pointer_cast<Planet>(tempPlanetVector.at(0)));
+    }
+
+    std::vector<std::shared_ptr<Model>> tempNpcVector = mapLoader->getModels("npc");
+    for (int i = 0; i < tempNpcVector.size(); i++) {
+        models.push_back(tempNpcVector.at(i));
+        npc.push_back(std::dynamic_pointer_cast<Npc>(tempNpcVector.at(i)));
     }
 
     background = std::dynamic_pointer_cast<Background>(mapLoader->getModels("background").at(0));
@@ -57,7 +58,7 @@ void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     player->calculateGravity(references);
     glm::vec2 direction = player->getGravityDirection();
     for (int i = 1; i < models.size(); i++) {
-        float* temp = adjustDownward(models.at(1)->getVertexDataPointer(),direction);
+        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(),direction);
         float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
         models.at(i)->moveWithPosition(newPos);
     }
