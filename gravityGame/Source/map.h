@@ -27,7 +27,7 @@ class Map{
 		void createMap();
 		void centerMap();
 		void adjustDownwardOnStart();
-		void adjustDownward();
+		float* adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 direction);
 		void respawn();
 		void setCursorPos(double xPos, double yPos);
 		void setScreenSize(float width, float height);

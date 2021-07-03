@@ -50,31 +50,31 @@ void Map::centerMap() {
 }
 
 void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
+    //NOTE: might want to adjust for bullets as well, if the level starts with bullets flying
     std::vector<std::shared_ptr<Model>> references;
     for (int i = 0; i < planets.size(); i++)
         references.push_back(planets.at(i));
     player->calculateGravity(references);
-    adjustDownward();
+    glm::vec2 direction = player->getGravityDirection();
+    for (int i = 1; i < models.size(); i++) {
+        float* temp = adjustDownward(models.at(1)->getVertexDataPointer(),direction);
+        float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
+        models.at(i)->moveWithPosition(newPos);
+    }
 }
 
-void Map::adjustDownward() { //adjusting downward for everything else
-    glm::vec2 direction = player->getGravityDirection();
+float* Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 direction) { //adjusting downward for everything else
     float angleDown = atan2(-1, 0);
     float angle = atan2(direction.y, direction.x); //gets the angle that everything needs to be rotated by
     float angleDifference = angle - angleDown;
-    if (abs(angleDifference) < 0.000001) //why does the guy jump
-        return;
     std::shared_ptr<VertexData> playerVertexData = player->getVertexDataPointer(); //player vertex data
-    for (int i = 1; i < models.size(); i++) { //loops through all models
-        std::shared_ptr<VertexData> temp = models.at(i)->getVertexDataPointer(); //gets model vertex data
-        float xDiff = temp->getAvgX() - playerVertexData->getAvgX();  //gets difference of x
-        float yDiff = temp->getAvgY() - playerVertexData->getAvgY();  //gets difference of y
-        float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
-        float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
-        angle2 -= angleDifference;
-        float newPos[2] = { (magnitude * cos(angle2)) + windowSize[0] / 2 - temp->getAvgXModel(),(magnitude * sin(angle2)) + windowSize[1] / 2 - temp->getAvgYModel() };
-        models.at(i)->moveWithPosition(newPos);
-    }
+    float xDiff = input->getAvgX() - playerVertexData->getAvgX();  //gets difference of x
+    float yDiff = input->getAvgY() - playerVertexData->getAvgY();  //gets difference of y
+    float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
+    float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
+    angle2 -= angleDifference;
+    float newPos[2] = { (magnitude * cos(angle2)) + windowSize[0] / 2 - input->getAvgXModel(),(magnitude * sin(angle2)) + windowSize[1] / 2 - input->getAvgYModel() };
+    return newPos;
 }
 
 void Map::shoot() {
@@ -146,6 +146,7 @@ void Map::updateMap() {
     for (int i = 0; i < planets.size(); i++)
         references.push_back(planets.at(i));
     float* newOffset = player->calculateVelocity(references); //janky way of doing it, but this is for transfering the data in that array to a new array so the original array does not get modified
+    glm::vec2 direction = player->getGravityDirection();
     float newOffsetTemp[2] = { newOffset[0],newOffset[1] };
     currentPlayerLocation[0] += newOffsetTemp[0];
     currentPlayerLocation[1] += newOffsetTemp[1];
@@ -156,6 +157,9 @@ void Map::updateMap() {
     for (int i = 1; i < models.size(); i++) {
         models.at(i)->rotate(glm::vec2(0, 1));
         models.at(i)->moveWithVelocity(newOffsetTemp);
+        //float* temp = adjustDownward(models.at(1)->getVertexDataPointer(), direction); //messes up,but why
+        //float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
+        //models.at(i)->moveWithPosition(newPos);
         //things need to be rotated as well
     }
     for (int i = 0; i < 100; i++) {
@@ -165,7 +169,6 @@ void Map::updateMap() {
         }
     }
 
-    //adjustDownward(); //adjusting downward works, but messes up because of collision makes you hop
     //respawn();
     for (int i = 0; i < npc.size(); i++) {
         newOffset = npc.at(i)->calculateVelocity(references);
@@ -173,7 +176,7 @@ void Map::updateMap() {
     }
     
     bulletStuff(references);
-
+    //adjustDownward(); //adjusting downward works, but messes up because of collision makes you hop
 }
 
 Map::~Map() {}
