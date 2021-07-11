@@ -38,8 +38,8 @@ void Map::createMap() {
 void Map::centerMap() {
     std::shared_ptr<VertexData> playerData = player->getVertexDataPointer();
     float offset[2] = { 0,0 };
-    offset[0] = 380-playerData->getAvgX();
-    offset[1] = 220 - playerData->getAvgY();
+    offset[0] = windowSize[0] / 2 - playerData->getAvgX(); 
+    offset[1] = windowSize[1] / 2 - playerData->getAvgY();
     for (int i = 0; i < models.size(); i++) {
         std::shared_ptr<VertexData> temp= models.at(i)->getVertexDataPointer();
         float offsetOfModel[2] = { 0,0 };
@@ -74,7 +74,9 @@ float* Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 directio
     float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
     float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
     angle2 -= angleDifference;
-    float newPos[2] = { (magnitude * cos(angle2)) + windowSize[0] / 2 - input->getAvgXModel(),(magnitude * sin(angle2)) + windowSize[1] / 2 - input->getAvgYModel() };
+    if (abs(angleDown - angle2) < .0001)
+        angle2 = angleDown;
+    float newPos[2] = { (magnitude * cos(angle2)) + windowSize[0] / 2 - input->getAvgXModel()+ playerVertexData->getAvgXModel(),(magnitude * sin(angle2)) + windowSize[1] / 2 - input->getAvgYModel() + playerVertexData->getAvgYModel() };
     return newPos;
 }
 
@@ -157,12 +159,13 @@ void Map::updateMap() {
 
     for (int i = 1; i < models.size(); i++) {
         models.at(i)->rotate(glm::vec2(0, 1));
-        models.at(i)->moveWithVelocity(newOffsetTemp);
-        //float* temp = adjustDownward(models.at(1)->getVertexDataPointer(), direction); //messes up,but why
-        //float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
-        //models.at(i)->moveWithPosition(newPos);
+        models.at(i)->moveWithVelocity(newOffsetTemp); //uncomment whenever centering is fixed
+        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction); //messes up,but why
+        float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
+        models.at(i)->moveWithPosition(newPos);
         //things need to be rotated as well
     }
+
     for (int i = 0; i < 100; i++) {
         if (bullets[i] != nullptr) {
             bullets[i]->rotate(glm::vec2(0, 1));
@@ -177,7 +180,6 @@ void Map::updateMap() {
     }
     
     bulletStuff(references);
-    //adjustDownward(); //adjusting downward works, but messes up because of collision makes you hop
 }
 
 Map::~Map() {}

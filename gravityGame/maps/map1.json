@@ -16,11 +16,17 @@
     }
   ],
   "npc": [
+    {
+      "_comment": "1st",
+      "type": "npc",
+      "coordinates": [ 150, 0 ],
+      "velocity": [ 0, 0 ]
+    }
   ],
   "planet": [
     {
       "type": "planet",
-      "coordinates": [ -300, -500 ],
+      "coordinates": [ -225, -550 ],
       "velocity": [ 0, 0 ]
     }
   ],

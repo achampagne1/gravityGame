@@ -52,7 +52,7 @@ void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	}
 }
 
-void Model::calculateMovement() {
+void Model::calculateMovement() { //what moves you around
 	movementVec = movementEngine->calculateMovement();
 	velocity[0] += movementVec[0]; //adds new movement velocity
 	velocity[1] += movementVec[1];

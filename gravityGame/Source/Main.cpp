@@ -23,8 +23,8 @@ void onStartUp();
 //variables
 std::shared_ptr<MovementEngine> movementEnginePtr;
 
-int screenWidth = 800;
-int screenHeight = 460;
+int screenWidth = 950;
+int screenHeight = 500;
 static double limitFPS = 1.0 / 30.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
@@ -91,7 +91,7 @@ void initWindow() {
     if (!glfwInit())
         exit(EXIT_FAILURE);
 
-    window = glfwCreateWindow(800, 450, "Gravity Game", NULL, NULL);
+    window = glfwCreateWindow(screenWidth, screenHeight, "Gravity Game", NULL, NULL);
 
     if (!window)
     {
