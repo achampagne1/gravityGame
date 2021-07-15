@@ -23,8 +23,8 @@ void onStartUp();
 //variables
 std::shared_ptr<MovementEngine> movementEnginePtr;
 
-int screenWidth = 950;
-int screenHeight = 500;
+int screenWidth = 800;
+int screenHeight = 800;//NOTE: I am using this screen size so rotation is normal
 static double limitFPS = 1.0 / 30.0;
 double lastTime = glfwGetTime(), timer = lastTime;
 double deltaTime = 0, nowTime = 0;
@@ -36,7 +36,7 @@ bool stepMode = false;
 //object declerations
 GLFWwindow* window;
 std::shared_ptr<Delay> delay;
-std::shared_ptr<Map> map{ new Map("maps/oldMaps/orbitTester.json",screenWidth,screenHeight) };
+std::shared_ptr<Map> map{ new Map("maps/map1.json",screenWidth,screenHeight) };
 
 int main(void)
 {
@@ -71,6 +71,7 @@ int main(void)
 
 void onStartUp() {
     srand(time(0)); 
+    map->setScreenSizeOnStart(screenWidth, screenHeight);
     map->createMap();
 }
 

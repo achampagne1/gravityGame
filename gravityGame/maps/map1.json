@@ -26,7 +26,7 @@
   "planet": [
     {
       "type": "planet",
-      "coordinates": [ -225, -550 ],
+      "coordinates": [ -225, -610 ],
       "velocity": [ 0, 0 ]
     }
   ],

@@ -13,6 +13,7 @@ class Map{
 		std::shared_ptr<Background> background;
 		std::unique_ptr<MapLoader> mapLoader{ new MapLoader };
 		int windowSize[2];
+		int windowSizeOnStart[2];
 		int mapBounds[4] = { 0,0,0,0 };
 		double cursorPos[2] = { 0,0 };
 		const char* mapPath = "";
@@ -31,6 +32,7 @@ class Map{
 		void respawn();
 		void setCursorPos(double xPos, double yPos);
 		void setScreenSize(float width, float height);
+		void setScreenSizeOnStart(float width, float height);
 		void updateMap();
 		void bulletStuff(std::vector<std::shared_ptr<Model>> references);
 };

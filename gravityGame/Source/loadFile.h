@@ -1,4 +1,3 @@
-#pragma once
 #ifndef loadFileH
 #define loadFileH
 

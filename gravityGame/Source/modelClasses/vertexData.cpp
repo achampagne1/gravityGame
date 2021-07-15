@@ -145,13 +145,7 @@ void VertexData::move(float x, float y) {
     conversion->convertToGlobal(coor);
     moveVertices(coor[0], coor[1]);
     glm::mat4 temp = glm::mat4(1.0f);
-    float angle = glm::radians(45.0f);
-    /*temp = glm::rotate(temp, angle, glm::vec3(0.0f, 0.0f, 1.0f));
-    aspectRatioX = .5625;
-    aspectRatioY = 1.77777778;
-    //float scalingFactor = 1;
-    //float otherVar = 0.65;
-    temp = glm::scale(temp, glm::vec3(1.0f,1.0f+ aspectRatioX*sin(angle), 1.0f));*/
+    //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
     temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
     trans = temp;
 }
@@ -185,7 +179,7 @@ std::shared_ptr<AnimationData> VertexData::getCurrentAnimation() {
 }
 
 void VertexData::rotate(glm::vec2 direction) {
-    rotation = atan(direction[1] / direction[0]);
+    rotation = atan(-direction[0] / direction[1]);
 }
 
 void VertexData::computeAverage(float model[], int size) {
