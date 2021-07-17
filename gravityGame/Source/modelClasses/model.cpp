@@ -1,7 +1,7 @@
 #include "model.h"
 
 Model::Model() {
-	
+
 }
 
 Model::Model(const Model& model) {
@@ -11,7 +11,7 @@ Model::Model(const Model& model) {
 	currentAnimationType = model.currentAnimationType;
 }
 
-void Model::setType(std::string type){
+void Model::setType(std::string type) {
 	this->type = type;
 }
 
@@ -29,13 +29,13 @@ void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2]
 	this->velocity[1] = velocity[1];
 	vertexData->move(pos[0], pos[1]);
 	setAnimationType("generic");
-	texturesSize = currentAnimationType->getFramesSize();	
+	texturesSize = currentAnimationType->getFramesSize();
 }
 
 void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
 	float avgCoor[2] = { vertexData->getAvgX(),vertexData->getAvgY() };
-	deltaVelocity= gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
+	deltaVelocity = gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
 	gravityDirection = gravityEngine->getDirection();
 	movementEngine->setGravityForceVec(gravityDirection);
 }
@@ -56,6 +56,9 @@ void Model::calculateMovement() { //what moves you around
 	movementVec = movementEngine->calculateMovement();
 	velocity[0] += movementVec[0]; //adds new movement velocity
 	velocity[1] += movementVec[1];
+	if (movementEngine->directionChange())
+		vertexData->mirrorSprite();
+
 }
 
 float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object

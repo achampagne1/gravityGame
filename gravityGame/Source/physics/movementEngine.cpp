@@ -3,7 +3,7 @@
 MovementEngine::MovementEngine() {
 
 }
-glm::vec2 MovementEngine:: calculateMovement() {
+glm::vec2 MovementEngine::calculateMovement() {
 	float speed = 3;
 	glm::vec2 movementVec = glm::vec2(0, 0);
 	if (grounded) {
@@ -26,6 +26,14 @@ glm::vec2 MovementEngine:: calculateMovement() {
 }
 void MovementEngine::setDirection(int direction) {
 	this->direction = direction;
+}
+
+bool MovementEngine::directionChange() {
+	if (prevDirection != direction&&direction!=4) {
+		prevDirection = direction;
+		return true;
+	}
+	return false;
 }
 
 void MovementEngine::setGrounded(bool grounded) {

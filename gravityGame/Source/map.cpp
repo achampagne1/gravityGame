@@ -1,6 +1,6 @@
 #include "map.h"
 
-Map::Map(const char* mapPath, int width,int height) {
+Map::Map(const char* mapPath, int width, int height) {
     this->mapPath = mapPath;
     windowSize[0] = width;
     windowSize[1] = height;
@@ -37,9 +37,9 @@ void Map::createMap() {
 
 void Map::centerMap() {
     std::shared_ptr<VertexData> playerData = player->getVertexDataPointer();
-    float offset[2] = { windowSize[0] / 2 - playerData->getAvgX(),windowSize[1] / 2 - playerData->getAvgY()};
+    float offset[2] = { windowSize[0] / 2 - playerData->getAvgX(),windowSize[1] / 2 - playerData->getAvgY() };
     for (int i = 0; i < models.size(); i++) {
-        std::shared_ptr<VertexData> temp= models.at(i)->getVertexDataPointer();
+        std::shared_ptr<VertexData> temp = models.at(i)->getVertexDataPointer();
         float offsetOfModel[2] = { 0,0 };
         offsetOfModel[0] = offset[0] + temp->getAvgX() - temp->getAvgXModel();
         offsetOfModel[1] = offset[1] + temp->getAvgY() - temp->getAvgXModel();
@@ -56,7 +56,7 @@ void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     player->calculateGravity(references);
     glm::vec2 direction = player->getGravityDirection();
     for (int i = 1; i < models.size(); i++) {
-        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(),direction);
+        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
         float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
         models.at(i)->moveWithPosition(newPos);
     }
@@ -74,15 +74,15 @@ float* Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 directio
     angle2 -= angleDifference;
     if (abs(angleDown - angle2) < .0001)
         angle2 = angleDown;
-    float newPos[2] = { (magnitude * cos(angle2)) + windowSizeOnStart[0] / 2 - input->getAvgXModel(),(magnitude * sin(angle2)) + windowSizeOnStart[1] / 2 - input->getAvgYModel()};
+    float newPos[2] = { (magnitude * cos(angle2)) + windowSizeOnStart[0] / 2 - input->getAvgXModel(),(magnitude * sin(angle2)) + windowSizeOnStart[1] / 2 - input->getAvgYModel() };
     return newPos;
 }
 
 void Map::shoot() {
     std::shared_ptr<VertexData> playerVertexData = player->getVertexDataPointer();
-    float temp[2] = { playerVertexData->getAvgX(),playerVertexData->getAvgY()};
-    glm::vec2 direction = glm::normalize(glm::vec2(-(windowSize[0]/2-cursorPos[0]), windowSize[1] / 2 - cursorPos[1]));
-    float directionToShoot[2] = { direction[0],direction[1]};
+    float temp[2] = { playerVertexData->getAvgX(),playerVertexData->getAvgY() };
+    glm::vec2 direction = glm::normalize(glm::vec2(-(windowSize[0] / 2 - cursorPos[0]), windowSize[1] / 2 - cursorPos[1]));
+    float directionToShoot[2] = { direction[0],direction[1] };
     std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, directionToShoot);
     for (int i = 0; i < 100; i++) {
         if (bullets[i] == nullptr) {
@@ -97,7 +97,7 @@ void Map::bulletStuff(std::vector<std::shared_ptr<Model>> references) {
     for (int i = 0; i < 100; i++) {
         if (bullets[i] == nullptr)
             continue;
-        else if (bullets[i]->checkToDestroy()) 
+        else if (bullets[i]->checkToDestroy())
             bullets[i] = nullptr;
         else {
             newOffset = bullets[i]->calculateVelocity(references);
@@ -127,7 +127,7 @@ void Map::setCursorPos(double xPos, double yPos) {
     cursorPos[1] = yPos;
 }
 
-void Map::setScreenSize(float width, float height){
+void Map::setScreenSize(float width, float height) {
     windowSize[0] = width;
     windowSize[1] = height;
 }
@@ -182,9 +182,8 @@ void Map::updateMap() {
         npc.at(i)->moveWithVelocity(newOffset);
         npc.at(i)->rotate(directionNpc);
     }
-    
+
     bulletStuff(references);
 }
 
 Map::~Map() {}
-  

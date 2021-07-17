@@ -25,13 +25,17 @@ VertexData::VertexData(const VertexData& vertexData) {
     verticesCollision = new float[verticesSizeCollision * 8];
     verticesCollisionUpdated = new float[verticesSizeCollision * 8];
     indicesCollision = new int[indicesSizeCollision];
+    verticesTexture = new float[verticesSizeTexture * 8];
     for (int i = 0; i < verticesSizeCollision * 8; i++) {
-        verticesCollision[i]= vertexData.verticesCollision[i];
+        verticesCollision[i] = vertexData.verticesCollision[i];
         verticesCollisionUpdated[i] = vertexData.verticesCollisionUpdated[i];
     }
 
     for (int i = 0; i < indicesSizeCollision; i++)
         indicesCollision[i] = vertexData.indicesCollision[i];
+
+    for (int i = 0; i < verticesSizeTexture; i++)
+        verticesTexture[i] = vertexData.verticesTexture[i];
 }
 
 std::vector<std::shared_ptr<AnimationData>> VertexData::generateObject(const char* modelPath, int width, int height) {
@@ -44,11 +48,11 @@ std::vector<std::shared_ptr<AnimationData>> VertexData::generateObject(const cha
     std::string jsonString;
     jsonString = file->load(modelPath).str();
     json jf = json::parse(jsonString);
-    
+
     indicesSizeTexture = jf["textureIndices"].size();
     verticesSizeTexture = jf["textureVertices"].size();
     indicesSizeCollision = jf["collisionIndices"].size();
-    verticesSizeCollision = jf["collisionVertices"].size(); 
+    verticesSizeCollision = jf["collisionVertices"].size();
     verticesTexture = new float[verticesSizeTexture * 8];
     verticesCollision = new float[verticesSizeCollision * 8];
     verticesCollisionUpdated = new float[verticesSizeCollision * 8];
@@ -112,7 +116,7 @@ std::vector<std::shared_ptr<AnimationData>> VertexData::generateObject(const cha
             unsigned char* data = stbi_load(texturePathString.c_str(), &width, &height, &nrChannels, 0);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
             glGenerateMipmap(GL_TEXTURE_2D);
-            stbi_image_free(data);          
+            stbi_image_free(data);
             temp->setFrame(j, tempId);
         }
         for (int j = 0; j < jf["animations"][i]["order"].size(); j++)
@@ -127,20 +131,20 @@ std::vector<std::shared_ptr<AnimationData>> VertexData::generateObject(const cha
 
 void VertexData::render(int animationFrame) {
     shader->use();
-    unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");    
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));  
+    unsigned int transformLoc = glGetUniformLocation(shader->ID, "location");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
     glBindTexture(GL_TEXTURE_2D, animationFrame);
-    glBindVertexArray(VAO); 
+    glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indicesSizeTexture, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);       
+    glBindVertexArray(0);
 }
 
 void VertexData::move(float x, float y) {
     this->x = x;
     this->y = y;
     float coor[2] = { x,y };
-    xAvgGlobal = x+xAvgModel;//might need to change back to xAvgModel and yAvgModel
-    yAvgGlobal = y+yAvgModel;
+    xAvgGlobal = x + xAvgModel;//might need to change back to xAvgModel and yAvgModel
+    yAvgGlobal = y + yAvgModel;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     moveVertices(coor[0], coor[1]);
@@ -193,9 +197,17 @@ void VertexData::computeAverage(float model[], int size) {
 
 void VertexData::moveVertices(float x, float y) {
     for (int i = 0; i < verticesSizeCollision / 8; i++) {
-        verticesCollisionUpdated[i*8] = verticesCollision[i*8] + x;
-        verticesCollisionUpdated[i*8 + 1] = verticesCollision[i*8 + 1] + y;
+        verticesCollisionUpdated[i * 8] = verticesCollision[i * 8] + x;
+        verticesCollisionUpdated[i * 8 + 1] = verticesCollision[i * 8 + 1] + y;
     }
+}
+
+void VertexData::mirrorSprite() {
+    for (int i = 0; i <= 3; i++) {
+        verticesTexture[i * 8 + 6] = abs(1 - verticesTexture[i * 8 + 6]);
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, verticesSizeTexture * 8 * sizeof(float), verticesTexture, GL_STATIC_DRAW);
 }
 
 VertexData::~VertexData() {

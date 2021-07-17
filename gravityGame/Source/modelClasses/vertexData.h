@@ -31,6 +31,7 @@ private:
 	float xAvgGlobal = 0;
 	float yAvgGlobal = 0;
 	float gravity = 0;
+	bool mirrorVar = false;
 
 	std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") }; //add shader path to constructor
 	glm::mat4 trans = glm::mat4(1.0f);
@@ -51,6 +52,7 @@ public:
 	void rotate(glm::vec2 direction);
 	void computeAverage(float model[], int size);
 	void moveVertices(float x, float y);
+	void mirrorSprite();
 
 	int indicesSizeTexture = 0;
 	int verticesSizeTexture = 0;
