@@ -13,16 +13,16 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 	float v1[2];
 	float v2[2];
 	float v3[2];
-	for (int i = 0; i < model->verticesSizeCollision; i+=8) {
-		pt[0] = model->verticesCollisionUpdated[i]; //gives point that we are checking if is inside of a shape
-		pt[1] = model->verticesCollisionUpdated[i + 1];
-		for (int j = 0; j < chosenPoint->indicesSizeCollision; j+=3) {
-			v1[0] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j]*8];
-			v2[0] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j+1]*8];
-			v3[0] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j+2]*8];
-			v1[1] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j]*8 + 1];
-			v2[1] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j + 1]*8 + 1];
-			v3[1] = chosenPoint->verticesCollisionUpdated[chosenPoint->indicesCollision[j + 2]*8 + 1];
+	for (int i = 0; i < model->collisionVertices.size(); i+=8) {
+		pt[0] = model->collisionVerticesUpdated[i]; //gives point that we are checking if is inside of a shape
+		pt[1] = model->collisionVerticesUpdated[i + 1];
+		for (int j = 0; j < chosenPoint->collisionIndices.size(); j+=3) {
+			v1[0] = chosenPoint->collisionVerticesUpdated[chosenPoint->collisionIndices[j]*8];
+			v2[0] = chosenPoint->collisionVerticesUpdated[chosenPoint->collisionIndices[j+1]*8];
+			v3[0] = chosenPoint->collisionVerticesUpdated[chosenPoint->collisionIndices[j+2]*8];
+			v1[1] = chosenPoint->collisionVerticesUpdated[chosenPoint->collisionIndices[j]*8 + 1];
+			v2[1] = chosenPoint->collisionVerticesUpdated[chosenPoint->collisionIndices[j + 1]*8 + 1];
+			v3[1] = chosenPoint->collisionVerticesUpdated[chosenPoint->collisionIndices[j + 2]*8 + 1];
 			collide = pointInTri(pt, v1, v2, v3);
 			if (collide) {
 				glm::vec2 dir = glm::vec2(v2[0] - v3[0], v2[1] - v3[1]);
@@ -35,15 +35,14 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 	}
 	breakOut:
 
-	/*if (collide) {
+	if (collide) {
 		float disX = model->getAvgX() - chosenPoint->getAvgX();
 		float disY = model->getAvgY() - chosenPoint->getAvgY();
 		float magV = sqrt(pow(velocity[0], 2) + pow(velocity[1], 2));
 		glm::vec2 normalVec = glm::normalize(glm::vec2(disX, disY));
 		normalVec *= magV;
 		return normalVec;
-	}*/
-	return glm::vec2(0, 0); //This collision is temp
+	}
 }
 
 bool CollisionEngine::getCollision() {

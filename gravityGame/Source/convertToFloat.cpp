@@ -37,3 +37,23 @@ void ConvertToFloat::format(float* input, const int size) {
 			step++;
 	}
 }
+
+std::vector<float> ConvertToFloat::format(std::vector<float> input) {
+	int step = 0;
+	for (int i = 0; i < input.size(); i++) {
+		if (step < 3) {
+			if (step == 1)
+				input[i] = ((input[i] * 2) / height) - 1;
+			else
+				input[i] = ((input[i] * 2) / width) - 1;
+		}
+		else if (step < 6) {
+			input[i] = input[i] / 255;
+		}
+		if (step == 7)
+			step = 0;
+		else
+			step++;
+	}
+	return input;
+}

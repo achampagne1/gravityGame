@@ -50,19 +50,16 @@ public:
 	int getTexturesSize();
 	std::shared_ptr<AnimationData> getCurrentAnimation();
 	void rotate(glm::vec2 direction);
-	void computeAverage(float model[], int size);
+	void computeAverage(std::vector<float>input);
 	void moveVertices(float x, float y);
 	void mirrorSprite();
 
-	int indicesSizeTexture = 0;
-	int verticesSizeTexture = 0;
 	int indicesSizeCollision = 0;
 	int verticesSizeCollision= 0;
 
-	float* verticesTexture;
-	float* verticesCollision;
-	float* verticesCollisionUpdated;
-
-	int* indicesTexture;
-	int* indicesCollision;
+	std::vector<float> textureVertices;
+	std::vector<int> textureIndices;
+	std::vector<float> collisionVertices;
+	std::vector<float> collisionVerticesUpdated;
+	std::vector<int> collisionIndices;
 };
