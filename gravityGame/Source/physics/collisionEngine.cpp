@@ -36,8 +36,8 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 	breakOut:
 
 	if (collide) {
-		float disX = model->getAvgX() - chosenPoint->getAvgX();
-		float disY = model->getAvgY() - chosenPoint->getAvgY();
+		float disX = model->getAvg().x - chosenPoint->getAvg().x;
+		float disY = model->getAvg().y - chosenPoint->getAvg().y;
 		float magV = sqrt(pow(velocity[0], 2) + pow(velocity[1], 2));
 		glm::vec2 normalVec = glm::normalize(glm::vec2(disX, disY));
 		normalVec *= magV;

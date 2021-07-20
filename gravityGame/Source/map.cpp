@@ -36,13 +36,14 @@ void Map::createMap() {
 }
 
 void Map::centerMap() {
-    std::shared_ptr<VertexData> playerData = player->getVertexDataPointer();
-    float offset[2] = { windowSize[0] / 2 - playerData->getAvgX(),windowSize[1] / 2 - playerData->getAvgY() };
+    glm::vec2 playerAvgModel = player->getVertexDataPointer()->getAvgModel();
+    float offset[2] = { windowSize[0] / 2 - playerAvgModel.x,windowSize[1] / 2 - playerAvgModel.y };
     for (int i = 0; i < models.size(); i++) {
-        std::shared_ptr<VertexData> temp = models.at(i)->getVertexDataPointer();
+        glm::vec2 modelAvgModel = models.at(i)->getVertexDataPointer()->getAvgModel();
+        glm::vec2 modelAvgGlobal = models.at(i)->getVertexDataPointer()->getAvg();
         float offsetOfModel[2] = { 0,0 };
-        offsetOfModel[0] = offset[0] + temp->getAvgX() - temp->getAvgXModel();
-        offsetOfModel[1] = offset[1] + temp->getAvgY() - temp->getAvgXModel();
+        offsetOfModel[0] = offset[0] + modelAvgGlobal.x - modelAvgModel.x;
+        offsetOfModel[1] = offset[1] + modelAvgGlobal.y - modelAvgModel.y;
         //NOTE: the avergae of the model must be subtracted out due to the move function adding it back in later
         models.at(i)->moveWithPosition(offsetOfModel);
     }
@@ -66,21 +67,23 @@ float* Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 directio
     float angleDown = atan2(-1, 0);
     float angle = atan2(direction.y, direction.x); //gets the angle that everything needs to be rotated by
     float angleDifference = angle - angleDown;
-    std::shared_ptr<VertexData> playerVertexData = player->getVertexDataPointer(); //player vertex data
-    float xDiff = input->getAvgX() - playerVertexData->getAvgX();  //gets difference of x
-    float yDiff = input->getAvgY() - playerVertexData->getAvgY();  //gets difference of y
+    glm::vec2 playerAvg = player->getVertexDataPointer()->getAvg();
+    glm::vec2 inputAvgGlobal = input->getAvg();
+    glm::vec2 inputAvgModel = input->getAvgModel();
+    float xDiff = inputAvgGlobal.x - playerAvg.x;  //gets difference of x
+    float yDiff = inputAvgGlobal.y - playerAvg.y;  //gets difference of y
     float angle2 = atan2(yDiff, xDiff); //you need to extract the angle for a correct calculation
     float magnitude = sqrt(pow(yDiff, 2) + pow(xDiff, 2));  //magnitude is needed for calculating the new rotated position
     angle2 -= angleDifference;
     if (abs(angleDown - angle2) < .0001)
         angle2 = angleDown;
-    float newPos[2] = { (magnitude * cos(angle2)) + windowSizeOnStart[0] / 2 - input->getAvgXModel(),(magnitude * sin(angle2)) + windowSizeOnStart[1] / 2 - input->getAvgYModel() };
+    float newPos[2] = { (magnitude * cos(angle2)) + windowSizeOnStart[0] / 2 - inputAvgModel.x,(magnitude * sin(angle2)) + windowSizeOnStart[1] / 2 - inputAvgModel.y };
     return newPos;
 }
 
 void Map::shoot() {
-    std::shared_ptr<VertexData> playerVertexData = player->getVertexDataPointer();
-    float temp[2] = { playerVertexData->getAvgX(),playerVertexData->getAvgY() };
+    glm::vec2 playerAvg = player->getVertexDataPointer()->getAvg();
+    float temp[2] = { playerAvg.x,playerAvg.y };
     glm::vec2 direction = glm::normalize(glm::vec2(-(windowSize[0] / 2 - cursorPos[0]), windowSize[1] / 2 - cursorPos[1]));
     float directionToShoot[2] = { direction[0],direction[1] };
     std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, directionToShoot);
@@ -107,7 +110,7 @@ void Map::bulletStuff(std::vector<std::shared_ptr<Model>> references) {
 }
 
 void Map::respawn() {
-    if (currentPlayerLocation[0]<mapBounds[0] || currentPlayerLocation[0] > mapBounds[1] || currentPlayerLocation[1]<mapBounds[2] || currentPlayerLocation[1] > mapBounds[3]) {
+    /*if (currentPlayerLocation[0]<mapBounds[0] || currentPlayerLocation[0] > mapBounds[1] || currentPlayerLocation[1]<mapBounds[2] || currentPlayerLocation[1] > mapBounds[3]) {
         //I need to get a global coordinate system done before i do respawn
         float newOffsetTemp[2] = { 0,-96 };
         for (int i = 2; i < models.size(); i++) {
@@ -119,7 +122,7 @@ void Map::respawn() {
             //things need to be rotated as well
         }
         std::cout << "respawn" << std::endl;
-    }
+    }*/
 }
 
 void Map::setCursorPos(double xPos, double yPos) {

@@ -34,7 +34,7 @@ void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2]
 
 void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
-	float avgCoor[2] = { vertexData->getAvgX(),vertexData->getAvgY() };
+	float avgCoor[2] = { vertexData->getAvg().x,vertexData->getAvg().y };
 	deltaVelocity = gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
 	gravityDirection = gravityEngine->getDirection();
 	movementEngine->setGravityForceVec(gravityDirection);

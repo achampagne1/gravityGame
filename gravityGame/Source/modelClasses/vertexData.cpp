@@ -14,6 +14,8 @@ VertexData::VertexData(const VertexData& vertexData) {
     rotation = vertexData.rotation;
     xAvgModel = vertexData.xAvgModel;
     yAvgModel = vertexData.yAvgModel;
+    avg = vertexData.avg;
+    avgModel = vertexData.avgModel;
     xAvgGlobal = vertexData.xAvgGlobal;
     yAvgGlobal = vertexData.yAvgGlobal;
     gravity = vertexData.gravity;
@@ -121,8 +123,10 @@ void VertexData::move(float x, float y) {
     this->x = x;
     this->y = y;
     float coor[2] = { x,y };
-    xAvgGlobal = x + xAvgModel;//might need to change back to xAvgModel and yAvgModel
-    yAvgGlobal = y + yAvgModel;
+    xAvgGlobal = x + avgModel.x;//might need to change back to xAvgModel and yAvgModel
+    yAvgGlobal = y + avgModel.y;
+    avg.x = x + avgModel.x;//might need to change back to xAvgModel and yAvgModel
+    avg.y = y + avgModel.y;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(coor);
     moveVertices(coor[0], coor[1]);
@@ -132,20 +136,12 @@ void VertexData::move(float x, float y) {
     trans = temp;
 }
 
-float VertexData::getAvgX() {
-    return xAvgGlobal;
+glm::vec2 VertexData::getAvg() {
+    return avg;
 }
 
-float VertexData::getAvgY() {
-    return yAvgGlobal;
-}
-
-float VertexData::getAvgXModel() {
-    return yAvgModel;
-}
-
-float VertexData::getAvgYModel() {
-    return xAvgModel;
+glm::vec2 VertexData::getAvgModel() {
+    return avgModel;
 }
 
 float VertexData::getGravity() {
@@ -171,6 +167,14 @@ void VertexData::computeAverage(std::vector<float>input) {
     }
     xAvgModel /= input.size()/8;
     yAvgModel /= input.size()/8;
+
+    //new code
+    for (int i = 0; i < input.size() / 8; i++) {
+        avgModel.x += input[i * 8];
+        avgModel.y += input[i * 8 + 1];
+    }
+    avgModel.x /= input.size() / 8;
+    avgModel.y /= input.size() / 8;
 }
 
 void VertexData::moveVertices(float x, float y) {

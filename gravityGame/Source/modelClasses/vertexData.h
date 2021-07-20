@@ -30,6 +30,8 @@ private:
 	float yAvgModel = 0;
 	float xAvgGlobal = 0;
 	float yAvgGlobal = 0;
+	glm::vec2 avg;
+	glm::vec2 avgModel;
 	float gravity = 0;
 	bool mirrorVar = false;
 
@@ -42,10 +44,8 @@ public:
 	std::vector<std::shared_ptr<AnimationData>> generateObject(const char* modelPath, int width, int height);
 	void render(int animationFrame);
 	void move(float x, float y);
-	float getAvgX();
-	float getAvgY();
-	float getAvgXModel();
-	float getAvgYModel();
+	glm::vec2 getAvg();
+	glm::vec2 getAvgModel();
 	float getGravity();
 	int getTexturesSize();
 	std::shared_ptr<AnimationData> getCurrentAnimation();
