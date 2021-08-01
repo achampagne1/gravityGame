@@ -11,13 +11,9 @@ VertexData::VertexData(const VertexData& vertexData) {
     height = vertexData.height;
     x = vertexData.x;
     y = vertexData.y;
-    rotation = vertexData.rotation;
-    xAvgModel = vertexData.xAvgModel;
-    yAvgModel = vertexData.yAvgModel;
+    rotation = vertexData.rotation; 
     avg = vertexData.avg;
     avgModel = vertexData.avgModel;
-    xAvgGlobal = vertexData.xAvgGlobal;
-    yAvgGlobal = vertexData.yAvgGlobal;
     gravity = vertexData.gravity;
     trans = vertexData.trans;
     indicesSizeCollision = vertexData.indicesSizeCollision;
@@ -123,8 +119,6 @@ void VertexData::move(float x, float y) {
     this->x = x;
     this->y = y;
     float coor[2] = { x,y };
-    xAvgGlobal = x + avgModel.x;//might need to change back to xAvgModel and yAvgModel
-    yAvgGlobal = y + avgModel.y;
     avg.x = x + avgModel.x;//might need to change back to xAvgModel and yAvgModel
     avg.y = y + avgModel.y;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
@@ -133,6 +127,18 @@ void VertexData::move(float x, float y) {
     glm::mat4 temp = glm::mat4(1.0f);
     //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
     temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
+    trans = temp;
+}
+
+void VertexData::move(glm::vec2 input) {
+    avg.x = input.x + avgModel.x;
+    avg.y = input.y + avgModel.y;
+    std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
+    conversion->convertToGlobal(input);
+    moveVertices(input.x, input.y);
+    glm::mat4 temp = glm::mat4(1.0f);
+    //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+    temp = glm::translate(temp, glm::vec3(input.x, input.y, 0.0f));
     trans = temp;
 }
 
@@ -161,14 +167,6 @@ void VertexData::rotate(glm::vec2 direction) {
 }
 
 void VertexData::computeAverage(std::vector<float>input) {
-    for (int i = 0; i < input.size()/8; i++) {
-        xAvgModel += input[i * 8];
-        yAvgModel += input[i * 8 + 1];
-    }
-    xAvgModel /= input.size()/8;
-    yAvgModel /= input.size()/8;
-
-    //new code
     for (int i = 0; i < input.size() / 8; i++) {
         avgModel.x += input[i * 8];
         avgModel.y += input[i * 8 + 1];

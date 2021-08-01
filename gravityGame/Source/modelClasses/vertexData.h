@@ -5,10 +5,6 @@
 #include "..\convertToFloat.h"
 #include "..\shaderLoader.h"
 #include "..\animationData.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "glm/ext.hpp"
 #include "json.hpp" 
 #include "stb_image.h"
 
@@ -25,11 +21,7 @@ private:
 	float aspectRatioY = 0;
 	float x = 0;
 	float y = 0;
-	float rotation = 0;
-	float xAvgModel = 0;
-	float yAvgModel = 0;
-	float xAvgGlobal = 0;
-	float yAvgGlobal = 0;
+	float rotation = 0;	
 	glm::vec2 avg;
 	glm::vec2 avgModel;
 	float gravity = 0;
@@ -44,6 +36,7 @@ public:
 	std::vector<std::shared_ptr<AnimationData>> generateObject(const char* modelPath, int width, int height);
 	void render(int animationFrame);
 	void move(float x, float y);
+	void move(glm::vec2 input);
 	glm::vec2 getAvg();
 	glm::vec2 getAvgModel();
 	float getGravity();
