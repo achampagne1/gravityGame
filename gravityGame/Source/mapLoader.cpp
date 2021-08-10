@@ -25,6 +25,7 @@ void MapLoader::loadModelsFromMemory() { //responsible for loading all models fr
 		float velocity[2] = { 0,0 };
 		model->generateModel(path.c_str(), windowSize, coor, velocity);
 		modelsLoaded.push_back(model);
+		//loadedModels[]
 	}
 }
 

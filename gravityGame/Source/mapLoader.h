@@ -13,6 +13,7 @@ class MapLoader
 		using json = nlohmann::json;
 		std::unique_ptr<LoadFile> fileLoader{ new LoadFile };
 		std::vector<std::shared_ptr<Model>> modelsLoaded;
+		std::unordered_map<std::string, std::shared_ptr<Model>> loadedModels;
 		json jf;
 		int windowSize[2] = { 0,0 };
 	public:
