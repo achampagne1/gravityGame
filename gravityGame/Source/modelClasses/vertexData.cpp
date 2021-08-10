@@ -115,27 +115,14 @@ void VertexData::render(int animationFrame) {
     glBindVertexArray(0);
 }
 
-void VertexData::move(float x, float y) {
-    this->x = x;
-    this->y = y;
-    float coor[2] = { x,y };
-    avg.x = x + avgModel.x;//might need to change back to xAvgModel and yAvgModel
-    avg.y = y + avgModel.y;
-    std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
-    conversion->convertToGlobal(coor);
-    moveVertices(coor[0], coor[1]);
-    glm::mat4 temp = glm::mat4(1.0f);
-    //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-    temp = glm::translate(temp, glm::vec3(coor[0], coor[1], 0.0f));
-    trans = temp;
-}
-
 void VertexData::move(glm::vec2 input) {
+    this->x = input.x;
+    this->y = input.y;
     avg.x = input.x + avgModel.x;
     avg.y = input.y + avgModel.y;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
-    conversion->convertToGlobal(input);
-    moveVertices(input.x, input.y);
+    conversion->convertToGlobal(&input);
+    moveVertices(input);
     glm::mat4 temp = glm::mat4(1.0f);
     //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
     temp = glm::translate(temp, glm::vec3(input.x, input.y, 0.0f));
@@ -179,6 +166,13 @@ void VertexData::moveVertices(float x, float y) {
     for (int i = 0; i < collisionVertices.size() / 8; i++) {
         collisionVerticesUpdated[i * 8] = collisionVertices[i * 8] + x;
         collisionVerticesUpdated[i * 8 + 1] = collisionVertices[i * 8 + 1] + y;
+    }
+}
+
+void VertexData::moveVertices(glm::vec2 coordinates) {
+    for (int i = 0; i < collisionVertices.size() / 8; i++) {
+        collisionVerticesUpdated[i * 8] = collisionVertices[i * 8] + coordinates.x;
+        collisionVerticesUpdated[i * 8 + 1] = collisionVertices[i * 8 + 1] + coordinates.y;
     }
 }
 

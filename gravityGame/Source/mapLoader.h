@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 #include "modelClasses\player.h"
 #include "modelClasses\npc.h"
 #include "modelClasses\planet.h"
@@ -11,7 +12,6 @@ class MapLoader
 		const char* mapPath;
 		using json = nlohmann::json;
 		std::unique_ptr<LoadFile> fileLoader{ new LoadFile };
-		std::vector<std::shared_ptr<Model>> loadedModels;
 		std::vector<std::shared_ptr<Model>> modelsLoaded;
 		json jf;
 		int windowSize[2] = { 0,0 };

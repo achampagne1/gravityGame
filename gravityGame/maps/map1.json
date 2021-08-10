@@ -19,14 +19,21 @@
     {
       "_comment": "1st",
       "type": "npc",
-      "coordinates": [ 150, 0 ],
+      "coordinates": [ 150, -50 ],
       "velocity": [ 0, 0 ]
     }
   ],
   "planet": [
     {
+      "_comment": "1st",
       "type": "planet",
-      "coordinates": [ -225, -610 ],
+      "coordinates": [ -225, -700],
+      "velocity": [ 0, 0 ]
+    },
+    {
+      "_comment": "2nd",
+      "type": "planet",
+      "coordinates": [ -225, 150],
       "velocity": [ 0, 0 ]
     }
   ],

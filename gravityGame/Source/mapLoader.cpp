@@ -81,7 +81,7 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 		for (int i = 0; i < jf[modelType].size(); i++) {
 			std::shared_ptr<Planet> planet{ new Planet };
 			for (int i = 0; i < modelsLoaded.size(); i++) {
-				if (modelsLoaded.at(i)->getType() == modelType) 
+				if (modelsLoaded.at(i)->getType() == modelType) //change models loaded to unordered map
 					planet = std::make_shared<Planet>(*std::dynamic_pointer_cast<Planet>(modelsLoaded.at(i)));
 			}
 			loadGenerics(modelType, planet, i);

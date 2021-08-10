@@ -35,7 +35,6 @@ public:
 	~VertexData();
 	std::vector<std::shared_ptr<AnimationData>> generateObject(const char* modelPath, int width, int height);
 	void render(int animationFrame);
-	void move(float x, float y);
 	void move(glm::vec2 input);
 	glm::vec2 getAvg();
 	glm::vec2 getAvgModel();
@@ -45,6 +44,7 @@ public:
 	void rotate(glm::vec2 direction);
 	void computeAverage(std::vector<float>input);
 	void moveVertices(float x, float y);
+	void moveVertices(glm::vec2 coordinates);
 	void mirrorSprite();
 
 	int indicesSizeCollision = 0;

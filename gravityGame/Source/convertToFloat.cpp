@@ -5,18 +5,9 @@ ConvertToFloat::ConvertToFloat(int width, int height) {
 	this->height = height;
 }
 
-ConvertToFloat::ConvertToFloat() {
-
-}
-
-void ConvertToFloat::convertToGlobal(float* input) {
-	input[0] = 2.0*input[0] / width;
-	input[1] = 2.0*input[1] / height;
-}
-
-void ConvertToFloat::convertToGlobal(glm::vec2 input) {
-	input.x = 2.0 * input.x / width;
-	input.y = 2.0 * input.y / height;
+void ConvertToFloat::convertToGlobal(glm::vec2* input) {
+	input->x = 2.0 * input->x / width;
+	input->y = 2.0 * input->y / height;
 }
 
 void ConvertToFloat::convertFromRGB(float* input, const int size) {

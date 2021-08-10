@@ -20,7 +20,7 @@ void Map::createMap() {
     std::vector<std::shared_ptr<Model>> tempPlanetVector = mapLoader->getModels("planet");
     for (int i = 0; i < tempPlanetVector.size(); i++) {
         models.push_back(tempPlanetVector.at(i));
-        planets.push_back(std::dynamic_pointer_cast<Planet>(tempPlanetVector.at(0)));
+        planets.push_back(std::dynamic_pointer_cast<Planet>(tempPlanetVector.at(i)));
     }
 
     std::vector<std::shared_ptr<Model>> tempNpcVector = mapLoader->getModels("npc");
@@ -55,7 +55,7 @@ void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     for (int i = 0; i < planets.size(); i++)
         references.push_back(planets.at(i));
     player->calculateGravity(references);
-    glm::vec2 direction = player->getGravityDirection();
+    glm::vec2 direction = player->getGravityDirection(); //-1,0
     for (int i = 1; i < models.size(); i++) {
         float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
         float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?

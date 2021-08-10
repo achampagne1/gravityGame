@@ -27,7 +27,8 @@ void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2]
 	respawnPoint[1] = pos[1];
 	this->velocity[0] = velocity[0];
 	this->velocity[1] = velocity[1];
-	vertexData->move(pos[0], pos[1]);
+	glm::vec2 coordinates{ pos[0],pos[1] };
+	vertexData->move(coordinates);
 	setAnimationType("generic");
 	texturesSize = currentAnimationType->getFramesSize();
 }
@@ -74,7 +75,8 @@ float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) 
 void Model::moveWithVelocity(float newV[2]) { //I do not know if set velocity and move with Velocity act as the same
 	pos[0] += newV[0];
 	pos[1] += newV[1];
-	vertexData->move(pos[0], pos[1]);
+	glm::vec2 coordinates{pos[0],pos[1]};
+	vertexData->move(coordinates);
 }
 
 void Model::setVelocity(float velocity[2]) {
@@ -85,7 +87,8 @@ void Model::setVelocity(float velocity[2]) {
 void Model::moveWithPosition(float newPos[2]) {
 	pos[0] = newPos[0];
 	pos[1] = newPos[1];
-	vertexData->move(pos[0], pos[1]);
+	glm::vec2 position{ pos[0],pos[1] };
+	vertexData->move(position);
 }
 
 void Model::respawn() {

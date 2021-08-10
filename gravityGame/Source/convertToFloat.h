@@ -9,9 +9,7 @@
 class ConvertToFloat {
 	public:
 		ConvertToFloat(int width, int height);
-		ConvertToFloat();
-		void convertToGlobal(float* input);
-		void convertToGlobal(glm::vec2 input);
+		void convertToGlobal(glm::vec2* input);
 		void convertFromRGB(float* input, const int size);
 		void format(float* input, const int size);
 		std::vector<float> format(std::vector<float> input);
