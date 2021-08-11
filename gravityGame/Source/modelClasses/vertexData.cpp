@@ -9,8 +9,6 @@ VertexData::VertexData(const VertexData& vertexData) {
     VAO = vertexData.VAO;
     width = vertexData.width;
     height = vertexData.height;
-    x = vertexData.x;
-    y = vertexData.y;
     rotation = vertexData.rotation; 
     avg = vertexData.avg;
     avgModel = vertexData.avgModel;
@@ -116,10 +114,7 @@ void VertexData::render(int animationFrame) {
 }
 
 void VertexData::move(glm::vec2 input) {
-    this->x = input.x;
-    this->y = input.y;
-    avg.x = input.x + avgModel.x;
-    avg.y = input.y + avgModel.y;
+    avg = input + avgModel;
     std::unique_ptr<ConvertToFloat> conversion{ new ConvertToFloat(width,height) };
     conversion->convertToGlobal(&input);
     moveVertices(input);
@@ -160,13 +155,6 @@ void VertexData::computeAverage(std::vector<float>input) {
     }
     avgModel.x /= input.size() / 8;
     avgModel.y /= input.size() / 8;
-}
-
-void VertexData::moveVertices(float x, float y) {
-    for (int i = 0; i < collisionVertices.size() / 8; i++) {
-        collisionVerticesUpdated[i * 8] = collisionVertices[i * 8] + x;
-        collisionVerticesUpdated[i * 8 + 1] = collisionVertices[i * 8 + 1] + y;
-    }
 }
 
 void VertexData::moveVertices(glm::vec2 coordinates) {

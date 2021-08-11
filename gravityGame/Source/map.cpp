@@ -55,7 +55,7 @@ void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     for (int i = 0; i < planets.size(); i++)
         references.push_back(planets.at(i));
     player->calculateGravity(references);
-    glm::vec2 direction = player->getGravityDirection(); //-1,0
+    glm::vec2 direction = player->getGravityDirection(); 
     for (int i = 1; i < models.size(); i++) {
         float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
         float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
@@ -165,7 +165,7 @@ void Map::updateMap() {
 
     for (int i = 1; i < models.size(); i++) {
         models.at(i)->moveWithVelocity(newOffsetTemp); //uncomment whenever centering is fixed
-        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction); //messes up,but why
+        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
         float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
         models.at(i)->moveWithPosition(newPos);
         //things need to be rotated as well

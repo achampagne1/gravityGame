@@ -25,7 +25,7 @@ void MapLoader::loadModelsFromMemory() { //responsible for loading all models fr
 		float velocity[2] = { 0,0 };
 		model->generateModel(path.c_str(), windowSize, coor, velocity);
 		modelsLoaded.push_back(model);
-		//loadedModels[]
+		loadedModels[type] = model;
 	}
 }
 
@@ -57,10 +57,7 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 	std::vector<std::shared_ptr<Model>> returnVec;
 	if (modelType == "player") {
 		std::shared_ptr<Player> player{ new Player };
-		for (int i = 0; i < modelsLoaded.size(); i++) {
-			if (modelsLoaded.at(i)->getType() == modelType) 
-				player = std::make_shared<Player>(*std::dynamic_pointer_cast<Player>(modelsLoaded.at(i)));
-		}
+		player = std::make_shared<Player>(*std::dynamic_pointer_cast<Player>(loadedModels[modelType]));
 		loadGenerics(modelType, player,0);
 		//set player specific parameters here
 		returnVec.push_back(player);
@@ -68,10 +65,7 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 	else if(modelType == "npc") {
 		for (int i = 0; i < jf[modelType].size(); i++) {
 			std::shared_ptr<Npc> npc{ new Npc };
-			for (int i = 0; i < modelsLoaded.size(); i++) {
-				if (modelsLoaded.at(i)->getType() == modelType)
-					npc = std::make_shared<Npc>(*std::dynamic_pointer_cast<Npc>(modelsLoaded.at(i)));
-			}
+			npc = std::make_shared<Npc>(*std::dynamic_pointer_cast<Npc>(loadedModels[modelType]));
 			loadGenerics(modelType, npc, i);
 			//set NPC specific parameters here
 			returnVec.push_back(npc);
@@ -81,10 +75,7 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 	else if (modelType == "planet") {
 		for (int i = 0; i < jf[modelType].size(); i++) {
 			std::shared_ptr<Planet> planet{ new Planet };
-			for (int i = 0; i < modelsLoaded.size(); i++) {
-				if (modelsLoaded.at(i)->getType() == modelType) //change models loaded to unordered map
-					planet = std::make_shared<Planet>(*std::dynamic_pointer_cast<Planet>(modelsLoaded.at(i)));
-			}
+			planet = std::make_shared<Planet>(*std::dynamic_pointer_cast<Planet>(loadedModels[modelType]));
 			loadGenerics(modelType, planet, i);
 			//set NPC specific parameters here
 			returnVec.push_back(planet);
@@ -94,10 +85,7 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 	else if (modelType == "background") {
 		for (int i = 0; i < jf[modelType].size(); i++) {
 			std::shared_ptr<Background> background{ new Background };
-			for (int i = 0; i < modelsLoaded.size(); i++) {
-				if (modelsLoaded.at(i)->getType() == modelType)
-					background = std::make_shared<Background>(*std::dynamic_pointer_cast<Background>(modelsLoaded.at(i)));
-			}
+			background = std::make_shared<Background>(*std::dynamic_pointer_cast<Background>(loadedModels[modelType]));
 			loadGenerics(modelType, background, i);
 			//set NPC specific parameters here
 			returnVec.push_back(background);
@@ -119,13 +107,8 @@ std::shared_ptr<Model> MapLoader::loadGenerics(std::string modelType, std::share
 
 std::shared_ptr<Bullet> MapLoader::createBullet(float coor[], float direction[]) {
 	float velocit[2] = { direction[0] * 12,direction[1] * 12 };
-	for (int i = 0; i < modelsLoaded.size(); i++){
-		if (modelsLoaded.at(i)->getType() == "bullet") {
-			std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(*std::dynamic_pointer_cast<Bullet>(modelsLoaded.at(i)));
-			bullet->moveWithPosition(coor);
-			bullet->setVelocity(velocit);
-			return bullet;
-		}
-	}
-	return nullptr;
+	std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(*std::dynamic_pointer_cast<Bullet>(loadedModels["bullet"]));
+	bullet->moveWithPosition(coor);
+	bullet->setVelocity(velocit);
+	return bullet;
 }
