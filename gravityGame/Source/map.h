@@ -1,21 +1,23 @@
 #pragma once
 
 #include "mapLoader.h"
+#include "bulletHandler.h"
 
 
 class Map{
 	private:
 		std::vector<std::shared_ptr<Model>> models;
-		std::shared_ptr<Bullet> bullets[100];
+		std::vector<std::shared_ptr<Model>> references;
+		std::shared_ptr<MapLoader> mapLoader{ new MapLoader };
+		std::shared_ptr<BulletHandler> bulletHandlerPtr;
 		std::shared_ptr<Player> player;
 		std::vector<std::shared_ptr<Npc>> npc;
 		std::vector<std::shared_ptr<Planet>> planets;
 		std::shared_ptr<Background> background;
-		std::unique_ptr<MapLoader> mapLoader{ new MapLoader };
 		int windowSize[2];
 		int windowSizeOnStart[2];
 		int mapBounds[4] = { 0,0,0,0 };
-		double cursorPos[2] = { 0,0 };
+		glm::vec2 cursorPos = { 0,0 };
 		const char* mapPath = "";
 		float currentPlayerLocation[2] = { 0,0 };
 
@@ -34,6 +36,5 @@ class Map{
 		void setScreenSize(float width, float height);
 		void setScreenSizeOnStart(float width, float height);
 		void updateMap();
-		void bulletStuff(std::vector<std::shared_ptr<Model>> references);
 };
 

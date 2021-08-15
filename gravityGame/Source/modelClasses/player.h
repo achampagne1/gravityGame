@@ -1,10 +1,15 @@
 #pragma once
 #include "model.h"
+#include "../bulletHandler.h"
 
 class Player : public Model{
-	private:
-	public:
-		Player();
-
+private:
+	std::shared_ptr<BulletHandler> bulletHandler{ new BulletHandler };
+	std::shared_ptr<VertexData> vertexData{ new VertexData };
+public:
+	Player();
+	//Player(const Player& player);
+	//void render();
+	std::shared_ptr<BulletHandler> getBulletHandler();
 };
 

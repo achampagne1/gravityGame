@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\animationData.cpp" />
+    <ClCompile Include="Source\bulletHandler.cpp" />
     <ClCompile Include="Source\modelClasses\bullet.cpp" />
     <ClCompile Include="Source\modelClasses\background.cpp" />
     <ClCompile Include="Source\modelClasses\planet.cpp" />
@@ -170,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\animationData.h" />
+    <ClInclude Include="Source\bulletHandler.h" />
     <ClInclude Include="Source\modelClasses\bullet.h" />
     <ClInclude Include="Source\modelClasses\background.h" />
     <ClInclude Include="include\json.hpp" />

@@ -15,6 +15,7 @@ void Map::createMap() {
     mapLoader->initMap(mapPath);
 
     player = std::dynamic_pointer_cast<Player>(mapLoader->getModels("player").at(0));
+    bulletHandlerPtr = player->getBulletHandler();
     models.push_back(player);
 
     std::vector<std::shared_ptr<Model>> tempPlanetVector = mapLoader->getModels("planet");
@@ -31,6 +32,11 @@ void Map::createMap() {
 
     background = std::dynamic_pointer_cast<Background>(mapLoader->getModels("background").at(0));
 
+    for (int i = 0; i < planets.size(); i++)
+        references.push_back(planets.at(i));
+
+    bulletHandlerPtr->setGenericBullet(std::dynamic_pointer_cast<Bullet>(mapLoader->getModels("bullet").at(0)));
+    bulletHandlerPtr->setReferencesPtr(&references);
     centerMap();
     adjustDownwardOnStart();
 }
@@ -51,9 +57,6 @@ void Map::centerMap() {
 
 void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     //NOTE: might want to adjust for bullets as well, if the level starts with bullets flying
-    std::vector<std::shared_ptr<Model>> references;
-    for (int i = 0; i < planets.size(); i++)
-        references.push_back(planets.at(i));
     player->calculateGravity(references);
     glm::vec2 direction = player->getGravityDirection(); 
     for (int i = 1; i < models.size(); i++) {
@@ -82,31 +85,7 @@ float* Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 directio
 }
 
 void Map::shoot() {
-    glm::vec2 playerAvg = player->getVertexDataPointer()->getAvg();
-    float temp[2] = { playerAvg.x,playerAvg.y };
-    glm::vec2 direction = glm::normalize(glm::vec2(-(windowSize[0] / 2 - cursorPos[0]), windowSize[1] / 2 - cursorPos[1]));
-    float directionToShoot[2] = { direction[0],direction[1] };
-    std::shared_ptr<Bullet> bullet = mapLoader->createBullet(temp, directionToShoot);
-    for (int i = 0; i < 100; i++) {
-        if (bullets[i] == nullptr) {
-            bullets[i] = bullet;
-            break;
-        }
-    }
-}
-
-void Map::bulletStuff(std::vector<std::shared_ptr<Model>> references) {
-    float* newOffset;
-    for (int i = 0; i < 100; i++) {
-        if (bullets[i] == nullptr)
-            continue;
-        else if (bullets[i]->checkToDestroy())
-            bullets[i] = nullptr;
-        else {
-            newOffset = bullets[i]->calculateVelocity(references);
-            bullets[i]->moveWithVelocity(newOffset);
-        }
-    }
+    bulletHandlerPtr->shoot(cursorPos);
 }
 
 void Map::respawn() {
@@ -142,51 +121,40 @@ void Map::setScreenSizeOnStart(float width, float height) {
 
 void Map::renderMap() {
     background->render();
-    for (int i = 0; i < 100; i++) {
-        if (bullets[i] != nullptr)
-            bullets[i]->render();
-    }
+    bulletHandlerPtr->renderBullets();
     for (int i = 0; i < models.size(); i++)
         models.at(i)->render();
 }
 
 void Map::updateMap() {
-    std::vector<std::shared_ptr<Model>> references;
-    for (int i = 0; i < planets.size(); i++)
-        references.push_back(planets.at(i));
     float* newOffset = player->calculateVelocity(references); //janky way of doing it, but this is for transfering the data in that array to a new array so the original array does not get modified
-    glm::vec2 direction = player->getGravityDirection();
     float newOffsetTemp[2] = { newOffset[0],newOffset[1] };
     currentPlayerLocation[0] += newOffsetTemp[0];
     currentPlayerLocation[1] += newOffsetTemp[1];
     newOffsetTemp[0] *= -1; //reverses the direction
     newOffsetTemp[1] *= -1;
+    glm::vec2 newOffsetTemp2 = glm::vec2{ newOffsetTemp[0],newOffsetTemp[1] };
+    glm::vec2 direction = player->getGravityDirection();
 
 
     for (int i = 1; i < models.size(); i++) {
-        models.at(i)->moveWithVelocity(newOffsetTemp); //uncomment whenever centering is fixed
+        models.at(i)->moveWithVelocity(newOffsetTemp2); //uncomment whenever centering is fixed
         float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
         float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
         models.at(i)->moveWithPosition(newPos);
         //things need to be rotated as well
     }
 
-    for (int i = 0; i < 100; i++) {
-        if (bullets[i] != nullptr) {
-            bullets[i]->rotate(glm::vec2(0, 1));
-            bullets[i]->moveWithVelocity(newOffsetTemp);
-        }
-    }
+    bulletHandlerPtr->updateBullets(newOffsetTemp2);
 
-    //respawn();
+
     for (int i = 0; i < npc.size(); i++) {
         newOffset = npc.at(i)->calculateVelocity(references);
+        glm::vec2 newOffset2 = glm::vec2{ newOffset[0],newOffset[1] };
         glm::vec2 directionNpc = npc.at(i)->getGravityDirection();
-        npc.at(i)->moveWithVelocity(newOffset);
+        npc.at(i)->moveWithVelocity(newOffset2);
         npc.at(i)->rotate(directionNpc);
     }
-
-    bulletStuff(references);
 }
 
 Map::~Map() {}

@@ -19,16 +19,11 @@ std::string Model::getType() {
 	return type;
 }
 
-void Model::generateModel(const char* modelPath, int windowSize[2], float pos[2], float velocity[2]) {
+void Model::generateModel(const char* modelPath, glm::vec2 windowSize, glm::vec2 position, glm::vec2 velocity) {
 	animationDataVec = vertexData->generateObject(modelPath, windowSize[0], windowSize[1]);
-	this->pos[0] = pos[0];
-	this->pos[1] = pos[1];
-	respawnPoint[0] = pos[0];
-	respawnPoint[1] = pos[1];
-	this->velocity[0] = velocity[0];
-	this->velocity[1] = velocity[1];
-	glm::vec2 coordinates{ pos[0],pos[1] };
-	vertexData->move(coordinates);
+	this->position = position;
+	this->velocity = velocity;
+	vertexData->move(position);
 	setAnimationType("generic");
 	texturesSize = currentAnimationType->getFramesSize();
 }
@@ -43,10 +38,11 @@ void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
-	collisionEngine->calculateCollision(vertexData, referencesRaw, velocity);
+	float velocity2[2] = {velocity.x,velocity.y};
+	collisionEngine->calculateCollision(vertexData, referencesRaw, velocity2);
 	if (collisionEngine->getCollision()) {
-		velocity[0] = 0;
-		velocity[1] = 0;
+		velocity.x = 0;
+		velocity.y = 0;
 		deltaVelocity[0] = 0;
 		deltaVelocity[1] = 0;
 		movementEngine->setGrounded(true);
@@ -55,8 +51,8 @@ void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 
 void Model::calculateMovement() { //what moves you around
 	movementVec = movementEngine->calculateMovement();
-	velocity[0] += movementVec[0]; //adds new movement velocity
-	velocity[1] += movementVec[1];
+	velocity.x += movementVec[0]; //adds new movement velocity
+	velocity.y += movementVec[1];
 	if (movementEngine->directionChange())
 		vertexData->mirrorSprite();
 
@@ -65,29 +61,27 @@ void Model::calculateMovement() { //what moves you around
 float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
 	//this velocity can be used to move either the object, or offset everything else.
 	calculateGravity(references);
-	velocity[0] += deltaVelocity[0];
-	velocity[1] += deltaVelocity[1];
+	velocity.x += deltaVelocity[0];
+	velocity.y += deltaVelocity[1];
 	calculateCollision(references);
 	calculateMovement();
-	return velocity;
+	float velocity2[2] = { velocity[0],velocity[1] };
+	return velocity2;
 }
 
-void Model::moveWithVelocity(float newV[2]) { //I do not know if set velocity and move with Velocity act as the same
-	pos[0] += newV[0];
-	pos[1] += newV[1];
-	glm::vec2 coordinates{pos[0],pos[1]};
-	vertexData->move(coordinates);
+void Model::moveWithVelocity(glm::vec2 newVelocity) { //I do not know if set velocity and move with Velocity act as the same
+	position += newVelocity;
+	vertexData->move(position);
 }
 
 void Model::setVelocity(float velocity[2]) {
-	this->velocity[0] = velocity[0];
-	this->velocity[1] = velocity[1];
+	this->velocity.x = velocity[0];
+	this->velocity.y = velocity[1];
 }
 
 void Model::moveWithPosition(float newPos[2]) {
-	pos[0] = newPos[0];
-	pos[1] = newPos[1];
-	glm::vec2 position{ pos[0],pos[1] };
+	position.x = newPos[0];
+	position.y = newPos[1];
 	vertexData->move(position);
 }
 

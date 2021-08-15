@@ -3,7 +3,6 @@
 
 class Npc : public Model{
 	private:
-
 	public:
 		Npc();
 };

@@ -21,9 +21,8 @@ void MapLoader::loadModelsFromMemory() { //responsible for loading all models fr
 		std::shared_ptr<Model> model = ifElseHell(type);
 		model->setType(type);
 		std::string path = jf["modelType"][i]["path"];
-		float coor[2] = { 0,0 };
-		float velocity[2] = { 0,0 };
-		model->generateModel(path.c_str(), windowSize, coor, velocity);
+		glm::vec2 windowSize2 = glm::vec2{ windowSize[0],windowSize[1] };
+		model->generateModel(path.c_str(), windowSize2, glm::vec2{ 0,0 }, glm::vec2{ 0,0 });
 		modelsLoaded.push_back(model);
 		loadedModels[type] = model;
 	}
@@ -90,6 +89,11 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 			//set NPC specific parameters here
 			returnVec.push_back(background);
 		}
+	}
+	else if (modelType == "bullet") {
+		std::shared_ptr<Bullet> bullet{ new Bullet };
+		bullet = std::make_shared<Bullet>(*std::dynamic_pointer_cast<Bullet>(loadedModels[modelType]));
+		returnVec.push_back(bullet);
 	}
 	return returnVec;
 }

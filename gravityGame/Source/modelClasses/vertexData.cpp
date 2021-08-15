@@ -148,7 +148,7 @@ void VertexData::rotate(glm::vec2 direction) {
     rotation = atan(-direction[0] / direction[1]);
 }
 
-void VertexData::computeAverage(std::vector<float>input) {
+void VertexData::computeAverage(std::vector<float>input) { 
     for (int i = 0; i < input.size() / 8; i++) {
         avgModel.x += input[i * 8];
         avgModel.y += input[i * 8 + 1];
