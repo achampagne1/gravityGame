@@ -99,20 +99,12 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 }
 
 std::shared_ptr<Model> MapLoader::loadGenerics(std::string modelType, std::shared_ptr<Model> model, int locationInArray) {
-	float velocit[2] = { 0,0 };
-	float coor[2] = { jf[modelType][locationInArray]["coordinates"][0] ,jf[modelType][locationInArray]["coordinates"][1] };
+	glm::vec2 velocit = { 0,0 };
+	glm::vec2 coor = { jf[modelType][locationInArray]["coordinates"][0] ,jf[modelType][locationInArray]["coordinates"][1] };
 	std::string path = jf[modelType][locationInArray]["type"];
-	velocit[0] = jf[modelType][locationInArray]["velocity"][0];
-	velocit[1] = jf[modelType][locationInArray]["velocity"][1];
+	velocit.x = jf[modelType][locationInArray]["velocity"][0];
+	velocit.y = jf[modelType][locationInArray]["velocity"][1];
 	model->moveWithPosition(coor);
 	model->setVelocity(velocit);
 	return model;
-}
-
-std::shared_ptr<Bullet> MapLoader::createBullet(float coor[], float direction[]) {
-	float velocit[2] = { direction[0] * 12,direction[1] * 12 };
-	std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(*std::dynamic_pointer_cast<Bullet>(loadedModels["bullet"]));
-	bullet->moveWithPosition(coor);
-	bullet->setVelocity(velocit);
-	return bullet;
 }

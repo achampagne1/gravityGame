@@ -24,6 +24,5 @@ class MapLoader
 		void loadModelsFromMemory();
 		std::shared_ptr<Model> ifElseHell(std::string input);
 		std::shared_ptr<Model> loadGenerics(std::string modelType, std::shared_ptr<Model> model, int locationInArray);
-		std::shared_ptr<Bullet> createBullet(float coor[], float direction[]);
 };
 

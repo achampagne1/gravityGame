@@ -58,15 +58,14 @@ void Model::calculateMovement() { //what moves you around
 
 }
 
-float* Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
+glm::vec2 Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
 	//this velocity can be used to move either the object, or offset everything else.
 	calculateGravity(references);
 	velocity.x += deltaVelocity[0];
 	velocity.y += deltaVelocity[1];
 	calculateCollision(references);
 	calculateMovement();
-	float velocity2[2] = { velocity[0],velocity[1] };
-	return velocity2;
+	return velocity;
 }
 
 void Model::moveWithVelocity(glm::vec2 newVelocity) { //I do not know if set velocity and move with Velocity act as the same
@@ -74,19 +73,17 @@ void Model::moveWithVelocity(glm::vec2 newVelocity) { //I do not know if set vel
 	vertexData->move(position);
 }
 
-void Model::setVelocity(float velocity[2]) {
-	this->velocity.x = velocity[0];
-	this->velocity.y = velocity[1];
+void Model::setVelocity(glm::vec2 velocity) {
+	this->velocity = velocity;
 }
 
-void Model::moveWithPosition(float newPos[2]) {
-	position.x = newPos[0];
-	position.y = newPos[1];
+void Model::moveWithPosition(glm::vec2 newPos) {
+	position = newPos;
 	vertexData->move(position);
 }
 
 void Model::respawn() {
-	moveWithPosition(respawnPoint);
+	//moveWithPosition(respawnPoint);
 }
 
 void Model::rotate(glm::vec2 direction) {

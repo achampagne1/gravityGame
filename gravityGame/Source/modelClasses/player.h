@@ -8,8 +8,6 @@ private:
 	std::shared_ptr<VertexData> vertexData{ new VertexData };
 public:
 	Player();
-	//Player(const Player& player);
-	//void render();
 	std::shared_ptr<BulletHandler> getBulletHandler();
 };
 

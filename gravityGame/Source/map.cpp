@@ -47,7 +47,7 @@ void Map::centerMap() {
     for (int i = 0; i < models.size(); i++) {
         glm::vec2 modelAvgModel = models.at(i)->getVertexDataPointer()->getAvgModel();
         glm::vec2 modelAvgGlobal = models.at(i)->getVertexDataPointer()->getAvg();
-        float offsetOfModel[2] = { 0,0 };
+        glm::vec2 offsetOfModel = { 0,0 };
         offsetOfModel[0] = offset[0] + modelAvgGlobal.x - modelAvgModel.x;
         offsetOfModel[1] = offset[1] + modelAvgGlobal.y - modelAvgModel.y;
         //NOTE: the avergae of the model must be subtracted out due to the move function adding it back in later
@@ -61,7 +61,7 @@ void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     glm::vec2 direction = player->getGravityDirection(); 
     for (int i = 1; i < models.size(); i++) {
         float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
-        float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
+        glm::vec2 newPos = { temp[0],temp[1] }; //is there a better way of doing this?
         models.at(i)->moveWithPosition(newPos);
     }
 }
@@ -127,7 +127,7 @@ void Map::renderMap() {
 }
 
 void Map::updateMap() {
-    float* newOffset = player->calculateVelocity(references); //janky way of doing it, but this is for transfering the data in that array to a new array so the original array does not get modified
+    glm::vec2 newOffset = player->calculateVelocity(references); //janky way of doing it, but this is for transfering the data in that array to a new array so the original array does not get modified
     float newOffsetTemp[2] = { newOffset[0],newOffset[1] };
     currentPlayerLocation[0] += newOffsetTemp[0];
     currentPlayerLocation[1] += newOffsetTemp[1];
@@ -140,8 +140,8 @@ void Map::updateMap() {
     for (int i = 1; i < models.size(); i++) {
         models.at(i)->moveWithVelocity(newOffsetTemp2); //uncomment whenever centering is fixed
         float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
-        float newPos[2] = { temp[0],temp[1] }; //is there a better way of doing this?
-        models.at(i)->moveWithPosition(newPos);
+        glm::vec2 newPos = { temp[0],temp[1] }; //is there a better way of doing this?
+        //models.at(i)->moveWithPosition(newPos);
         //things need to be rotated as well
     }
 

@@ -35,12 +35,12 @@ class Model{
 		std::shared_ptr<MovementEngine> getMovementPointer();
 		glm::vec2 getGravityDirection();
 		void calculateMovement();
-		float* calculateVelocity(std::vector<std::shared_ptr<Model>> references);
+		glm::vec2 calculateVelocity(std::vector<std::shared_ptr<Model>> references);
 		std::vector<std::shared_ptr<VertexData>> toVertexData(std::vector<std::shared_ptr<Model>> input);
 		std::shared_ptr<VertexData> getVertexDataPointer();
 		void moveWithVelocity(glm::vec2 newVelocity);
-		void setVelocity(float velocity[2]);
-		void moveWithPosition(float newPos[2]);
+		void setVelocity(glm::vec2 velocity);
+		void moveWithPosition(glm::vec2 newPos);
 		void respawn();
 		void rotate(glm::vec2 direction);
 		void setAnimationType(std::string type);
