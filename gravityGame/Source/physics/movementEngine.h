@@ -16,7 +16,6 @@ class MovementEngine
 		bool directionChange();
 		void jump();
 		glm::vec2 calculateMovement();
-		void setGravityForceVec(glm::vec2 direction);
 		void setGrounded(bool grounded);
 };
 

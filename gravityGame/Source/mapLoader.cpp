@@ -49,6 +49,10 @@ std::shared_ptr<Model> MapLoader::ifElseHell(std::string input) {
 		std::shared_ptr<Bullet> bullet{ new Bullet };
 		return bullet;
 	}
+	else if (input == "platform") { //gotta add more logic to this
+		std::shared_ptr<Platform> platform{ new Platform };
+		return platform;
+	}
 
 }
 
@@ -81,6 +85,16 @@ std::vector<std::shared_ptr<Model>> MapLoader::getModels(std::string modelType) 
 		}
 	}
 
+	else if (modelType == "platform") {
+		for (int i = 0; i < jf[modelType].size(); i++) {
+			std::shared_ptr<Platform> platform{ new Platform };
+			platform = std::make_shared<Platform>(*std::dynamic_pointer_cast<Platform>(loadedModels[modelType]));
+			loadGenerics(modelType, platform, i);
+			//set NPC specific parameters here
+			returnVec.push_back(platform);
+		}
+	}
+
 	else if (modelType == "background") {
 		for (int i = 0; i < jf[modelType].size(); i++) {
 			std::shared_ptr<Background> background{ new Background };
@@ -104,6 +118,8 @@ std::shared_ptr<Model> MapLoader::loadGenerics(std::string modelType, std::share
 	std::string path = jf[modelType][locationInArray]["type"];
 	velocit.x = jf[modelType][locationInArray]["velocity"][0];
 	velocit.y = jf[modelType][locationInArray]["velocity"][1];
+	int collision = jf[modelType][locationInArray]["collision"];
+	model->setCollision(!!collision);
 	model->moveWithPosition(coor);
 	model->setVelocity(velocit);
 	return model;

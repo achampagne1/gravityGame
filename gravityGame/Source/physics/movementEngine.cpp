@@ -4,19 +4,19 @@ MovementEngine::MovementEngine() {
 
 }
 glm::vec2 MovementEngine::calculateMovement() {
-	float speed = 3;
+	float speed = 10;
 	glm::vec2 movementVec = glm::vec2(0, 0);
 	if (grounded) {
 		if (jumpVar) {
-			movementVec += glm::vec2(5 * cos(glm::radians(90.0f) - angle), 5 * sin(glm::radians(-90.0f) - angle));
+			movementVec += glm::vec2(0, speed);
 			jumpVar = false;
 		}
 		if (direction == 1) {
-			movementVec += glm::vec2(speed * cos(angle), speed * sin(angle));
+			movementVec += glm::vec2(-speed, 0);
 			return movementVec;
 		}
 		if (direction == 3) {
-			movementVec += glm::vec2(-speed * cos(angle), -speed * sin(angle));
+			movementVec += glm::vec2(speed, 0);
 			return movementVec;
 		}
 		grounded = false;
@@ -44,7 +44,3 @@ void MovementEngine::jump() {
 	jumpVar = true;
 }
 
-void MovementEngine::setGravityForceVec(glm::vec2 direction) {
-	glm::vec2 rotatedVec = glm::rotate(direction, glm::radians(-90.0f));
-	angle = atan2(rotatedVec.y, rotatedVec.x);
-}

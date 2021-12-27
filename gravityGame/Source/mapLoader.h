@@ -5,6 +5,7 @@
 #include "modelClasses\planet.h"
 #include "modelClasses\background.h"
 #include "modelClasses\bullet.h"
+#include "modelClasses\platform.h"
 
 class MapLoader
 {

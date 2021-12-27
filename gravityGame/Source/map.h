@@ -13,6 +13,7 @@ class Map{
 		std::shared_ptr<Player> player;
 		std::vector<std::shared_ptr<Npc>> npc;
 		std::vector<std::shared_ptr<Planet>> planets;
+		std::vector<std::shared_ptr<Platform>> platforms;
 		std::shared_ptr<Background> background;
 		int windowSize[2];
 		int windowSizeOnStart[2];
@@ -29,8 +30,6 @@ class Map{
 		void shoot();
 		void createMap();
 		void centerMap();
-		void adjustDownwardOnStart();
-		glm::vec2 adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 direction);
 		void respawn();
 		void setCursorPos(double xPos, double yPos);
 		void setScreenSize(float width, float height);
