@@ -33,7 +33,7 @@
     {
       "_comment": "2nd",
       "type": "planet",
-      "coordinates": [ -225, 150],
+      "coordinates": [ -224, 150],
       "velocity": [ 0, 0 ]
     }
   ],

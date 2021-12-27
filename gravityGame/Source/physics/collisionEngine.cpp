@@ -45,6 +45,7 @@ glm::vec2 CollisionEngine::calculateCollision(std::shared_ptr<VertexData> model,
 			return normalVec;
 		}
 	}
+	return glm::vec2(0, 0);
 }
 
 bool CollisionEngine::getCollision() {

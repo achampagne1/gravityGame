@@ -38,7 +38,7 @@ void Map::createMap() {
     bulletHandlerPtr->setGenericBullet(std::dynamic_pointer_cast<Bullet>(mapLoader->getModels("bullet").at(0)));
     bulletHandlerPtr->setReferencesPtr(&references);
     centerMap();
-    adjustDownwardOnStart();
+    //adjustDownwardOnStart(); //The gravity direction is miscalculated when the game starts
 }
 
 void Map::centerMap() {
@@ -60,13 +60,12 @@ void Map::adjustDownwardOnStart() { //for only adjusting downward on stratup
     player->calculateGravity(references);
     glm::vec2 direction = player->getGravityDirection(); 
     for (int i = 1; i < models.size(); i++) {
-        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
-        glm::vec2 newPos = { temp[0],temp[1] }; //is there a better way of doing this?
+        glm::vec2 newPos = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
         models.at(i)->moveWithPosition(newPos);
     }
 }
 
-float* Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 direction) { //adjusting downward for everything else
+glm::vec2 Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 direction) { //adjusting downward for everything else
     float angleDown = atan2(-1, 0);
     float angle = atan2(direction.y, direction.x); //gets the angle that everything needs to be rotated by
     float angleDifference = angle - angleDown;
@@ -80,7 +79,7 @@ float* Map::adjustDownward(std::shared_ptr<VertexData> input, glm::vec2 directio
     angle2 -= angleDifference;
     if (abs(angleDown - angle2) < .0001)
         angle2 = angleDown;
-    float newPos[2] = { (magnitude * cos(angle2)) + windowSizeOnStart[0] / 2 - inputAvgModel.x,(magnitude * sin(angle2)) + windowSizeOnStart[1] / 2 - inputAvgModel.y };
+    glm::vec2 newPos = { (magnitude * cos(angle2)) + windowSizeOnStart[0] / 2 - inputAvgModel.x,(magnitude * sin(angle2)) + windowSizeOnStart[1] / 2 - inputAvgModel.y };
     return newPos;
 }
 
@@ -139,8 +138,7 @@ void Map::updateMap() {
 
     for (int i = 1; i < models.size(); i++) {
         models.at(i)->moveWithVelocity(newOffsetTemp2); //uncomment whenever centering is fixed
-        float* temp = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
-        glm::vec2 newPos = { temp[0],temp[1] }; //is there a better way of doing this?
+        glm::vec2 newPos = adjustDownward(models.at(i)->getVertexDataPointer(), direction);
         //models.at(i)->moveWithPosition(newPos);
         //things need to be rotated as well
     }

@@ -29,7 +29,3 @@ glm::vec2 GravityEngine::calculateDeltaVelocity(float avgCoor[2], std::vector<st
     }
     return forceVec;
 }
-
-glm::vec2 GravityEngine::getDirection() {
-    return glm::normalize(forceVec);
-}

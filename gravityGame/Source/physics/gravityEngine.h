@@ -11,5 +11,4 @@ class GravityEngine {
 	public:
 		GravityEngine();
 		glm::vec2 getDeltaVelocity(float avgCoor[2], std::vector<std::shared_ptr<VertexData>> references);
-		glm::vec2 getDirection();
 };
