@@ -27,18 +27,17 @@
     {
       "_comment": "1st",
       "type": "planet",
-      "coordinates": [ -225, -601],
-      "velocity": [ 0, 0 ]
-    },
-    {
-      "_comment": "2nd",
-      "type": "planet",
-      "coordinates": [ -225, 150],
+      "coordinates": [ -1500, -1000 ],
       "velocity": [ 0, 0 ]
     }
   ],
-  "objects": [
-
+  "platform": [
+    {
+      "_comment": "1st",
+      "type": "platform",
+      "coordinates": [ 0, -100 ],
+      "velocity": [ 0, 0 ]
+    }
   ],
   "mapBounds": [ -800, 800, -800, 800 ],
   "modelType": [
@@ -55,12 +54,16 @@
       "type": "npc"
     },
     {
-      "path": "models/planet1.json",
+      "path": "models/grass.json",
       "type": "planet"
     },
     {
       "path": "models/bullet.json",
       "type": "bullet"
+    },
+    {
+      "path": "models/platform.json",
+      "type": "platform"
     }
   ]
 }

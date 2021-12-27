@@ -21,7 +21,6 @@ std::shared_ptr<Bullet> BulletHandler::createBullet(glm::vec2 coordinate, glm::v
 void BulletHandler::updateBullets(glm::vec2 newOffset) {
     for (int i = 0; i < 100; i++) {
         if (bullets[i] != nullptr) {
-            bullets[i]->rotate(glm::vec2(0, 1));
             bullets[i]->moveWithVelocity(newOffset);
         }
     }

@@ -285,5 +285,6 @@
     19,
     0
   ],
-  "gravity": 1
+  "gravity": 1,
+  "collision": 0
 }

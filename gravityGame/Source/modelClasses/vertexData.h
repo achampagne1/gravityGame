@@ -19,7 +19,6 @@ private:
 	int height = 0;
 	float aspectRatioX = 0;
 	float aspectRatioY = 0;
-	float rotation = 0;	
 	glm::vec2 avg;
 	glm::vec2 avgModel;
 	float gravity = 0;
@@ -39,7 +38,6 @@ public:
 	float getGravity();
 	int getTexturesSize();
 	std::shared_ptr<AnimationData> getCurrentAnimation();
-	void rotate(glm::vec2 direction);
 	void computeAverage(std::vector<float>input);
 	void moveVertices(glm::vec2 coordinates);
 	void mirrorSprite();

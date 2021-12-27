@@ -28,14 +28,6 @@ void Model::generateModel(const char* modelPath, glm::vec2 windowSize, glm::vec2
 	texturesSize = currentAnimationType->getFramesSize();
 }
 
-void Model::calculateGravity(std::vector<std::shared_ptr<Model>> references) {
-	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
-	float avgCoor[2] = { vertexData->getAvg().x,vertexData->getAvg().y };
-	deltaVelocity = gravityEngine->getDeltaVelocity(avgCoor, referencesRaw);
-	gravityDirection = gravityEngine->getDirection();
-	movementEngine->setGravityForceVec(gravityDirection);
-}
-
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
 	float velocity2[2] = {velocity.x,velocity.y};
@@ -51,8 +43,7 @@ void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 
 void Model::calculateMovement() { //what moves you around
 	movementVec = movementEngine->calculateMovement();
-	velocity.x += movementVec[0]; //adds new movement velocity
-	velocity.y += movementVec[1];
+	velocity += movementVec;
 	if (movementEngine->directionChange())
 		vertexData->mirrorSprite();
 
@@ -60,7 +51,7 @@ void Model::calculateMovement() { //what moves you around
 
 glm::vec2 Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
 	//this velocity can be used to move either the object, or offset everything else.
-	calculateGravity(references);
+	deltaVelocity = glm::vec2(0, -gravity); //for gravity
 	velocity.x += deltaVelocity[0];
 	velocity.y += deltaVelocity[1];
 	calculateCollision(references);
@@ -84,10 +75,6 @@ void Model::moveWithPosition(glm::vec2 newPos) {
 
 void Model::respawn() {
 	//moveWithPosition(respawnPoint);
-}
-
-void Model::rotate(glm::vec2 direction) {
-	vertexData->rotate(direction);
 }
 
 std::vector<std::shared_ptr<VertexData>> Model::toVertexData(std::vector<std::shared_ptr<Model>> input) {
