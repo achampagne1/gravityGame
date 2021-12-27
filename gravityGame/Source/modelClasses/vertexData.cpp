@@ -9,7 +9,6 @@ VertexData::VertexData(const VertexData& vertexData) {
     VAO = vertexData.VAO;
     width = vertexData.width;
     height = vertexData.height;
-    rotation = vertexData.rotation; 
     avg = vertexData.avg;
     avgModel = vertexData.avgModel;
     gravity = vertexData.gravity;
@@ -142,10 +141,6 @@ int VertexData::getTexturesSize() {
 
 std::shared_ptr<AnimationData> VertexData::getCurrentAnimation() {
     return currentAnimationType;
-}
-
-void VertexData::rotate(glm::vec2 direction) {
-    rotation = atan(-direction[0] / direction[1]);
 }
 
 void VertexData::computeAverage(std::vector<float>input) { 

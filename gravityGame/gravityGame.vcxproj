@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\modelClasses\platform.cpp" />
     <ClCompile Include="Source\animationData.cpp" />
     <ClCompile Include="Source\bulletHandler.cpp" />
     <ClCompile Include="Source\modelClasses\bullet.cpp" />
@@ -162,7 +163,6 @@
     <ClCompile Include="Source\physics\collisionEngine.cpp" />
     <ClCompile Include="glad_src\gl.c" />
     <ClCompile Include="Source\convertToFloat.cpp" />
-    <ClCompile Include="Source\physics\gravityEngine.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\modelClasses\model.cpp" />
     <ClCompile Include="Source\physics\movementEngine.cpp" />
@@ -170,6 +170,7 @@
     <ClCompile Include="Source\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\modelClasses\Platform.h" />
     <ClInclude Include="Source\animationData.h" />
     <ClInclude Include="Source\bulletHandler.h" />
     <ClInclude Include="Source\modelClasses\bullet.h" />
@@ -185,7 +186,6 @@
     <ClInclude Include="Source\physics\collisionEngine.h" />
     <ClInclude Include="Source\convertToFloat.h" />
     <ClInclude Include="Source\delay.h" />
-    <ClInclude Include="Source\physics\gravityEngine.h" />
     <ClInclude Include="Source\loadFile.h" />
     <ClInclude Include="Source\modelClasses\model.h" />
     <ClInclude Include="Source\physics\movementEngine.h" />
@@ -203,7 +203,9 @@
     <None Include="models\circleRes3Rad10.json" />
     <None Include="models\circleRes3Rad100.json" />
     <None Include="models\circleRes40Rad100.json" />
+    <None Include="models\grass.json" />
     <None Include="models\planet1.json" />
+    <None Include="models\platform.json" />
     <None Include="models\sky.json" />
     <None Include="models\spaceman.json" />
     <None Include="models\spacewoman.json" />
@@ -213,7 +215,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\awesomeface.png" />
+    <Image Include="textures\grass.png" />
     <Image Include="textures\planet1.png" />
+    <Image Include="textures\platform.png" />
     <Image Include="textures\sky.png" />
     <Image Include="textures\spaceman.png" />
     <Image Include="textures\spacemanWaiting\frame1.png" />

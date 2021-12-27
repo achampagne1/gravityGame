@@ -43,6 +43,9 @@ void Map::createMap() {
             references.push_back(models.at(i));
     }
 
+    for (int i = 0; i < platforms.size(); i++)
+        references.push_back(platforms.at(i));
+
     bulletHandlerPtr->setGenericBullet(std::dynamic_pointer_cast<Bullet>(mapLoader->getModels("bullet").at(0)));
     bulletHandlerPtr->setReferencesPtr(&references);
     centerMap();
