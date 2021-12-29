@@ -109,26 +109,20 @@ void Map::renderMap() {
 }
 
 void Map::updateMap() {
-    glm::vec2 newOffset = player->calculateVelocity(references); //janky way of doing it, but this is for transfering the data in that array to a new array so the original array does not get modified
-    float newOffsetTemp[2] = { newOffset[0],newOffset[1] };
-    currentPlayerLocation[0] += newOffsetTemp[0];
-    currentPlayerLocation[1] += newOffsetTemp[1];
-    newOffsetTemp[0] *= -1; //reverses the direction
-    newOffsetTemp[1] *= -1;
-    glm::vec2 newOffsetTemp2 = glm::vec2{ newOffsetTemp[0],newOffsetTemp[1] };
+    glm::vec2 newOffset = player->calculateVelocity(references); 
+    newOffset = -newOffset; //reverses direction
 
-
+    std::cout << newOffset.y << std::endl;
     for (int i = 1; i < models.size(); i++) {
-        models.at(i)->moveWithVelocity(newOffsetTemp2); //uncomment whenever centering is fixed
+        models.at(i)->moveWithVelocity(newOffset); 
     }
 
-    bulletHandlerPtr->updateBullets(newOffsetTemp2);
+    bulletHandlerPtr->updateBullets(newOffset);
 
 
     for (int i = 0; i < npc.size(); i++) {
         newOffset = npc.at(i)->calculateVelocity(references);
-        glm::vec2 newOffset2 = glm::vec2{ newOffset[0],newOffset[1] };
-        npc.at(i)->moveWithVelocity(newOffset2);
+        npc.at(i)->moveWithVelocity(newOffset);
     }
 }
 

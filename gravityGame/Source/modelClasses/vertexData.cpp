@@ -9,6 +9,7 @@ VertexData::VertexData(const VertexData& vertexData) {
     VAO = vertexData.VAO;
     width = vertexData.width;
     height = vertexData.height;
+    rotation = vertexData.rotation; 
     avg = vertexData.avg;
     avgModel = vertexData.avgModel;
     gravity = vertexData.gravity;
@@ -118,7 +119,6 @@ void VertexData::move(glm::vec2 input) {
     conversion->convertToGlobal(&input);
     moveVertices(input);
     glm::mat4 temp = glm::mat4(1.0f);
-    //temp = glm::rotate(temp, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
     temp = glm::translate(temp, glm::vec3(input.x, input.y, 0.0f));
     trans = temp;
 }
@@ -141,6 +141,10 @@ int VertexData::getTexturesSize() {
 
 std::shared_ptr<AnimationData> VertexData::getCurrentAnimation() {
     return currentAnimationType;
+}
+
+void VertexData::rotate(glm::vec2 direction) {
+    rotation = atan(-direction[0] / direction[1]);
 }
 
 void VertexData::computeAverage(std::vector<float>input) { 

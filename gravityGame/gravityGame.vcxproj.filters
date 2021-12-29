@@ -48,6 +48,9 @@
     <ClCompile Include="Source\physics\collisionEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\physics\gravityEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\physics\movementEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -116,6 +119,9 @@
     <ClInclude Include="Source\physics\collisionEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\physics\gravityEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source\physics\movementEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -134,7 +140,7 @@
     <ClInclude Include="Source\bulletHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\modelClasses\Platform.h">
+    <ClInclude Include="Source\modelClasses\platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -155,8 +161,6 @@
     <None Include="maps\oldMaps\orbitTester.json" />
     <None Include="models\bullet.json" />
     <None Include="textures\spacemanWaiting\spacemanWaiting.ai" />
-    <None Include="models\grass.json" />
-    <None Include="models\platform.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\spaceman.png">
@@ -190,12 +194,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="textures\spacemanWaiting\waitingSpritesheet.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textures\grass.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textures\platform.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

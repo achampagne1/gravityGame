@@ -144,14 +144,17 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     if (key == GLFW_KEY_A && action == GLFW_PRESS){
         movementEnginePtr->setDirection(1);
     }
+    if (key == GLFW_KEY_A && action == GLFW_RELEASE) {
+        movementEnginePtr->setDirection(4);
+    }
     if (key == GLFW_KEY_D && action == GLFW_PRESS){
         movementEnginePtr->setDirection(3);
     }
+    if (key == GLFW_KEY_D && action == GLFW_RELEASE) {
+        movementEnginePtr->setDirection(5);
+    }
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         movementEnginePtr->jump();
-    }
-    if (action == GLFW_RELEASE) {
-        movementEnginePtr->setDirection(4);
     }
 }
 

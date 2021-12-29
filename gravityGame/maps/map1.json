@@ -18,19 +18,13 @@
     }
   ],
   "npc": [
-    {
-      "_comment": "1st",
-      "type": "npc",
-      "coordinates": [ 150, -40 ],
-      "velocity": [ 0, 0 ],
-      "collision": 0
-    }
+
   ],
   "planet": [
     {
       "_comment": "1st",
       "type": "planet",
-      "coordinates": [ -1500, -1000 ],
+      "coordinates": [ -1500, -1500 ],
       "velocity": [ 0, 0 ],
       "collision": 1
     }
@@ -39,21 +33,21 @@
     {
       "_comment": "1st",
       "type": "platform",
-      "coordinates": [ 0, -100 ],
+      "coordinates": [ -51,-300 ],
       "velocity": [ 0, 0 ],
       "collision": 1
     },
     {
       "_comment": "1st",
       "type": "platform",
-      "coordinates": [ 150, -100 ],
+      "coordinates": [ -51, -350 ],
       "velocity": [ 0, 0 ],
       "collision": 1
     },
     {
       "_comment": "1st",
       "type": "platform",
-      "coordinates": [ 100, -100 ],
+      "coordinates": [ -51, -600 ],
       "velocity": [ 0, 0 ],
       "collision": 1
     }

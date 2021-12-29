@@ -38,15 +38,9 @@ void Model::generateModel(const char* modelPath, glm::vec2 windowSize, glm::vec2
 
 void Model::calculateCollision(std::vector<std::shared_ptr<Model>> references) {
 	std::vector<std::shared_ptr<VertexData>> referencesRaw = toVertexData(references);
-	float velocity2[2] = {velocity.x,velocity.y};
-	collisionEngine->calculateCollision(vertexData, referencesRaw, velocity2);
-	if (collisionEngine->getCollision()) {
-		velocity.x = 0;
-		velocity.y = 0;
-		deltaVelocity[0] = 0;
-		deltaVelocity[1] = 0;
-		movementEngine->setGrounded(true);
-	}
+	glm::vec2 velocity2 = velocity;
+	velocity += collisionEngine->calculateCollision(vertexData, referencesRaw, velocity2);
+	movementEngine->setGrounded(collisionEngine->getCollision());
 }
 
 void Model::calculateMovement() { //what moves you around
@@ -59,11 +53,9 @@ void Model::calculateMovement() { //what moves you around
 
 glm::vec2 Model::calculateVelocity(std::vector<std::shared_ptr<Model>> references) { //responsible for calculating the velocity of the object
 	//this velocity can be used to move either the object, or offset everything else.
-	deltaVelocity = glm::vec2(0, -gravity); //for gravity
-	velocity.x += deltaVelocity[0];
-	velocity.y += deltaVelocity[1];
-	calculateCollision(references);
+	velocity += glm::vec2(0, -gravity); //for gravity
 	calculateMovement();
+	calculateCollision(references);
 	return velocity;
 }
 

@@ -19,12 +19,13 @@ private:
 	int height = 0;
 	float aspectRatioX = 0;
 	float aspectRatioY = 0;
+	float rotation = 0;	
 	glm::vec2 avg;
 	glm::vec2 avgModel;
 	float gravity = 0;
 	bool mirrorVar = false;
 
-	std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") }; //add shader path to constructor
+	std::unique_ptr <Shader> shader{ new Shader("Shaders/3.3.shader.vs", "Shaders/3.3.shader.fs") };
 	glm::mat4 trans = glm::mat4(1.0f);
 public:
 	VertexData();
@@ -38,6 +39,7 @@ public:
 	float getGravity();
 	int getTexturesSize();
 	std::shared_ptr<AnimationData> getCurrentAnimation();
+	void rotate(glm::vec2 direction);
 	void computeAverage(std::vector<float>input);
 	void moveVertices(glm::vec2 coordinates);
 	void mirrorSprite();
